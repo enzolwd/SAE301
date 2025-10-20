@@ -48,22 +48,22 @@
                         <tr>
                             <td>Du 06/05/2025 à 10h au 06/05/2025 à 15h</td>
                             <td>Enzo LeGrand</td>
-                            <td><button class="action-button consulter">Consulter</button></td>
+                            <td><button class="action-button consulterAttente">Consulter</button></td>
                         </tr>
                         <tr>
                             <td>Du 06/05/2025 à 10h au 06/05/2025 à 15h</td>
                             <td>Arthus Baillon</td>
-                            <td><button class="action-button consulter">Consulter</button></td>
+                            <td><button class="action-button consulterAttente">Consulter</button></td>
                         </tr>
                         <tr>
                             <td>Du 06/05/2025 à 10h au 06/05/2025 à 15h</td>
                             <td>Léon Marchand</td>
-                            <td><button class="action-button consulter">Consulter</button></td>
+                            <td><button class="action-button consulterAttente">Consulter</button></td>
                         </tr>
                         <tr>
                             <td>Du 06/05/2025 à 10h au 06/05/2025 à 15h</td>
                             <td>Zinedine Zidane</td>
-                            <td><button class="action-button consulter">Consulter</button></td>
+                            <td><button class="action-button consulterAttente">Consulter</button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -90,28 +90,28 @@
                             <td>Du 06/05/2025 à 10h au 06/05/2025 à 15h</td>
                             <td>Enzo LeGrand</td>
                             <td>Refusé</td>
-                            <td><button class="action-button consulter">Consulter</button></td>
+                            <td><button class="action-button consulterHistorique">Consulter</button></td>
                             <td><button class="action-button deverrouiller">Déverrouiller</button></td>
                         </tr>
                         <tr class="statut-accepte">
                             <td>Du 06/05/2025 à 10h au 06/05/2025 à 15h</td>
                             <td>Arthus Baillon</td>
                             <td>Accepté</td>
-                            <td><button class="action-button consulter">Consulter</button></td>
+                            <td><button class="action-button consulterHistorique">Consulter</button></td>
                             <td><button class="action-button deverrouiller">Déverrouiller</button></td>
                         </tr>
                         <tr class="statut-refuse">
                             <td>Du 06/05/2025 à 10h au 06/05/2025 à 15h</td>
                             <td>Léon Marche</td>
                             <td>Refusé</td>
-                            <td><button class="action-button consulter">Consulter</button></td>
+                            <td><button class="action-button consulterHistorique">Consulter</button></td>
                             <td><button class="action-button deverrouiller">Déverrouiller</button></td>
                         </tr>
                         <tr class="statut-accepte">
                             <td>Du 06/05/2025 à 10h au 06/05/2025 à 15h</td>
                             <td>Zinedine Zidane</td>
                             <td>Accepté</td>
-                            <td><button class="action-button consulter">Consulter</button></td>
+                            <td><button class="action-button consulterHistorique">Consulter</button></td>
                             <td><button class="action-button deverrouiller">Déverrouiller</button></td>
                         </tr>
                         </tbody>
@@ -132,7 +132,120 @@
 
 
 
-<!-- ===== MODALE DE CONFIRMATION ===== -->
+
+
+<!-- ===== MODALE CONSULTATION DE JUSTIFICATIF EN ATTENTE ===== -->
+<div id="modal-consultation-attente" class="modal consultation-modal">
+    <div class="modal-content consultation-content">
+
+        <span class="close-button" id="close-consultation-attente-modal">&times;</span>
+
+        <div class="modal-body-details">
+            <div class="details-left">
+                <p class="absence-date">Absent du : <strong>12/04/2025 à 10h</strong></p>
+                <p class="absence-date">Au : <strong>12/04/2025 à 15h</strong></p>
+
+                <h3 class="detail-title">Motif : Pas de transport</h3>
+
+                <h3 class="detail-title">Commentaire :</h3>
+                <div class="comment-box">
+                    <p>
+                        Lorem ipsum dolor sit amet. Sit repellat aliquam et iure vitae est quasi illum aut
+                        aspernatur repellendus nam omnis dolor ut iste omnis. Ea odio nulla qui voluptas
+                        accusantium est beatae distinctio! Ea fuga quia 33 voluptatem nostrum ex rerum
+                        necessitatibus et velit magnam eos exercitationem fugiat sed voluptatem nisi.
+                    </p>
+                </div>
+            </div>
+
+            <div class="separator-line"></div>
+
+            <div class="details-right">
+                <h3 class="detail-title">Justificatif :</h3>
+                <div class="justificatif-buttons">
+                    <button class="action-button">Télécharger le justificatif</button>
+                    <button class="action-button apercu-button">Voir un aperçu</button>
+                </div>
+
+                <p class="student-info-label">Nom : <strong>Lewandowski --Bry</strong></p>
+                <p class="student-info-label">Prénom : <strong>Enzo</strong></p>
+                <p class="student-info-label">Adresse mail : <strong>Enzo.Lewan@uphf.fr</strong></p>
+
+                <div class="action-trio-buttons">
+                    <button class="action-button revision-button">Demander une révision</button>
+                    <button class="action-button refuser-button">Refuser</button>
+                    <button class="action-button valider-button">Valider</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===== MODALE CONSULTATION DE JUSTIFICATIF DANS L HISTORIQUE ===== -->
+<div id="modal-consultation" class="modal consultation-modal">
+    <div class="modal-content consultation-content">
+
+        <span class="close-button" id="close-consultation-modal">&times;</span>
+
+        <div class="modal-body-details">
+            <div class="details-left">
+                <p class="absence-date">Absent du : <strong>12/04/2025 à 10h</strong></p>
+                <p class="absence-date">Au : <strong>12/04/2025 à 15h</strong></p>
+
+                <h3 class="detail-title">Motif : Pas de transport</h3>
+
+                <h3 class="detail-title">Commentaire :</h3>
+                <div class="comment-box">
+                    <p>
+                        Lorem ipsum dolor sit amet. Sit repellat aliquam et iure vitae est quasi illum aut
+                        aspernatur repellendus nam omnis dolor ut iste omnis. Ea odio nulla qui voluptas
+                        accusantium est beatae distinctio! Ea fuga quia 33 voluptatem nostrum ex rerum
+                        necessitatibus et velit magnam eos exercitationem fugiat sed voluptatem nisi.
+                    </p>
+                </div>
+            </div>
+
+            <div class="separator-line"></div>
+
+            <div class="details-right">
+                <h3 class="detail-title">Justificatif :</h3>
+                <div class="justificatif-buttons">
+                    <button class="action-button">Télécharger le justificatif</button>
+                    <button class="action-button">Voir un aperçu</button>
+                </div>
+
+                <p class="student-info-label">Nom : <strong>Lewandowski --Bry</strong></p>
+                <p class="student-info-label">Prénom : <strong>Enzo</strong></p>
+                <p class="student-info-label">Adresse mail : <strong>Enzo.Lewan@uphf.fr</strong></p>
+
+                <h3 class="finalite-label">Finalité : <span class="finalite-status">Refusé</span></h3>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ===== MODALE DE CONFIRMATION DE DEVEROUILLAGE===== -->
 <div id="modal-deverrouiller" class="modal">
     <div class="modal-content">
         <h3>Confirmation</h3>
@@ -143,6 +256,12 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
 
 <!-- ===== SCRIPT JS ===== -->
 <script>
@@ -173,6 +292,66 @@
     window.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
+        }
+    });
+
+
+
+
+
+    // code pour la modale de consultation des justificatif dans l'historique
+    const consultationModal = document.getElementById('modal-consultation');
+    const closeConsultationBtn = document.getElementById('close-consultation-modal');
+
+    // Ouvre la modale quand on clique sur un bouton "ConsulterHistorique"
+    document.querySelectorAll('.consultation-button, .action-button.consulterHistorique').forEach(button => {
+        button.addEventListener('click', (event) => {
+            // Optionnel : Récupérer et remplir les données de la ligne cliquée ici (pour un usage réel)
+
+            consultationModal.style.display = 'flex';
+        });
+    });
+
+    // Ferme la modale en cliquant sur le 'X'
+    closeConsultationBtn.addEventListener('click', () => {
+        consultationModal.style.display = 'none';
+    });
+
+    // Ferme la modale si on clique en dehors
+    window.addEventListener('click', (e) => {
+        if (e.target === consultationModal) {
+            consultationModal.style.display = 'none';
+        }
+    });
+
+
+
+
+
+
+    // ===== GESTION MODALE "CONSULTATION EN ATTENTE" =====
+    const consultationAttenteModal = document.getElementById('modal-consultation-attente');
+    const closeConsultationAttenteBtn = document.getElementById('close-consultation-attente-modal');
+
+    // Ouvre la modale quand on clique sur les boutons "Consulter" de la section "En attente"
+    document.querySelectorAll('.action-button.consulterAttente').forEach(button => {
+        button.addEventListener('click', () => {
+            consultationAttenteModal.style.display = 'flex';
+        });
+    });
+
+    // Ferme la modale en cliquant sur le 'X'
+    closeConsultationAttenteBtn.addEventListener('click', () => {
+        consultationAttenteModal.style.display = 'none';
+    });
+
+    // Mise à jour de la gestion du clic en dehors pour inclure la nouvelle modale
+    window.addEventListener('click', (e) => {
+        // ... [Code existant pour modalDeverrouiller et consultationModal] ...
+
+        // Ajout de la nouvelle modale
+        if (e.target === consultationAttenteModal) {
+            consultationAttenteModal.style.display = 'none';
         }
     });
 </script>
