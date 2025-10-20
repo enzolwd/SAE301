@@ -44,6 +44,17 @@ body {
     margin-left: 15px;
 }
 
+.bouton-statistique {
+    background-color: #004d66;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+    margin-left: 15px;
+}
+
 .bouton-deconnexion:hover {
     background-color: #00334d;
 }
@@ -308,4 +319,52 @@ body {
     .section-historique {
         max-width: 90%;
     }
+}
+
+
+
+
+
+
+
+/* ===== MODALE DE CONFIRMATION ===== */
+.modal {
+    display: none; /* cachée par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 25px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
