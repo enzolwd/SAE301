@@ -7,7 +7,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 /* ----- HEADER ----- */
 .header-main {
     display: flex;
@@ -17,22 +16,18 @@ body {
     background-color: #fff;
     border-bottom: 2px solid #e0e0e0;
 }
-
 .logo-section img {
     height: 60px;
 }
-
 .header-right {
     display: flex;
     align-items: center;
 }
-
 .header-right p {
     margin-right: 20px;
     color: #666;
     font-size: 0.9rem;
 }
-
 .bouton-deconnexion {
     background-color: #004d66;
     color: white;
@@ -43,7 +38,6 @@ body {
     transition: background-color 0.3s ease;
     margin-left: 15px;
 }
-
 .bouton-statistique {
     background-color: #004d66;
     color: white;
@@ -54,7 +48,6 @@ body {
     transition: background-color 0.3s ease;
     margin-left: 15px;
 }
-
 .bouton-deconnexion:hover {
     background-color: #00334d;
 }
@@ -67,6 +60,18 @@ body {
 }
 /* ----- FIN FOOTER ----- */
 
+
+
+
+
+
+
+
+
+
+
+
+
 .container {
     flex-grow: 1;
     padding: 30px;
@@ -77,92 +82,14 @@ body {
     max-width: 1400px;
     margin: 0 auto;
 }
-
 /* Variables pour les couleurs */
 :root {
-    --couleur-primaire-bleu: #004d9c; /* Bleu foncé de l'en-tête */
+    --couleur-primaire-bleu: #004d9c; /* Utilisé dans les statuts */
     --couleur-secondaire-gris: #555; /* Gris des boutons et bordures */
     --couleur-fond-bouton-gris: #ccc; /* Fond des boutons 'Consulter'/'Déverouiller' */
     --couleur-fond-entete-tableau: #808080; /* Gris foncé pour les en-têtes de tableau */
-    --couleur-bande-orange: #ff8c00; /* Bande de séparation */
+    --couleur-bande-orange: #ff8c00; /* INUTILISÉE */
     --couleur-texte-sombre: #333;
-}
-
-
-
-/* 1. Conteneur global du tableau de bord */
-.tableau-de-bord-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: white;
-}
-
-/* Simuler la bande grise/orange de l'en-tête (si non dans le header) */
-.header-bande {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid var(--couleur-bande-orange);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.logo-section {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    height: 50px;
-    margin-right: 10px;
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.universite-polytechnique {
-    color: var(--couleur-primaire-bleu);
-}
-
-.hauts-de-france {
-    font-size: 12px;
-    font-weight: normal;
-}
-
-.espace-numerique {
-    font-size: 14px;
-    color: var(--couleur-secondaire-gris);
-    border-left: 1px solid var(--couleur-secondaire-gris);
-    padding-left: 10px;
-}
-
-/* 2. Contrôles et titre */
-.dashboard-controls {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.control-button {
-    background-color: var(--couleur-secondaire-gris);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-left: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.control-button.deconnexion {
-    background-color: var(--couleur-primaire-bleu);
 }
 
 .titre-tableau-de-bord {
@@ -174,7 +101,6 @@ body {
     border-bottom: 3px solid #ccc;
     padding-bottom: 10px;
 }
-
 /* 3. Conteneur principal des deux tableaux */
 .content-wrapper,
 .content-tables-container {
@@ -185,7 +111,6 @@ body {
     width: 90%;
     margin: 40px auto;
 }
-
 .section-justificatifs,
 .section-historique {
     flex: 1;
@@ -195,7 +120,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
-
 .section-justificatifs h2,
 .section-historique h2 {
     font-size: 1.5em;
@@ -204,21 +128,11 @@ body {
     margin-bottom: 15px;
     text-align: center;
 }
-
-/* 4. Style des tableaux */
-.table-scroll-container {
-    position: relative;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
 .tableau {
     width: 100%;
     border-collapse: collapse;
     table-layout: auto; /* plus flexible */
 }
-
 /* En-têtes (gris foncé) */
 .tableau thead th {
     background-color: var(--couleur-fond-entete-tableau);
@@ -227,11 +141,9 @@ body {
     text-align: center;
     border-right: 1px solid white;
 }
-
 .tableau thead th:last-child {
     border-right: none;
 }
-
 /* Corps du tableau */
 .tableau tbody td {
     border: 1px solid #ddd;
@@ -241,23 +153,21 @@ body {
     font-size: 0.95em;
     word-wrap: break-word;
 }
-
 .tableau tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-
 /* Colonnes spécifiques au tableau Historique */
 .tableau.historique tbody td:nth-child(3) {
     font-weight: bold;
 }
-
-.tableau .refuse {
+/* Classes de statut basées sur les TR */
+.statut-refuse td:nth-child(3) { /* Cible spécifiquement le statut "Refusé" */
     color: red;
 }
-
-.tableau .accepte {
+.statut-accepte td:nth-child(3) { /* Cible spécifiquement le statut "Accepté" */
     color: green;
 }
+
 
 .action-button {
     display: inline-block;
@@ -271,42 +181,16 @@ body {
     text-transform: uppercase;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
-
     /* ✅ empêche les retours à la ligne */
     white-space: nowrap;
-
     /* ✅ laisse le bouton s’adapter à la taille du texte */
     width: auto;
     min-width: fit-content;
 }
-
 .action-button:hover {
     background-color: #aaa;
 }
 
-/* 6. Simulation de la barre de défilement verticale */
-.scroll-bar-simulation {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 15px;
-    height: 100%;
-    background-color: #f0f0f0;
-    pointer-events: none;
-}
-
-.scroll-bar-simulation::before {
-    content: '';
-    position: absolute;
-    top: 10%;
-    left: 2px;
-    width: 11px;
-    height: 20%;
-    background-color: #c1c1c1;
-    border-radius: 8px;
-}
-
-/* --- Responsive : revient en colonne sur mobile --- */
 @media (max-width: 900px) {
     .content-wrapper,
     .content-tables-container {
@@ -314,20 +198,12 @@ body {
         align-items: center;
         gap: 30px;
     }
-
     .section-justificatifs,
     .section-historique {
         max-width: 90%;
     }
 }
 
-
-
-
-
-
-
-/* ===== MODALE DE CONFIRMATION ===== */
 .modal {
     display: none; /* cachée par défaut */
     position: fixed;
@@ -340,7 +216,6 @@ body {
     align-items: center;
     z-index: 1000;
 }
-
 .modal-content {
     background-color: #fff;
     padding: 25px 40px;
@@ -351,20 +226,179 @@ body {
     width: 90%;
     animation: fadeIn 0.3s ease;
 }
-
 .modal-content h3 {
     margin-top: 0;
     color: #333;
 }
-
 .modal-buttons {
     display: flex;
     justify-content: center;
     gap: 15px;
     margin-top: 20px;
 }
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+
+
+
+
+
+
+
+/* ------------------- STYLES SPÉCIFIQUES À LA MODALE DE CONSULTATION DE JUSTIFICATIF DANS L HISTORIQUE ------------------- */
+
+.consultation-modal .modal-content {
+    /* Modifie la taille et la forme de la modale par rapport à la modale de confirmation */
+    max-width: 800px;
+    width: 95%;
+    min-height: 500px;
+    padding: 0;
+    border: 1px solid black;
+    border-radius: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    position: relative; /* ESSENTIEL : Définit le contexte pour la croix de fermeture */
+}
+
+/* Bouton de fermeture 'X' */
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    z-index: 10;
+}
+.close-button:hover {
+    color: var(--couleur-secondaire-gris);
+}
+
+.modal-body-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    flex-grow: 1;
+}
+
+.details-left {
+    flex: 1;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2em;
+}
+.details-left p.absence-date {
+    margin: 5px 0;
+}
+.details-left strong {
+    font-weight: normal;
+}
+
+.details-right {
+    flex: 1;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.separator-line {
+    width: 1px;
+    background-color: black;
+    margin: 0 15px;
+    height: 100%;
+}
+
+.detail-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+.comment-box {
+    border: 1px solid black;
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 1em;
+    line-height: 1.4;
+    margin-top: 10px;
+}
+
+.justificatif-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+/* * CORRECTION: Nous ciblons ici les action-button à l'intérieur de ce conteneur
+* et leur appliquons un style de largeur et de hauteur sans écraser leur apparence.
+*/
+.justificatif-buttons .action-button {
+    width: 100%;
+    padding: 12px 15px; /* Augmente la hauteur pour la maquette */
+    font-weight: bold;
+    text-transform: uppercase;
+    /* On laisse le fond gris, la bordure grise et le texte sombre hérités de .action-button */
+}
+
+
+.student-info-label {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+.student-info-label strong {
+    font-weight: normal;
+}
+
+.finalite-label {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: auto;
+}
+.finalite-status {
+    color: red;
+}
+
+
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+
+
+
+
+
+/* ------------------- STYLES SPÉCIFIQUES À LA MODALE DE CONSULTATION DE JUSTIFICATIF EN ATTENTE ------------------- */
+
+.action-trio-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto; /* Pousse ce bloc en bas de la colonne droite */
+}
+
+/* Surcharge des boutons spécifiques pour le trio d'action */
+.action-trio-buttons .action-button {
+    flex: 1; /* Permet à chaque bouton de prendre un tiers de l'espace */
+    padding: 10px 5px; /* Ajuste le padding pour tenir les 3 boutons */
+    font-size: 0.85em; /* Taille de police légèrement réduite si besoin */
+    min-width: unset; /* Annule le min-width s'il gêne le trio */
+    /* Styles spécifiques pour le fond des boutons si nécessaire, basés sur la maquette: */
+}
+
+
+
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
