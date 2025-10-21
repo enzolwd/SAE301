@@ -57,17 +57,14 @@ body {
 }
 
 
-
-
-
-.login-container {
+.container-connexion {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login-box {
+.box-connexion {
     background-color: #fff;
     padding: 40px;
     border-radius: 8px;
@@ -98,7 +95,7 @@ body {
     font-size: 1rem;
 }
 
-.login-button {
+.bouton-connexion {
     width: 100%;
     padding: 12px;
     background-color: #004d66;
@@ -110,6 +107,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.bouton-connexion:hover {
     background-color: #00334d;
 }
