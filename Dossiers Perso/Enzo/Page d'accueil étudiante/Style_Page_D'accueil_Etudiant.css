@@ -132,12 +132,10 @@ body {
     text-transform: uppercase;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
-    /* ✅ empêche les retours à la ligne */
     white-space: nowrap;
-    /* ✅ laisse le bouton s’adapter à la taille du texte */
     width: auto;
     min-width: fit-content;
-    text-decoration: none;
+    text-decoration: none; /* ✅ Correction ajoutée ici */
 }
 
 .absence-table .action-button {
@@ -190,8 +188,8 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
-    max-height: 90vh; /* limite la hauteur de la modale à 90% de la hauteur de l’écran */
-    overflow-y: auto; /* permet le défilement vertical si le contenu dépasse */
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 /* === EN-TÊTE DE LA MODALE === */

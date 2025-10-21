@@ -15,9 +15,9 @@
         <p>ESPACE NUMÉRIQUE DE TRAVAIL</p>
         <a href="Politique_Absence.html" class="button">Politique d'absence</a>
         <a href="index.html" class="disconnect-button">Déconnexion</a>
-
     </div>
 </div>
+
 <div class="container">
     <h1>Historique des absences</h1>
     <div class="dashboard-content">
@@ -64,8 +64,8 @@
         </div>
     </div>
 </div>
-<footer class="main-footer"></footer>
 
+<footer class="main-footer"></footer>
 
 <div id="justify-modal" class="modal">
     <div class="modal-content">
@@ -164,7 +164,7 @@
             const errorSpan = field.nextElementSibling;
             if (!field.value) {
                 field.classList.add('invalid');
-                errorSpan.textContent = "Ce champ est obligatoire";
+                errorSpan.textContent = "Ce champ est obligatoire"; // Texte en français
                 formIsValid = false;
             } else {
                 field.classList.remove('invalid');
@@ -173,7 +173,7 @@
         });
 
         if (formIsValid) {
-            alert('Formulaire envoyé avec succès !');
+            alert('Formulaire envoyé avec succès !'); // Texte en français
             justifyModal.style.display = 'none';
         }
     });
