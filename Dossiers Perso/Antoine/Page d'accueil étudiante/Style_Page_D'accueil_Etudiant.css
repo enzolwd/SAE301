@@ -108,34 +108,35 @@ body {
     font-weight: bold;
 }
 
-/* === BOUTONS === */
+/* === BOUTONS === (SECTION MODIFIÉE) === */
 .action-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    display: inline-block;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    background-color: #ddd;
+    color: #333;
     cursor: pointer;
-    text-decoration: none;
+    font-weight: bold;
+    border-radius: 3px;
+    text-transform: uppercase;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
-}
-
-.absence-table .action-button {
-    padding: 6px 10px;
-    font-size: 0.8rem;
+    /* ✅ empêche les retours à la ligne */
+    white-space: nowrap;
+    /* ✅ laisse le bouton s’adapter à la taille du texte */
+    width: auto;
+    min-width: fit-content;
+    /* J'ajoute ceci pour que les balises <a> ressemblent à des boutons */
+    text-decoration: none;
 }
 
 .action-button:hover {
-    background-color: #0056b3;
+    background-color: #aaa;
 }
 
 .justify-button {
     text-align: right;
     margin-top: 20px;
-}
-
-.justify-button .action-button {
-    padding: 10px 20px;
-    font-size: 1rem;
 }
 
 /* === FOOTER === */
@@ -260,21 +261,14 @@ body {
     background-color: #0056b3;
 }
 
-/* === PIED DE FORMULAIRE (BOUTON ENVOYER) === */
+/* === PIED DE FORMULAIRE (BOUTON ENVOYER) === (SECTION MODIFIÉE) === */
 .button-footer {
     text-align: right;
     margin-top: 20px;
 }
 
-.button-footer .action-button {
-    padding: 12px 25px;
-    background-color: #007bff;
-    font-size: 1rem;
-}
-
-.button-footer .action-button:hover {
-    background-color: #0056b3;
-}
+/* (Les styles spécifiques pour .button-footer .action-button ont été supprimés
+   car le .action-button principal s'applique maintenant) */
 
 /* === VALIDATION DES CHAMPS === */
 .form-group .error-message {
