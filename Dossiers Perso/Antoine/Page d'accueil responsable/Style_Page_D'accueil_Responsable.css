@@ -6,7 +6,14 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
+
+/* ----- PERMET DE CENTRER LE CONTENU DE LA PAGE ----- */
+* {
+    box-sizing: border-box;
+}
+
 /* ----- HEADER ----- */
 .header-main {
     display: flex;
