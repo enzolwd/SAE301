@@ -409,3 +409,293 @@ body {
 /* -------------------  ------------------- */
 /* -------------------  ------------------- */
 /* -------------------  ------------------- */
+
+
+
+
+
+
+
+
+
+
+/* ------------------- STYLES SPÉCIFIQUES À LA MODALE DE REFUS ------------------- */
+
+
+.refusal-modal .modal-content {
+    max-width: 500px; /* Taille adaptée pour le formulaire */
+    width: 90%;
+    min-height: 400px;
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Alignement du texte à gauche */
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    z-index: 10;
+}
+
+
+.refusal-modal .modal-title {
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.refusal-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.refusal-label {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 15px 0 5px 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.refusal-select,
+.refusal-textarea {
+    padding: 10px;
+    border: 1px solid var(--couleur-secondaire-gris);
+    border-radius: 4px;
+    width: 100%;
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+
+.refusal-textarea {
+    resize: vertical; /* Permet uniquement le redimensionnement vertical */
+    min-height: 120px;
+    flex-grow: 1; /* Le textarea prend l'espace restant */
+}
+
+.refusal-buttons-trio {
+    display: flex;
+    justify-content: flex-end; /* Aligner à droite ou au centre */
+    gap: 15px;
+    margin-top: 20px;
+}
+.refusal-buttons-trio .action-button {
+    /* Maintient le style des autres boutons 'déverouiller' et 'consulter' */
+    font-size: 0.9em;
+}
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+
+
+
+
+
+
+
+/* ------------------- STYLES SPÉCIFIQUES À LA MODALE AJOUTER UN MOTIF ------------------- */
+
+.add-motif-modal .modal-content {
+    max-width: 450px; /* Taille plus petite */
+    width: 90%;
+    /* Réutilisation de la position relative pour la croix */
+    position: relative;
+    padding: 25px; /* Ajustement du padding */
+}
+
+.add-motif-modal .modal-title-small {
+    /* Style pour le titre 'Motif' */
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--couleur-texte-sombre);
+    margin: 0 0 15px 0;
+    text-align: left;
+}
+
+.add-motif-input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #000; /* Bordure noire pour ressembler à la photo */
+    border-radius: 0; /* Pas d'arrondi */
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+.add-motif-buttons {
+    display: flex;
+    justify-content: center; /* Centrer le bouton Valider */
+    margin-top: 10px;
+}
+
+.add-motif-buttons .action-button {
+    /* Le bouton "Valider" est centré et utilise le style action-button */
+    width: 150px; /* Largeur fixe pour ressembler à la photo */
+    /* Pas de modifications de fond nécessaires, il utilise le gris par défaut */
+}
+
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+
+
+
+
+
+
+
+
+/* ------------------- STYLES SPÉCIFIQUES À LA MODALE DE VALIDATION FINALE (COMMENTAIRE) ------------------- */
+
+.validation-comment-modal .modal-content {
+    max-width: 500px;
+    width: 90%;
+    min-height: 300px;
+    padding: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.modal-title-validation {
+    /* Style pour le titre 'Commentaire :' */
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--couleur-texte-sombre);
+    margin: 15px 0 10px 0;
+    text-align: center;
+    border-bottom: 2px solid #ccc; /* Séparateur */
+    padding-bottom: 5px;
+}
+
+.validation-instruction {
+    font-size: 1.1em;
+    color: #333; /* Texte sombre pour l'instruction */
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.validation-comment-modal .revision-textarea {
+    /* Réutilise le style d'un textarea similaire */
+    min-height: 120px;
+    padding: 10px;
+    border: 1px solid var(--couleur-secondaire-gris);
+    border-radius: 4px;
+    width: 100%;
+    font-size: 1em;
+    resize: vertical;
+}
+
+.validation-buttons-wrapper {
+    display: flex;
+    justify-content: flex-end; /* Aligner le bouton à droite */
+    margin-top: 15px;
+}
+
+.validation-buttons-wrapper .action-button {
+    /* Assure que le bouton a le style 'action-button' comme celui de 'Déverrouiller' */
+    width: 120px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+/* -------------------  ------------------- */
+
+
+
+
+
+
+
+/* ------------------- STYLES SPÉCIFIQUES À LA MODALE DE DEMANDE DE RÉVISION ------------------- */
+
+.revision-comment-modal .modal-content {
+    /* Reprise du style de la modale de validation (pour la taille et le centrage) */
+    max-width: 500px;
+    width: 90%;
+    min-height: 250px; /* Légèrement ajusté pour la hauteur du contenu */
+    padding: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+/* IMPORTANT : La modale doit avoir un fond blanc, comme les autres */
+.revision-comment-modal .modal-content {
+    background-color: #fff;
+}
+
+.revision-instruction {
+    /* Style pour le texte d'instruction en haut (comme dans l'image) */
+    font-size: 1.1em;
+    color: #333;
+    font-weight: normal; /* Texte d'instruction non gras */
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.modal-title-revision {
+    /* Style pour le titre 'Commentaire :' */
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--couleur-texte-sombre);
+    margin: 15px 0 10px 0;
+    text-align: left; /* Alignement à gauche comme dans l'image */
+    border-bottom: none; /* Pas de bordure sous le titre */
+    padding-bottom: 0;
+}
+
+.revision-comment-modal .revision-textarea {
+    /* Style du textarea (le champ de saisie) */
+    min-height: 120px;
+    padding: 10px;
+    border: 1px solid var(--couleur-secondaire-gris);
+    border-radius: 0; /* Pas d'arrondi */
+    width: 100%;
+    font-size: 1em;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.revision-comment-modal .revision-buttons-wrapper {
+    display: flex;
+    justify-content: flex-end; /* Aligner le bouton "Valider" à droite */
+    margin-top: 15px;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
+/* STYLE DU BOUTON VALIDER (DOIT RESSEMBLER AU BOUTON DÉVERROUILLER) */
+/* ------------------------------------------------------------------------------------------------------------------------- */
+
+/* Récupération des styles du bouton .action-button (Consulter / Déverrouiller) */
+.deverrouiller-style {
+    /* Reprend les styles du bouton .action-button (Déverrouiller) */
+    padding: 8px 15px;
+    border: 1px solid var(--couleur-secondaire-gris);
+    background-color: var(--couleur-fond-bouton-gris);
+    color: var(--couleur-texte-sombre);
+    font-weight: bold;
+    border-radius: 3px;
+    text-transform: uppercase;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    /* Styles spécifiques pour le bouton "Valider" de la révision */
+    width: 120px; /* Assure une taille correcte */
+}
+
+.deverrouiller-style:hover {
+    background-color: #aaa; /* Reprend l'effet hover de .action-button */
+}
+
+/* ------------------- FIN STYLES MODALE DE RÉVISION ------------------- */
