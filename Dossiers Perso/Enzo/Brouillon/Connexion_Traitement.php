@@ -21,8 +21,8 @@ if (isset($_POST['identifiants'])) {
     } catch (PDOException $e) {
         // En cas d'erreur de connexion, on redirige avec une erreur
         $_SESSION['erreur_connexion'] = "Erreur de connexion à la base de données.";
-        // On suppose que la page de login s'appelle "Connexion.php"
-        header("Location: Connexion.php?erreur=db");
+        // On suppose que la page de login s'appelle "Connexion_Traitement.php"
+        header("Location: Connexion_Traitement.php?erreur=db");
         exit();
     }
 
@@ -62,7 +62,7 @@ if (isset($_POST['identifiants'])) {
                     break;
                 default:
                     $_SESSION['erreur_connexion'] = "Rôle utilisateur non défini.";
-                    header("Location: Connexion.php?erreur=role");
+                    header("Location: Connexion_Traitement.php?erreur=role");
                     break;
             }
             exit();
@@ -70,13 +70,13 @@ if (isset($_POST['identifiants'])) {
         } else {
             // --- 8. Échec : Mauvais identifiant ou mot de passe ---
             $_SESSION['erreur_connexion'] = "Nom d'utilisateur ou mot de passe incorrect.";
-            header("Location: Connexion.php?erreur=identifiants");
+            header("Location: Connexion_Traitement.php?erreur=identifiants");
             exit();
         }
 
     } catch (PDOException $e) {
         $_SESSION['erreur_connexion'] = "Erreur lors de la vérification des identifiants.";
-        header("Location: Connexion.php?erreur=requete");
+        header("Location: Connexion_Traitement.php?erreur=requete");
         exit();
     }
 
@@ -84,7 +84,7 @@ if (isset($_POST['identifiants'])) {
     // --- CORRECTION DE LA BOUCLE INFINIE ---
     // Si quelqu'un accède à ce script directement
     // au lieu de le faire boucler, on le renvoie à la page de login.
-    header("Location: Login.php"); // MODIFIÉ
+    header("Location: Page_De_Connexion.php"); // MODIFIÉ
     exit();
 }
 ?>

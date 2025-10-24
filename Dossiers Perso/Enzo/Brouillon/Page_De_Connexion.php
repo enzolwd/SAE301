@@ -1,9 +1,24 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
     <link rel="stylesheet" href="Style_Page_De_Connexion.css">
+
+    <style>
+        .erreur-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
 
@@ -16,12 +31,17 @@
     </div>
 </div>
 
-
 <div class="login-container">
-
     <div class="login-box">
 
-        <form method="post" action="Connexion_PHP.php">
+        <?php
+        if (isset($_SESSION['erreur_connexion'])) {
+            echo '<div class="erreur-message">' . htmlspecialchars($_SESSION['erreur_connexion']) . '</div>';
+            unset($_SESSION['erreur_connexion']);
+        }
+        ?>
+
+        <form method="post" action="Connexion_Traitement.php">
 
             <div class="form-group">
                 <label for="username">Nom d'utilisateur</label>
@@ -36,13 +56,9 @@
             <input type="submit" class="login-button" name="identifiants" value="Se connecter">
 
         </form>
-
     </div>
-
 </div>
 
 <footer class="main-footer"></footer>
-
 </body>
-
 </html>
