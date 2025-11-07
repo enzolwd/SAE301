@@ -35,6 +35,17 @@ body {
     font-size: 0.9rem;
 }
 
+.button {
+    background-color: #004d66;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+    margin-right: 15px;
+}
+
 .bouton-deconnexion {
     background-color: #004d66;
     color: white;
