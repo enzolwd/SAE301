@@ -71,6 +71,8 @@ CREATE TABLE testpush(
   id INT primary key
 );
 
+--changeset usersae301:003
+
 
 DROP TABLE IF EXISTS testpush CASCADE;
 
