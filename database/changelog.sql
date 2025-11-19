@@ -60,6 +60,10 @@ CREATE TABLE Absence (
                          FOREIGN KEY (idJustificatif) REFERENCES Justificatif(idJustificatif)
 );
 
+CREATE TABLE testpush(
+  id int primary key
+);
+
 
 
 
