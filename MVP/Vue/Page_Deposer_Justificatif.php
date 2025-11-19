@@ -31,6 +31,7 @@ if (isset($_GET['succes'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Justifier une absence - Université Polytechnique</title>
     <link rel="stylesheet" href="css/Style_Page_Deposer_Justificatif.css">
+
 </head>
 <body>
 
@@ -69,21 +70,36 @@ if (isset($_GET['succes'])) {
             <div class="form-body">
                 <div class="form-section">
                     <h4>Absence</h4>
+
                     <div class="form-group">
-                        <label for="dateDebut">Absent du</label>
-                        <input type="date" id="dateDebut" name="dateDebut" class="form-input" required>
+                        <input type="checkbox" id="jourEntierCheckbox" name="jourEntierCheckbox">
+                        <label for="jourEntierCheckbox" style="display: inline; margin-left: 5px;">Justifier une journée entière</label>
                     </div>
-                    <div class="form-group">
-                        <label for="heureDebut">À :</label>
-                        <input type="time" id="heureDebut" name="heureDebut" class="form-input" required>
+
+                    <div id="champsJourEntier" class="champs-date hidden">
+                        <div class="form-group">
+                            <label for="dateJourEntier">Date de l'absence</label>
+                            <input type="date" id="dateJourEntier" name="dateJourEntier" class="form-input">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="dateFin">Au</label>
-                        <input type="date" id="dateFin" name="dateFin" class="form-input" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="heureFin">À :</label>
-                        <input type="time" id="heureFin" name="heureFin" class="form-input" required>
+
+                    <div id="champsIntervalle" class="champs-date">
+                        <div class="form-group">
+                            <label for="dateDebut">Absent du</label>
+                            <input type="date" id="dateDebut" name="dateDebut" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="heureDebut">À :</label>
+                            <input type="time" id="heureDebut" name="heureDebut" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateFin">Au</label>
+                            <input type="date" id="dateFin" name="dateFin" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="heureFin">À :</label>
+                            <input type="time" id="heureFin" name="heureFin" class="form-input" required>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -102,7 +118,6 @@ if (isset($_GET['succes'])) {
                             <option value="Examen ou concours">Examen ou concours</option>
                             <option value="Autre">Autre</option>
                         </select>
-
                     </div>
                     <div class="form-group">
                         <label for="commentaire">Commentaire</label>
@@ -111,11 +126,21 @@ if (isset($_GET['succes'])) {
                 </div>
                 <div class="form-section">
                     <h4>Renseignements/Documents</h4>
+
                     <div class="form-group">
-                        <label for="fichierjustificatif" class="file-label">Importer un fichier</label>
-                        <input type="file" id="fichierjustificatif" name="fichierjustificatif" class="file-input" accept=".pdf,.png,.jpg,.jpeg">
-                        <small>Fichier justificatif (pdf, png, jpeg, jpg)</small>
-                        <span id="file-upload-feedback"></span>
+                        <label for="fichierjustificatif1" class="file-label">Importer fichier 1</label>
+                        <input type="file" id="fichierjustificatif1" name="fichierjustificatif1" class="file-input" accept=".pdf,.png,.jpg,.jpeg">
+                        <small>Fichier justificatif 1 (pdf, png, jpeg, jpg)</small>
+                        <span id="file-upload-feedback1"></span>
+                        <button type="button" id="remove-file1" class="bouton-annuler-fichier">Annuler</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fichierjustificatif2" class="file-label">Importer fichier 2 (facultatif)</label>
+                        <input type="file" id="fichierjustificatif2" name="fichierjustificatif2" class="file-input" accept=".pdf,.png,.jpg,.jpeg">
+                        <small>Fichier justificatif 2 (pdf, png, jpeg, jpg)</small>
+                        <span id="file-upload-feedback2"></span>
+                        <button type="button" id="remove-file2" class="bouton-annuler-fichier">Annuler</button>
                     </div>
 
                 </div>
@@ -131,25 +156,118 @@ if (isset($_GET['succes'])) {
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // sélectionner les éléments qui sont en rapport avec le dépôt du fichier
-        const fileInput = document.getElementById('fichierjustificatif');
-        const feedbackElement = document.getElementById('file-upload-feedback');
 
-        // écouter l'événement 'change' sur l'input de fichier
-        fileInput.addEventListener('change', function() {
-            // vérifier si un fichier est sélectionné
-            if (this.files && this.files.length > 0) {
-                // récupérer le nom du fichier
-                const fileName = this.files[0].name;
+        function setupFileInputFeedback(inputId, feedbackId, removeButtonId) {
+            const fileInput = document.getElementById(inputId);
+            const feedbackElement = document.getElementById(feedbackId);
+            const removeButton = document.getElementById(removeButtonId);
 
-                // afficher le message de confirmation
-                feedbackElement.textContent = 'Fichier importé : ' + fileName;
-                feedbackElement.style.color = '#004d66';
+            if (fileInput && feedbackElement && removeButton) {
+
+                // Événement quand un fichier est choisi
+                fileInput.addEventListener('change', function() {
+                    // vérifier si un fichier est sélectionné
+                    if (this.files && this.files.length > 0) {
+                        // récupérer le nom du fichier
+                        const fileName = this.files[0].name;
+
+                        // afficher le message de confirmation
+                        feedbackElement.textContent = 'Fichier importé : ' + fileName;
+                        feedbackElement.style.color = '#004d66';
+
+                        // Afficher le bouton "Annuler"
+                        removeButton.style.display = 'inline';
+                    } else {
+                        // vider le message si aucun fichier n'est sélectionné
+                        feedbackElement.textContent = '';
+                        // Cacher le bouton "Annuler"
+                        removeButton.style.display = 'none';
+                    }
+                });
+
+                // Événement quand on clique sur "Annuler"
+                removeButton.addEventListener('click', function() {
+                    // Vider la valeur de l'input fichier
+                    fileInput.value = '';
+
+                    // Vider le message de feedback
+                    feedbackElement.textContent = '';
+
+                    // Cacher le bouton "Annuler"
+                    removeButton.style.display = 'none';
+                });
+            }
+        }
+
+        // Appliquer la fonction aux deux inputs de fichier
+        setupFileInputFeedback('fichierjustificatif1', 'file-upload-feedback1', 'remove-file1');
+        setupFileInputFeedback('fichierjustificatif2', 'file-upload-feedback2', 'remove-file2');
+
+
+        // récupérer les éléments
+        const checkbox = document.getElementById('jourEntierCheckbox');
+        const champsJourEntier = document.getElementById('champsJourEntier');
+        const champsIntervalle = document.getElementById('champsIntervalle');
+
+        // Inputs pour le jour entier
+        const inputDateJourEntier = document.getElementById('dateJourEntier');
+
+        // Inputs pour l'intervalle
+        const inputDateDebut = document.getElementById('dateDebut');
+        const inputHeureDebut = document.getElementById('heureDebut');
+        const inputDateFin = document.getElementById('dateFin');
+        const inputHeureFin = document.getElementById('heureFin');
+
+        // ajouter l'écouteur d'événement
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Mode "Jour Entier"
+                champsJourEntier.classList.remove('hidden');
+                champsIntervalle.classList.add('hidden');
+
+                // Rendre le champ jour entier obligatoire et actif
+                inputDateJourEntier.required = true;
+                inputDateJourEntier.disabled = false;
+
+                // Rendre les champs intervalle non-obligatoires et inactifs
+                inputDateDebut.required = false;
+                inputHeureDebut.required = false;
+                inputDateFin.required = false;
+                inputHeureFin.required = false;
+
+                inputDateDebut.disabled = true;
+                inputHeureDebut.disabled = true;
+                inputDateFin.disabled = true;
+                inputHeureFin.disabled = true;
+
             } else {
-                // vider le message si aucun fichier n'est sélectionné
-                feedbackElement.textContent = '';
+                // Mode "Intervalle" (par défaut)
+                champsJourEntier.classList.add('hidden');
+                champsIntervalle.classList.remove('hidden');
+
+                // Rendre le champ jour entier non-obligatoire et inactif
+                inputDateJourEntier.required = false;
+                inputDateJourEntier.disabled = true;
+
+                // Rendre les champs intervalle obligatoires et actifs
+                inputDateDebut.required = true;
+                inputHeureDebut.required = true;
+                inputDateFin.required = true;
+                inputHeureFin.required = true;
+
+                inputDateDebut.disabled = false;
+                inputHeureDebut.disabled = false;
+                inputDateFin.disabled = false;
+                inputHeureFin.disabled = false;
             }
         });
+
+        // initialiser l'état (au cas où la page est rechargée)
+        // On simule un 'change' pour mettre les champs 'disabled'/'required' dans le bon état
+        checkbox.checked = false;
+        const event = new Event('change');
+        checkbox.dispatchEvent(event);
+
     });
 </script>
 

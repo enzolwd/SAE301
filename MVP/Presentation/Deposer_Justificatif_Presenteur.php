@@ -9,6 +9,30 @@ session_start();
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Etudiant_Modele.php';
 
+// Fonction d'aide pour gérer l'upload d'un fichier
+function gérerUploadFichier($fileKey, $uploadDir) {
+    // Vérifie si le fichier existe DANS LA REQUÊTE et s'il a été uploadé sans erreur
+    if (isset($_FILES[$fileKey]) && $_FILES[$fileKey]['error'] === UPLOAD_ERR_OK) {
+
+        $fileTmpName = $_FILES[$fileKey]['tmp_name'];
+        $fileName = basename($_FILES[$fileKey]['name']);
+        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        $newFileName = uniqid('', true) . '.' . $fileExtension;
+        $destination = $uploadDir . $newFileName;
+
+        if (move_uploaded_file($fileTmpName, $destination)) {
+            return $destination; // Retourne le chemin du fichier si l'upload réussit
+        } else {
+            // En cas d'échec du déplacement de fichier
+            header('Location: ../Vue/Page_Deposer_Justificatif.php?error=upload');
+            exit();
+        }
+    }
+    // Si le fichier n'est pas présent
+    // ou s'il y a une erreur autre
+    return null;
+}
+
 // On vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['idUtilisateur'])) {
     header('Location: ../Vue/Page_De_Connexion.php');
@@ -19,44 +43,42 @@ $idUtilisateurConnecte = $_SESSION['idUtilisateur'];
 
 if (isset($_POST['justifier'])) {
 
-    // Gestion de l'uploads du fichier du justificatif
-    $cheminFichierPourBDD = null;
-    if (isset($_FILES['fichierjustificatif']) && $_FILES['fichierjustificatif']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = '../Modele/uploads/';
 
-        // Le chemin pointe maintenant vers le dossier uploads du Modele
-        $uploadDir = '../Modele/uploads/';
-        $fileTmpName = $_FILES['fichierjustificatif']['tmp_name'];
-        $fileName = basename($_FILES['fichierjustificatif']['name']);
-        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-        $newFileName = uniqid('', true) . '.' . $fileExtension;
-        $destination = $uploadDir . $newFileName;
+    // On appelle la fonction d'aide pour le premier fichier
+    $cheminFichier1PourBDD = gérerUploadFichier('fichierjustificatif1', $uploadDir);
 
-        if (move_uploaded_file($fileTmpName, $destination)) {
-            $cheminFichierPourBDD = $destination;
-        } else {
-            header('Location: ../Vue/Page_Deposer_Justificatif.php?error=uploads');
-            exit();
-        }
-    }
-    // fin de la gestion de l'upload
+    // On appelle la fonction d'aide pour le second fichier
+    $cheminFichier2PourBDD = gérerUploadFichier('fichierjustificatif2', $uploadDir);
 
-    $datedebut = $_POST['dateDebut'];
-    $heuredebut = $_POST['heureDebut'];
-    $datefin = $_POST['dateFin'];
-    $heurefin = $_POST['heureFin'];
     $motif = $_POST['motif'];
+    $datedebut = '';
+    $heuredebut = '';
+    $datefin = '';
+    $heurefin = '';
+
+    // On vérifie si le mode "jour entier" a été utilisé
+    if (isset($_POST['dateJourEntier']) && !empty($_POST['dateJourEntier'])) {
+        // Mode Jour Entier
+        $datedebut = $_POST['dateJourEntier'];
+        $datefin = $_POST['dateJourEntier'];
+        $heuredebut = '00:00'; // Début de la journée
+        $heurefin = '23:59';   // Fin de la journée
+    } else {
+        // Mode Intervalle
+        $datedebut = $_POST['dateDebut'];
+        $heuredebut = $_POST['heureDebut'];
+        $datefin = $_POST['dateFin'];
+        $heurefin = $_POST['heureFin'];
+    }
     $commentaire = empty($_POST['commentaire']) ? null : $_POST['commentaire'];
 
-    // 1. On crée la connexion
     $conn1 = connecterBDD();
 
-    // 2. On demande au Modele de traiter le justificatif
-    $resultat = deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heuredebut, $datefin, $heurefin, $motif, $commentaire, $cheminFichierPourBDD);
+    $resultat = deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heuredebut, $datefin, $heurefin, $motif, $commentaire, $cheminFichier1PourBDD, $cheminFichier2PourBDD);
 
-    // 3. On ferme la connexion
     $conn1 = null;
 
-    // 4. On redirige en fonction de la réponse du Modele
     if ($resultat === "succes") {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?succes');
         exit();

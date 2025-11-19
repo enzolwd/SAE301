@@ -50,11 +50,14 @@ $justificatifID_from_url = (int)$_GET['id'];
 
                     <select id="motifAccepter" name="motifAccepter" class="accepter-select" required>
                         <option value="" selected>Choisir un motif...</option>
-                        <option>Justificatif invalide</option>
-                        <option>Justificatif illisible</option>
-                        <option>Pièce justificative manquante</option>
-                        <option>Motif d'absence non recevable</option>
-                        <option>Dates ou heures incohérentes avec l'absence</option>
+                        <option>Maladie (certificat médical)</option>
+                        <option>Rendez-vous médical</option>
+                        <option>Raison familiale / Événement impérieux</option>
+                        <option>Convocation (administrative, juridique...)</option>
+                        <option>Examen ou concours</option>
+                        <option>Problème de transport</option>
+                        <option>Stage / Déplacement pédagogique</option>
+                        <option>Autre (préciser en commentaire)</option>
                     </select>
 
                     <input type="hidden" name="justificatifID" value="<?php echo $justificatifID_from_url; ?>">
