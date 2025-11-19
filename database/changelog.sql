@@ -71,10 +71,6 @@ CREATE TABLE testpush(
   id INT primary key
 );
 
---changeset usersae301:003
-
-
-DROP TABLE IF EXISTS testpush CASCADE;
 
 
 
@@ -159,4 +155,10 @@ ALTER TABLE Utilisateur
 
 ALTER TABLE utilisateur
     ADD COLUMN derniere_tentative TIMESTAMP;
+
+
+--changeset usersae301:003
+
+
+DROP TABLE IF EXISTS testpush CASCADE;
 
