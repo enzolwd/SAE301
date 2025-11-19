@@ -68,7 +68,7 @@ CREATE TABLE Statut (
 );
 
 
-
+DROP TABLE IF EXISTS testpush CASCADE
 
 
 
@@ -101,6 +101,7 @@ ALTER TABLE Utilisateur
 DROP TABLE IF EXISTS MotifPourEleve CASCADE;
 
 DROP TABLE IF EXISTS MotifPourResponsable CASCADE;
+
 
 ALTER TABLE Justificatif
 DROP COLUMN motifeleve;
