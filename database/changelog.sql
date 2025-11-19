@@ -72,7 +72,7 @@ CREATE TABLE testpush(
 );
 
 CREATE TABLE testpush1(
-  id INT primary key
+  id1 INT primary key
 );
 
 
