@@ -4,7 +4,7 @@
 
 
 
-DROP TABLE IF EXISTS Absence, Justificatif, Utilisateur, Statut, MotifPourResponsable, MotifPourEleve CASCADE;
+DROP TABLE IF EXISTS Absence, Justificatif, Utilisateur, Statut, MotifPourResponsable, MotifPourEleve,testpush CASCADE;
 
 
 
@@ -65,6 +65,10 @@ CREATE TABLE MotifPourResponsable (
 
 CREATE TABLE Statut (
                         Statut TEXT PRIMARY KEY
+);
+
+CREATE TABLE testpush(
+  id INT primary key
 );
 
 
