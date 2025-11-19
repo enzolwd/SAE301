@@ -7,17 +7,6 @@
 DROP TABLE IF EXISTS Absence, Justificatif, Utilisateur, Statut, MotifPourResponsable, MotifPourEleve CASCADE;
 
 
-CREATE TABLE MotifPourEleve (
-                                motifEleve TEXT PRIMARY KEY
-);
-
-CREATE TABLE MotifPourResponsable (
-                                      motifRespon TEXT PRIMARY KEY
-);
-
-CREATE TABLE Statut (
-                        Statut TEXT PRIMARY KEY
-);
 
 CREATE TABLE Utilisateur (
                              idUtilisateur SERIAL PRIMARY KEY,
@@ -66,8 +55,16 @@ CREATE TABLE Absence (
                          FOREIGN KEY (idJustificatif) REFERENCES Justificatif(idJustificatif)
 );
 
-CREATE TABLE testpush(
-  id int primary key
+CREATE TABLE MotifPourEleve (
+                                motifEleve TEXT PRIMARY KEY
+);
+
+CREATE TABLE MotifPourResponsable (
+                                      motifRespon TEXT PRIMARY KEY
+);
+
+CREATE TABLE Statut (
+                        Statut TEXT PRIMARY KEY
 );
 
 
