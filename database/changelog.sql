@@ -71,6 +71,10 @@ CREATE TABLE testpush(
   id INT primary key
 );
 
+CREATE TABLE testpush1(
+  id INT primary key
+);
+
 
 
 
