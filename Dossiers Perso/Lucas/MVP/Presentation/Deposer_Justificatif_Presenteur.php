@@ -28,7 +28,7 @@ if (isset($_POST['justifier'])) {
         $fileTmpName = $_FILES['fichierjustificatif']['tmp_name'];
         $fileName = basename($_FILES['fichierjustificatif']['name']);
         $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-        $newFileName = uniqid('', true) . '.' . $fileExtension;
+        $newFileName = uniqid('', true) . 'Presentation' . $fileExtension;
         $destination = $uploadDir . $newFileName;
 
         if (move_uploaded_file($fileTmpName, $destination)) {

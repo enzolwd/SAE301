@@ -47,7 +47,7 @@ require_once '../Presentation/Statistique_Selection_Presenteur.php';
                 <?php foreach ($lesEtudiants as $etudiant) : ?>
                     <option value="<?php echo htmlspecialchars($etudiant['idutilisateur']); ?>">
                         <?php
-                        echo htmlspecialchars($etudiant['nom']) . ' ' .
+                        echo htmlspecialchars($etudiant['nom']) . ' Page_Selection_Etudiant_Statistique.php' .
                             htmlspecialchars($etudiant['prénom']) . ' (' .
                             htmlspecialchars($etudiant['groupe']) . ')';
                         ?>
