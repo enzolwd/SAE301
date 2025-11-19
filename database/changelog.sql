@@ -68,7 +68,7 @@ CREATE TABLE Statut (
 );
 
 
-DROP TABLE IF EXISTS testpush CASCADE
+DROP TABLE IF EXISTS testpush CASCADE;
 
 
 
