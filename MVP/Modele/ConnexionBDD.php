@@ -9,9 +9,9 @@
  */
 function connecterBDD() {
     $host = "localhost";
-    $dbname = "sae301";
-    $user = "plichon";
-    $passwordbd = "zsZ72ANM";
+    $dbname = "postgres";
+    $user = "postgres";
+    $passwordbd = "1234";
 
     try {
         $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $passwordbd);
