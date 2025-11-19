@@ -51,9 +51,21 @@ require_once '../Presentation/Consultation_Attente_Presenteur.php';
             <div class="details-right">
                 <h3 class="detail-title">Justificatif :</h3>
                 <div class="justificatif-buttons">
-                    <?php if (!empty($justificatifDetails['fichier'])) : ?>
-                        <a href="<?php echo htmlspecialchars($justificatifDetails['fichier']); ?>" download class="action-button">Télécharger le justificatif</a>
-                    <?php else : ?>
+                    <?php
+                    // On vérifie si au moins un fichier a été fourni
+                    $fichier1Existe = !empty($justificatifDetails['fichier1']);
+                    $fichier2Existe = !empty($justificatifDetails['fichier2']);
+                    ?>
+
+                    <?php if ($fichier1Existe) : ?>
+                        <a href="<?php echo htmlspecialchars($justificatifDetails['fichier1']); ?>" download class="action-button">Télécharger Fichier 1</a>
+                    <?php endif; ?>
+
+                    <?php if ($fichier2Existe) : ?>
+                        <a href="<?php echo htmlspecialchars($justificatifDetails['fichier2']); ?>" download class="action-button">Télécharger Fichier 2</a>
+                    <?php endif; ?>
+
+                    <?php if (!$fichier1Existe && !$fichier2Existe) : ?>
                         <p>(Aucun fichier fourni)</p>
                     <?php endif; ?>
                 </div>

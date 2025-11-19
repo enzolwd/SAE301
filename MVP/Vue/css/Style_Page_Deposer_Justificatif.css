@@ -277,3 +277,49 @@ body {
     font-style: italic;
     color: #004d66;
 }
+
+.bouton-annuler-fichier {
+    display: none;
+    margin-left: 10px;
+    background: none;
+    border: none;
+    color: #cc0000;
+    cursor: pointer;
+    font-size: 0.9em;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+.champs-date {
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    max-height: 500px;
+    opacity: 1;
+}
+
+
+.champs-date.hidden {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border: none;
+}
+
+
+.bouton-annuler-fichier {
+    display: none;
+    margin-left: 10px;
+    background: none;
+    border: none;
+    color: #cc0000;
+    cursor: pointer;
+    font-size: 0.9em;
+    text-decoration: underline;
+}

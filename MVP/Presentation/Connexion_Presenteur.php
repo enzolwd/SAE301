@@ -1,71 +1,115 @@
 <?php
-/*
- * Fichier Presentation
- * Fait le lien entre la Vue (formulaire de connexion) et le Modele (BDD).
-*/
 
 session_start();
 
-// On inclut les fichiers Modele nécessaires
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Connexion_Modele.php';
 
-// On vérifie si le formulaire a été soumis
 if (isset($_POST['identifiants'])) {
 
     try {
         $username = $_POST['UserName'];
         $password = $_POST['mdp'];
 
-        // 1. On crée la connexion
         $conn = connecterBDD();
 
-        // 2. On demande les informations au Modele
+        // récupérer les infos utilisateur
         $utilisateur = trouverUtilisateurParNom($conn, $username);
 
-        // 3. On ferme la connexion
-        $conn = null;
+        // reset des tentatives si ça fait plus d'1h (ou X secondes pour test) depuis la dernière tentative et que le compte n'est pas bloqué
+        if ($utilisateur && $utilisateur['blocage'] === null && $utilisateur['tentatives'] < 5
+            && $utilisateur['derniere_tentative'] !== null
+            && strtotime($utilisateur['derniere_tentative']) < time() - 3600) {
 
-        // On vérifie le mot de passe
-        if ($utilisateur && $utilisateur['hash'] && password_verify($password, $utilisateur['hash'])) {
+            $reqResetHour = $conn->prepare("
+                UPDATE Utilisateur 
+                SET tentatives_echouees = 0, derniere_tentative = NULL 
+                WHERE idutilisateur = :id");
+            $reqResetHour->bindParam(':id', $utilisateur['idUtilisateur']);
+            $reqResetHour->execute();
 
-            // On stocke l'ID dans la session
-            $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
+            $utilisateur['tentatives'] = 0;
+        }
 
-            // On récupère le rôle (attention: votre code original le récupérait 2 fois, j'ai gardé la 2e)
-            $role = $utilisateur['role']; // Utilise le rôle récupéré par la fonction
-            $_SESSION['role'] = $role;
-
-            // pour savoir sur quelle page rediriger l'utilisateur
-            switch ($role) {
-                case "Etudiant":
-                    header('Location: ../Vue/Page_Accueil_Etudiant.php');
-                    break;
-                case "Professeur":
-                    header('Location: ../Vue/Page_Accueil_Professeur.php');
-                    break;
-                case "ADMIN":
-                    header('Location: ../Vue/ADMIN.php');
-                    break;
-                case "Responsable Pedagogique":
-                    header('Location: ../Vue/Page_Accueil_Responsable.php');
-                    break;
-                case "Secretaire":
-                    header('Location: ../Vue/Page_Accueil_Secretaire.php');
-                    break;
-            }
-            exit();
-
-        } else {
-            // Si le mot de passe ou le nom sont faux
-            $_SESSION['login_error'] = "Nom d'utilisateur ou mot de passe incorrect.";
+        // vérifier si le compte est bloqué
+        if ($utilisateur && $utilisateur['blocage'] && strtotime($utilisateur['blocage']) > time()) {
+            $temps = strtotime($utilisateur['blocage']) - time();
+            $minutes = floor($temps / 60);
+            $_SESSION['login_error'] = "Compte bloqué. Temps restant : {$minutes} min.";
             header('Location: ../Vue/Page_De_Connexion.php');
             exit();
         }
 
-    } catch(Exception $e) { // On capture l'erreur de connexion si elle arrive
+        // mot de passe correct
+        if ($utilisateur && $utilisateur['hash'] && password_verify($password, $utilisateur['hash'])) {
+            // reset des tentatives et blocage + derniere_tentative
+            $reqReset = $conn->prepare("
+                UPDATE Utilisateur 
+                SET tentatives_echouees = 0, date_fin_blocage = NULL, derniere_tentative = NULL 
+                WHERE idutilisateur = :id");
+            $reqReset->bindParam(':id', $utilisateur['idUtilisateur']);
+            $reqReset->execute();
+
+            $_SESSION['idUtilisateur'] = $utilisateur['idUtilisateur'];
+            $_SESSION['role'] = $utilisateur['role'];
+
+            switch ($utilisateur['role']) {
+                case "Etudiant":
+                    header('Location: ../Vue/Page_Accueil_Etudiant.php'); break;
+                case "Professeur":
+                    header('Location: ../Vue/Page_Accueil_Professeur.php'); break;
+                case "ADMIN":
+                    header('Location: ../Vue/ADMIN.php'); break;
+                case "Responsable Pedagogique":
+                    header('Location: ../Vue/Page_Accueil_Responsable.php'); break;
+                case "Secretaire":
+                    header('Location: ../Vue/Page_Accueil_Secretaire.php'); break;
+            }
+            exit();
+
+        } else {
+            // gestion tentatives échouées
+            if ($utilisateur) {
+                $nouvellesTentatives = $utilisateur['tentatives'] + 1;
+
+                if ($nouvellesTentatives >= 5) {
+                    $finBlocage = date('Y-m-d H:i:s', time() + (15 * 60));
+                    $reqBlocage = $conn->prepare("
+                        UPDATE Utilisateur 
+                        SET tentatives_echouees = :t, date_fin_blocage = :d, derniere_tentative = NOW()
+                        WHERE idutilisateur = :id
+                    ");
+                    $reqBlocage->bindParam(':t', $nouvellesTentatives);
+                    $reqBlocage->bindParam(':d', $finBlocage);
+                    $reqBlocage->bindParam(':id', $utilisateur['idUtilisateur']);
+                    $reqBlocage->execute();
+
+                    $_SESSION['login_error'] = "Trop de tentatives. Compte bloqué 15 minutes.";
+
+                } else {
+                    // incrément simple avec mise à jour de derniere_tentative
+                    $reqUpdate = $conn->prepare("
+                        UPDATE Utilisateur 
+                        SET tentatives_echouees = :t, derniere_tentative = NOW() 
+                        WHERE idutilisateur = :id
+                    ");
+                    $reqUpdate->bindParam(':t', $nouvellesTentatives);
+                    $reqUpdate->bindParam(':id', $utilisateur['idUtilisateur']);
+                    $reqUpdate->execute();
+
+                    $_SESSION['login_error'] = "Nom d'utilisateur ou mot de passe incorrect.";
+                }
+
+            } else {
+                $_SESSION['login_error'] = "Nom d'utilisateur ou mot de passe incorrect.";
+            }
+
+            header('Location: ../Vue/Page_De_Connexion.php');
+            exit();
+        }
+
+    } catch(Exception $e) {
         $_SESSION['login_error'] = "Erreur de connexion. Veuillez réessayer plus tard.";
-        // $_SESSION['login_error'] = $e->getMessage(); // (gardé en commentaire)
         header('Location: ../Vue/Page_De_Connexion.php');
         exit();
     }

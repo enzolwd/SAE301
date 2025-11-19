@@ -1,17 +1,15 @@
 <?php
-/*
- * Fichier Modele
- * Contient la fonction UNIQUE pour se connecter à la BDD.
-*/
+// mettre le bon fuseau horaire parce que sinon on avait 45min de retard environ sur l'heure actuelle
+date_default_timezone_set('Europe/Paris');
 
 /**
  * Fonction qui crée et retourne l'objet de connexion PDO.
  */
 function connecterBDD() {
     $host = "localhost";
-    $dbname = "postgres";
-    $user = "postgres";
-    $passwordbd = "1234";
+    $dbname = "sae301";
+    $user = "plichon";
+    $passwordbd = "zsZ72ANM";
 
     try {
         $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $passwordbd);
