@@ -74,7 +74,6 @@ CREATE TABLE testpush(
 
 
 
---changeset usersae301:003
 
 
 DROP TABLE IF EXISTS testpush CASCADE;
