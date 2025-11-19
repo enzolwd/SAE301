@@ -1,3 +1,8 @@
+--liquibase formatted sql
+
+--changeset usersae301:001
+
+
 DROP TABLE IF EXISTS Absence, Justificatif, Utilisateur, Statut, MotifPourResponsable, MotifPourEleve CASCADE;
 
 
