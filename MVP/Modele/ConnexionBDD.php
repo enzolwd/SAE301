@@ -6,10 +6,10 @@ date_default_timezone_set('Europe/Paris');
  * Fonction qui crée et retourne l'objet de connexion PDO.
  */
 function connecterBDD() {
-    $host = "localhost";
-    $dbname = "sae301";
-    $user = "plichon";
-    $passwordbd = "zsZ72ANM";
+    $host = "srv-sae12";
+    $dbname = "bddsae301";
+    $user = "usersae301";
+    $passwordbd = "psae301";
 
     try {
         $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $passwordbd);
