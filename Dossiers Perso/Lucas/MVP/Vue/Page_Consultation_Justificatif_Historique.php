@@ -54,21 +54,9 @@ require_once '../Presentation/Consultation_Historique_Presenteur.php';
                 <div class="details-right">
                     <h3 class="detail-title">Justificatif :</h3>
                     <div class="justificatif-buttons">
-                        <?php
-                        // On vérifie si au moins un fichier a été fourni
-                        $fichier1Existe = !empty($justificatifDetailsHisto['fichier1']);
-                        $fichier2Existe = !empty($justificatifDetailsHisto['fichier2']);
-                        ?>
-
-                        <?php if ($fichier1Existe) : ?>
-                            <a href="<?php echo htmlspecialchars($justificatifDetailsHisto['fichier1']); ?>" download class="action-button">Télécharger Fichier 1</a>
-                        <?php endif; ?>
-
-                        <?php if ($fichier2Existe) : ?>
-                            <a href="<?php echo htmlspecialchars($justificatifDetailsHisto['fichier2']); ?>" download class="action-button">Télécharger Fichier 2</a>
-                        <?php endif; ?>
-
-                        <?php if (!$fichier1Existe && !$fichier2Existe) : ?>
+                        <?php if (!empty($justificatifDetailsHisto['fichier'])) : ?>
+                            <a href="<?php echo htmlspecialchars($justificatifDetailsHisto['fichier']); ?>" download class="action-button">Télécharger le justificatif</a>
+                        <?php else : ?>
                             <p>(Aucun fichier fourni)</p>
                         <?php endif; ?>
                     </div>

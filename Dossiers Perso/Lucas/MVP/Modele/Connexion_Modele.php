@@ -1,4 +1,8 @@
 <?php
+/*
+ * Fichier Modele
+ * Contient les fonctions pour la connexion.
+*/
 
 /**
  * Fonction qui cherche un utilisateur dans la base de données par son nom.
@@ -16,7 +20,7 @@ function trouverUtilisateurParNom($conn1, $username) {
         $requeteRole = $conn1->prepare( "SELECT role FROM Utilisateur WHERE nomutilisateur = :nom");
         $requeteRole->bindParam(':nom', $username);
         $requeteRole->execute();
-        $role = $requeteRole->fetchColumn();
+        $role = $requeteRole->fetchColumn(); // Note: cette ligne est écrasée si $hash est valide dans le Présentateur
 
         // on récupère l'ID de l'utilisateur
         $requeteId = $conn1->prepare( "SELECT idutilisateur FROM Utilisateur WHERE nomutilisateur = :nom");
@@ -24,35 +28,15 @@ function trouverUtilisateurParNom($conn1, $username) {
         $requeteId->execute();
         $idUtilisateur = $requeteId->fetchColumn();
 
-        // tentatives échouées
-        $reqTentatives = $conn1->prepare("SELECT tentatives_echouees FROM Utilisateur WHERE nomutilisateur = :nom");
-        $reqTentatives->bindParam(':nom', $username);
-        $reqTentatives->execute();
-        $tentatives = $reqTentatives->fetchColumn();
-
-        // date fin blocage
-        $reqBlocage = $conn1->prepare("SELECT date_fin_blocage FROM Utilisateur WHERE nomutilisateur = :nom");
-        $reqBlocage->bindParam(':nom', $username);
-        $reqBlocage->execute();
-        $blocage = $reqBlocage->fetchColumn();
-
-        // dernière tentative
-        $reqDerniere = $conn1->prepare("SELECT derniere_tentative FROM Utilisateur WHERE nomutilisateur = :nom");
-        $reqDerniere->bindParam(':nom', $username);
-        $reqDerniere->execute();
-        $derniere = $reqDerniere->fetchColumn();
-
+        // On retourne toutes les informations
         return [
             'hash' => $hash,
             'role' => $role,
-            'idUtilisateur' => $idUtilisateur,
-            'tentatives' => $tentatives,
-            'blocage' => $blocage,
-            'derniere_tentative' => $derniere
+            'idUtilisateur' => $idUtilisateur
         ];
 
     } catch(PDOException $e) {
-        return false;
+        return false; // Erreur de requête
     }
 }
 ?>
