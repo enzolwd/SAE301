@@ -100,7 +100,11 @@ require_once '../Presentation/Etudiant_Accueil_Presenteur.php';
                     <td><?php echo htmlspecialchars($justif['datedefin']); ?></td>
                     <td><?php echo htmlspecialchars($justif['heurefin']); ?></td>
                     <td class="<?php echo getStatusClass($justif['statut']); ?>">
-                        <?php echo htmlspecialchars($justif['statut']); ?>
+                        <?php
+                        if (trim(strtolower($justif['statut'])) === 'plus valable') {
+                            echo "À re-justifier<br>(plus valable)";
+                        } else {
+                            echo htmlspecialchars($justif['statut']);} ?>
                     </td>
                     <td>
                         <a href="Motif_Absence.php?id=<?php echo htmlspecialchars($justif['idjustificatif']); ?>" class="action-button">Consulter</a>
