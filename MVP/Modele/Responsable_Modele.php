@@ -277,10 +277,9 @@ function recupererRattrapagesStats($conn1, $ressource_selectionnee) {
                            Absence.matiere, Utilisateur.nom, Utilisateur.prénom,
                            Utilisateur.groupe, Utilisateur.email
                     FROM Absence
-                    JOIN Utilisateur ON Utilisateur.idUtilisateur = Absence.idUtilisateur
-                    WHERE Absence.statut = 'accepté' AND Absence.evaluation IS TRUE";
+                    JOIN Utilisateur ON Utilisateur.idUtilisateur = Absence.idUtilisateur";
             if ($ressource_selectionnee != 'TOUT') {
-                $sql .= " AND Absence.ressource = :ressource";
+                $sql .= " WHERE Absence.ressource = :ressource";
             }
             $sql .= " ORDER BY date";
             $requeteRattrapages = $conn1->prepare($sql);

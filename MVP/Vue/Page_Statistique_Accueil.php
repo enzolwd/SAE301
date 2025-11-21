@@ -31,7 +31,7 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
         </div>
     <?php endif; ?>
 
-    <h1 class="titre-principal">Liste des rattrapages</h1>
+    <h1 class="titre-principal">Liste des Absences</h1>
 
     <div class="content-wrapper">
 
@@ -54,7 +54,7 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
                     <tbody>
                     <?php if (empty($lesRattrapages)) : ?>
                         <tr class="empty-table-message">
-                            <td colspan="8">Aucun rattrapage n'est à venir pour cette ressource.</td>
+                            <td colspan="8">Aucune absence non justifiée à ce jour.</td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($lesRattrapages as $ratrapage) : ?>

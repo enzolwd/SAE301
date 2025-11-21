@@ -63,7 +63,7 @@ function envoyerMail($destEmail, $destName, $type) {
     }
 
 }
-if (envoyerMail("Arthus.Baillon@uphf.fr", "Arthus", 3)) {
+if (envoyerMail("baillonarthus7@gmail.com", "Arthus", 3)) {
     echo "Email envoyé !";
 } else {
     echo "Erreur lors de l'envoi...";
