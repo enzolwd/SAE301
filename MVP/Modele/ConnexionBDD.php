@@ -6,10 +6,10 @@ date_default_timezone_set('Europe/Paris');
  * Fonction qui crée et retourne l'objet de connexion PDO.
  */
 function connecterBDD() {
-    $host = "srv-sae12";
-    $dbname = "bddsae301";
-    $user = "usersae301";
-    $passwordbd = "psae301";
+    $host = "ep-purple-resonance-agsgo68u-pooler.c-2.eu-central-1.aws.neon.tech";
+    $dbname = "neondb";
+    $user = "neondb_owner";
+    $passwordbd = "npg_nXhoB0G6mfTJ";
 
     try {
         $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $passwordbd);
