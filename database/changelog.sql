@@ -76,7 +76,6 @@ CREATE TABLE Absence (
 
 
 
-DROP TABLE IF EXISTS testpush CASCADE;
 
 
 ALTER TABLE Absence
@@ -160,6 +159,4 @@ ALTER TABLE utilisateur
 
 
 
-
-DROP TABLE IF EXISTS testpush CASCADE;
 
