@@ -45,7 +45,7 @@ function envoyerMail($destEmail, $destName, $type) {
         $mail->SMTPAuth   = true;
         $mail->Username   = 'baillonarthus7@gmail.com';
         $mail->Password   = 'SAE301progsmtp';
-        $mail->Port       = 2525;
+        $mail->Port       = 25025;
         $mail->setFrom('baillonarthus7@gmail.com', 'arthus');
         $mail->addAddress($destEmail, $destName);
 
