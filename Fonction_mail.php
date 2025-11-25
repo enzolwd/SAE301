@@ -39,8 +39,9 @@ function envoyerMail($destEmail, $destName, $type) {
         5 => [
             'sujet' => "Déverouillage de justificatif",
             'message' => "<p>Bonjour $destName,
-                          <p>Après réétude de votre justificatif couvrant les absences du xx/xx/xxxx à xxhxx au xx/xx/xxxx à xxhxx, les responsables pédagogiques ont décidé de le <strong>déverrouiller</strong>.</p>
-                          <p>Ce justificatif n'est donc plus valide et les absences qu'il couvrait sont désormais considérées comme <strong>non justifiées</strong>.</p>
+                          <p>Après réétude d'un de vos justificatifs, les responsables pédagogiques ont décidé de le <strong>déverrouiller</strong>.</p>
+                          <p>Ce justificatif n'est donc plus valable et les absences qu'il couvrait sont désormais considérées comme <strong>non justifiées</strong>.</p>
+                          <p>Vous trouverez le justificatif dans votre historique.</p>
                           <p>Vous pouvez à présent re-déposer un nouveau justificatif pour ces mêmes absences afin de les re-justifier.</p>"
         ],
         6 => [
