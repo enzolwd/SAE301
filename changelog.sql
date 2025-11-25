@@ -154,3 +154,8 @@ ALTER TABLE Utilisateur
 
 ALTER TABLE utilisateur
     ADD COLUMN derniere_tentative TIMESTAMP;
+
+ALTER TABLE Justificatif
+    ADD COLUMN date_depot TIMESTAMP;
+
+ALTER DATABASE neondb SET timezone = 'Europe/Paris';
