@@ -39,13 +39,11 @@ function traiterFichierCSV($conn, $csv_data) {
             $evaluation_str = trim($ligne[23]);
 
             $ressource = null;
-            $patternR = '/\(.*(R[1-6][^\)]*)\)/';
-            $patternS = '/\(.*(S[1-6][^\)]*)\)/';
+            // Expression régulière pour capturer la ressource (P, R, ou S)
+            // à l'intérieur de parenthèses : / (.* ( [PRS][1-6].*? ) ) /
+            $patternRessource = '/\(.*([PRS][1-6].*?)\)/';
 
-            if (preg_match($patternR, $matiere, $text)) {
-                $ressource = $text[1];
-            }
-            elseif (preg_match($patternS, $matiere, $text)) {
+            if (preg_match($patternRessource, $matiere, $text)) {
                 $ressource = $text[1];
             }
 
