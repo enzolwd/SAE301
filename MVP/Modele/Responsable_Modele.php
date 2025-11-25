@@ -478,4 +478,36 @@ function recupererStatistiquesEtudiant($conn, $idEtudiantSelectionne) {
         'totalAbsences', 'errorMessage', 'nomEtudiant', 'semestreGroup'
     );
 }
+
+
+function recupererNomEtudiant($conn1, $idJustificatif)
+{
+    $sql = "SELECT nom, prénom FROM Utilisateur JOIN Absence ON Absence.idUtilisateur = Utilisateur.idUtilisateur
+            WHERE Absence.idJustificatif = :idJustificatif
+            LIMIT 1";
+    $requete = $conn1->prepare($sql);
+    $requete->bindParam(':idJustificatif', $idJustificatif);
+    $requete->execute();
+    $nom = $requete->fetch(PDO::FETCH_ASSOC);
+
+    return $nom;
+}
+
+function recupererMailEtudiant($conn1, $idJustificatif)
+{
+    $sql = "SELECT u.email 
+            FROM Utilisateur u
+            JOIN Absence a ON a.idutilisateur = u.idutilisateur
+            WHERE a.idjustificatif = :idJustificatif
+            LIMIT 1";
+    $requete = $conn1->prepare($sql);
+    $requete->bindParam(':idJustificatif', $idJustificatif, PDO::PARAM_INT);
+    $requete->execute();
+    $result = $requete->fetch(PDO::FETCH_ASSOC);
+
+    return $result ? $result['email'] : null;
+}
+
+
+
 ?>
