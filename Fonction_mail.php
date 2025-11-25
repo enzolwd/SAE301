@@ -48,7 +48,7 @@ function envoyerMail($destEmail, $destName, $type) {
             'sujet' => "Alerte absences répétées non justifiées",
             'message' => "<p>Bonjour $destName,
                           <p>Vous avez plusieurs absences non justifiées.</p>
-                          <p>Vous devez justifier ces absences. Dans le cas contraire, vous serez <strong>sanctionné<strong> (malus sur vos ressources)</p>
+                          <p>Vous devez justifier ces absences. Dans le cas contraire, vous serez <strong>sanctionné</strong> (malus sur vos ressources)</p>
                           <p>Il vous reste 48h pour rester dans les temps. Passé ce délai, le responsable pédagogique sera susceptible de refuser vos justificatifs.</p>"
         ],
         7 => [

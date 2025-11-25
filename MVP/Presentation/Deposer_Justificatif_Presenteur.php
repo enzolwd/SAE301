@@ -78,11 +78,16 @@ if (isset($_POST['justifier'])) {
 
     $resultat = deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heuredebut, $datefin, $heurefin, $motif, $commentaire, $cheminFichier1PourBDD, $cheminFichier2PourBDD);
 
-    $conn1 = null;
+
 
     if ($resultat === "succes") {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?succes');
-        envoyerMail("Arthus.Baillon@uphf.fr", "Arthus",  1);
+
+        $email = recupererMail($conn1, $idUtilisateurConnecte);
+        $utilisateur = recupererNom($conn1, $idUtilisateurConnecte);
+        $nomComplet = $utilisateur['prénom'] . ' ' . $utilisateur['nom'];
+
+        envoyerMail($email, $nomComplet,  1);
         exit();
     } elseif ($resultat === "inutile") {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?error=inutile');
@@ -94,5 +99,7 @@ if (isset($_POST['justifier'])) {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?error=db');
         exit();
     }
+
+    $conn1 = null;
 }
 ?>

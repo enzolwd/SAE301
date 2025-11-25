@@ -204,4 +204,28 @@ function recupererMotifEtudiant($conn1, $justificatifID) {
     }
     return $motifDetails;
 }
+
+function recupererNom($conn1, $idUtilisateur)
+{
+    $sql = "SELECT nom, prénom FROM Utilisateur WHERE idutilisateur = :idutilisateur";
+    $requete = $conn1->prepare($sql);
+    $requete->bindParam(':idutilisateur', $idUtilisateur, PDO::PARAM_INT);
+    $requete->execute();
+    $nom = $requete->fetch(PDO::FETCH_ASSOC);
+
+    return $nom;
+}
+
+function recupererMail($conn1, $idUtilisateur)
+{
+    $sql = "SELECT email FROM Utilisateur WHERE idutilisateur = :idutilisateur";
+    $requete = $conn1->prepare($sql);
+    $requete->bindParam(':idutilisateur', $idUtilisateur, PDO::PARAM_INT);
+    $requete->execute();
+    $result = $requete->fetch(PDO::FETCH_ASSOC);
+
+    return $result ? $result['email'] : null;
+}
+
+
 ?>
