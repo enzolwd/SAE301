@@ -47,14 +47,15 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Groupe</th>
-                        <th>Email</th>
+                        <th>Evaluation</th>
+                        <th>statut</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     <?php if (empty($lesRattrapages)) : ?>
                         <tr class="empty-table-message">
-                            <td colspan="8">Aucune absence non justifiée à ce jour.</td>
+                            <td colspan="9">Aucune absence non justifiée à ce jour.</td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ($lesRattrapages as $ratrapage) : ?>
@@ -66,7 +67,21 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
                                 <td><?php echo htmlspecialchars($ratrapage['nom']); ?></td>
                                 <td><?php echo htmlspecialchars($ratrapage['prénom']); ?></td>
                                 <td><?php echo htmlspecialchars($ratrapage['groupe']); ?></td>
-                                <td><?php echo htmlspecialchars($ratrapage['email']); ?></td>
+                                <?php
+                                if ($ratrapage['evaluation']) {
+                                    $classe_evaluation = 'status-oui';
+                                    $texte_evaluation = 'OUI';
+                                } else {
+                                    $classe_evaluation = 'status-non';
+                                    $texte_evaluation = 'NON';
+                                }
+                                ?>
+                                <td class="<?php echo $classe_evaluation; ?>">
+                                    <?php echo $texte_evaluation; ?>
+                                </td>
+                                <td class="<?php echo getStatusClass($ratrapage['statut']); ?>">
+                                    <?php echo htmlspecialchars($ratrapage['statut']); ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>

@@ -275,7 +275,7 @@ function recupererRattrapagesStats($conn1, $ressource_selectionnee) {
                            TO_CHAR(Absence.heure, 'HH24:MI') as heure,
                            TO_CHAR(Absence.duree, 'HH24:MI') as duree, 
                            Absence.matiere, Utilisateur.nom, Utilisateur.prénom,
-                           Utilisateur.groupe, Utilisateur.email
+                           Utilisateur.groupe, absence.evaluation, Absence.statut
                     FROM Absence
                     JOIN Utilisateur ON Utilisateur.idUtilisateur = Absence.idUtilisateur";
             if ($ressource_selectionnee != 'TOUT') {

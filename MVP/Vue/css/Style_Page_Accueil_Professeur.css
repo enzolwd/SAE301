@@ -110,7 +110,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     width: 90%;
-    max-width: 1000px;
+    max-width: 100%;
 }
 
 /* Conteneur pour le tableau */
@@ -167,3 +167,46 @@ body {
     padding: 20px;
     background-color: #fdfdfd;
 }
+
+
+
+
+/* Vert pour 'OUI' (Rattrapage accepté) */
+.tableau tbody td.status-oui {
+    /* Utilisation de !important pour forcer l'écrasement des couleurs de fond
+       si le sélecteur ci-dessus ne suffit pas, bien que fortement déconseillé,
+       c'est la solution la plus rapide si les règles précédentes sont trop fortes. */
+    background-color: #4CAF50 ;
+    color: white ;
+    font-weight: bold ;
+    text-align: center;
+}
+
+/* Rouge pour 'NON' (Rattrapage non accepté/en attente/refusé) */
+.tableau tbody td.status-non {
+    background-color: #F44336 ;
+    color: white ;
+    font-weight: bold ;
+    text-align: center;
+}
+
+
+.status-oui {
+    background-color: #4CAF50; /* Vert foncé solide (couleur populaire pour "Succès") */
+    color: white;             /* Texte blanc pour assurer un bon contraste sur le fond foncé */
+    font-weight: bold;
+    text-align: center;
+    /* Ajoutez une petite marge pour que la couleur ne touche pas les bords si le tableau a des bordures */
+    /* padding: 5px; */
+}
+
+/* Rouge pour 'NON' (Rattrapage non accepté/en attente/refusé) */
+.status-non {
+    background-color: #F44336; /* Rouge foncé solide (couleur populaire pour "Erreur/Attention") */
+    color: white;             /* Texte blanc pour assurer un bon contraste */
+    font-weight: bold;
+    text-align: center;
+    /* padding: 5px; */
+}
+
+

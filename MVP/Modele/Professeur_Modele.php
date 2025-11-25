@@ -25,16 +25,18 @@ function recupererRattrapagesProf($conn1, $idProf) {
                        TO_CHAR(Absence.heure, 'HH24:MI') as heure,
                        TO_CHAR(Absence.duree, 'HH24:MI') as duree, 
                        Absence.matiere, Utilisateur.nom, Utilisateur.prénom,
-                       Utilisateur.groupe, Utilisateur.email
-        FROM Absence
-        JOIN Utilisateur ON Utilisateur.idutilisateur = Absence.idUtilisateur
-        WHERE LOWER(Absence.statut) = 'accepté' AND Absence.evaluation IS TRUE
-        AND LOWER(prof) = :nomCompletLower
-        ORDER BY date";
+                       Utilisateur.groupe, Utilisateur.email,
+                       Absence.statut
+                FROM Absence
+                JOIN Utilisateur ON Utilisateur.idutilisateur = Absence.idUtilisateur
+                WHERE Absence.evaluation IS TRUE AND LOWER(prof) = :nomCompletLower
+                ORDER BY date";
         $requeteRattrapages = $conn1->prepare($sql);
         $requeteRattrapages->bindValue(':nomCompletLower', $nomCompletLower);
         $requeteRattrapages->execute();
         $lesRattrapages = $requeteRattrapages->fetchAll(PDO::FETCH_ASSOC);
+
+
     } catch(PDOException $e) {
         $lesRattrapages = false;
     }
