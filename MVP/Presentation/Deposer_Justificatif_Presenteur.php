@@ -8,6 +8,7 @@ session_start();
 // On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Etudiant_Modele.php';
+require_once '../../Fonction_mail.php';
 
 // Fonction d'aide pour gérer l'upload d'un fichier
 function gérerUploadFichier($fileKey, $uploadDir) {
@@ -81,6 +82,7 @@ if (isset($_POST['justifier'])) {
 
     if ($resultat === "succes") {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?succes');
+        envoyerMail("Arthus.Baillon@uphf.fr", "Arthus",  1);
         exit();
     } elseif ($resultat === "inutile") {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?error=inutile');

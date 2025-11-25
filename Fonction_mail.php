@@ -10,24 +10,65 @@ function envoyerMail($destEmail, $destName, $type) {
 
     $mails = [
         1 => [
-            'sujet' => "Invitation à jouer",
-            'message' => "<p>Salut $destName, viens jouer à StratFat, on t’attend !</p>"
+            'sujet' => "Confirmation de soumission justificatif",
+            'message' => "<p>Bonjour $destName,
+                          <p>Nous vous confirmons la bonne réception de votre justificatif d'absence.</p>
+                          <p>Celui-ci sera <strong>traité</strong> par le service pédagogique dans les plus brefs délais. Vous serez notifié par email dès qu'une décision (validation ou refus) aura été prise.</p>"
         ],
         2 => [
-            'sujet' => "Rappel important",
-            'message' => "<p>$destName, n’oublie pas notre rendez-vous aujourd’hui !</p>"
+            'sujet' => "Validation de justificatif",
+            'message' => "<p>Bonjour $destName,
+                          <p>Nous avons le plaisir de vous informer qu'un justificatif a été <strong>validé</strong> par les responsables pédagogiques.</p>
+                          <p>Votre dossier a été mis à jour. Les absences concernant ce justificatif sont désormaient considérées comme justifiées.</p>"
         ],
         3 => [
-            'sujet' => "Nouvelle intéressante",
-            'message' => "<p>Hey $destName, j’ai une info cool à te partager !</p>"
+            'sujet' => "Refus du justificatif",
+            'message' => "<p>Bonjour $destName, 
+                          <p>Nous avons le regret de vous informer qu'un justificatif a été <strong>réfusé</strong> par les responsables pédagogiques.</p>
+                          <p>Votre dossier a été mis à jour. Les absences concernant ce justificatif sont désormaient considérées comme refusées.</p>
+                          <p>Toutes les évaluations qui ont eu lieu durant cette période ne pourront pas être rattrapées.</p>"
         ],
         4 => [
-            'sujet' => "Message urgent",
-            'message' => "<p>$destName, contacte-moi dès que possible STP.</p>"
+            'sujet' => "Demande de révision",
+            'message' => "<p>Bonjour $destName, 
+                          <p>Après étude de votre dossier, les responsables pédagogiques ont <strong>demandé une révision</strong> de votre justificatif.</p>
+                          <p>Vous trouverez plus de détails sur les raisons de la demande de révision en consultant votre justificatif dans votre historique.</p>
+                          <p>Les absences de cette période restent non justifiées.</p>
+                          <p>Afin de re-justifier ces absences, il faudra re-déposer un justificatif.</p>"
         ],
         5 => [
-            'sujet' => "Petit message sympa",
-            'message' => "<p>Bonjour $destName 😊 juste un petit coucou !</p>"
+            'sujet' => "Déverouillage de justificatif",
+            'message' => "<p>Bonjour $destName,
+                          <p>Après réétude de votre justificatif couvrant les absences du xx/xx/xxxx à xxhxx au xx/xx/xxxx à xxhxx, les responsables pédagogiques ont décidé de le <strong>déverrouiller</strong>.</p>
+                          <p>Ce justificatif n'est donc plus valide et les absences qu'il couvrait sont désormais considérées comme <strong>non justifiées</strong>.</p>
+                          <p>Vous pouvez à présent re-déposer un nouveau justificatif pour ces mêmes absences afin de les re-justifier.</p>"
+        ],
+        6 => [
+            'sujet' => "Alerte absences répétées non justifiées",
+            'message' => "<p>Bonjour $destName,
+                          <p>Vous avez plusieurs absences non justifiées.</p>
+                          <p>Vous devez justifier ces absences. Dans le cas contraire, vous serez <strong>sanctionné<strong> (malus sur vos ressources)</p>
+                          <p>Il vous reste 48h pour rester dans les temps. Passé ce délai, le responsable pédagogique sera susceptible de refuser vos justificatifs.</p>"
+        ],
+        7 => [
+            'sujet' => "Alerte reste 48h pour être dans les temps",
+            'message' => "<p>Bonjour $destName,
+                          <p>Vous avez une ou plusieurs absences non justifiée(s).</p>
+                          <p>Vous devez déposer un justificatif.</p>
+                          <p>Il vous reste 48h pour rester dans les temps. Passé ce délai, le responsable pédagogique sera susceptible de refuser vos justificatifs.</p>"
+        ],
+        8 => [
+            'sujet' => "Alerte reste 24h pour être dans les temps ",
+            'message' => "<p>Bonjour $destName,
+                          <p>Vous avez une ou plusieurs absences non justifiée(s).</p>
+                          <p>Vous devez déposer un justificatif.</p>
+                          <p>Il vous reste 24h pour rester dans les temps. Passé ce délai, le responsable pédagogique sera susceptible de refuser vos justificatifs.</p>"
+        ],
+        9 => [
+            'sujet' => "Alerte vous devez impérativement justifier ",
+            'message' => "<p>Bonjour $destName,
+                          <p>Vous avez une ou plusieurs absences non justifiée(s).</p>
+                          <p>Vous devez <strong>imprérativement</strong> déposer un justificatif.</p>"
         ]
     ];
 
@@ -45,7 +86,7 @@ function envoyerMail($destEmail, $destName, $type) {
         $mail->SMTPAuth   = true;
         $mail->Username   = 'baillonarthus7@gmail.com';
         $mail->Password   = 'SAE301progsmtp';
-        $mail->Port       = 25025;
+        $mail->Port       = 25;
         $mail->setFrom('baillonarthus7@gmail.com', 'arthus');
         $mail->addAddress($destEmail, $destName);
 
@@ -61,11 +102,4 @@ function envoyerMail($destEmail, $destName, $type) {
         error_log("Erreur email : " . $mail->ErrorInfo);
         return false;
     }
-
 }
-if (envoyerMail("baillonarthus7@gmail.com", "Arthus", 3)) {
-    echo "Email envoyé !";
-} else {
-    echo "Erreur lors de l'envoi...";
-}
-
