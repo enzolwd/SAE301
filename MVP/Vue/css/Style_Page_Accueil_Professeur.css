@@ -191,22 +191,20 @@ body {
 }
 
 
-.status-oui {
-    background-color: #4CAF50; /* Vert foncé solide (couleur populaire pour "Succès") */
-    color: white;             /* Texte blanc pour assurer un bon contraste sur le fond foncé */
+.tableau tbody td.status-oui {
+    background-color: #4CAF50 !important; /* Force le vert */
+    color: white !important;             /* Force le blanc */
     font-weight: bold;
     text-align: center;
-    /* Ajoutez une petite marge pour que la couleur ne touche pas les bords si le tableau a des bordures */
-    /* padding: 5px; */
 }
 
 /* Rouge pour 'NON' (Rattrapage non accepté/en attente/refusé) */
-.status-non {
-    background-color: #F44336; /* Rouge foncé solide (couleur populaire pour "Erreur/Attention") */
-    color: white;             /* Texte blanc pour assurer un bon contraste */
+/* Ce sélecteur est très spécifique et utilise !important pour écraser les styles de lignes paires */
+.tableau tbody td.status-non {
+    background-color: #F44336 !important; /* Force le rouge */
+    color: white !important;             /* Force le blanc */
     font-weight: bold;
     text-align: center;
-    /* padding: 5px; */
 }
 
 

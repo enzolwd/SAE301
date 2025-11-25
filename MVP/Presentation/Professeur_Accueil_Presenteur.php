@@ -32,5 +32,4 @@ try {
 // 3. On ferme la connexion
 $conn1 = null;
 
-// La Vue (Page_Accueil_Professeur.php) sera incluse et utilisera $lesRattrapages
 ?>
