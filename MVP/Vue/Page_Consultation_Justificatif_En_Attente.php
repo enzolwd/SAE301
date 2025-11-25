@@ -33,6 +33,7 @@ require_once '../Presentation/Consultation_Attente_Presenteur.php';
             <div class="details-left">
                 <p class="absence-date">Absent du : <strong><?php echo htmlspecialchars($justificatifDetails['datedebut_f'] . ' à ' . $justificatifDetails['heuredebut_f']); ?></strong></p>
                 <p class="absence-date">Au : <strong><?php echo htmlspecialchars($justificatifDetails['datefin_f'] . ' à ' . $justificatifDetails['heurefin_f']); ?></strong></p>
+                <p class="absence-date">Justificatif déposé le : <strong><?php echo date('d/m/Y à H:i', strtotime($justificatifDetails['date_depot'])); ?></strong></p>
 
                 <h3 class="detail-title">Motif : <?php echo htmlspecialchars($justificatifDetails['motifeleve']); ?></h3>
 

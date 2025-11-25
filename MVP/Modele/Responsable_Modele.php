@@ -72,6 +72,7 @@ function recupererDetailsJustificatifAttente($conn1, $justificatifID) {
                     Justificatif.commentaireeleve,
                     Justificatif.fichier1,
                     Justificatif.fichier2,
+                    Justificatif.date_depot,
                     Utilisateur.email,
                     Utilisateur.nom,
                     Utilisateur.prénom
@@ -109,6 +110,7 @@ function recupererDetailsJustificatifHistorique($conn1, $justificatifID) {
                 u.email,
                 j.statut,
                 j.motifrespon,
+                j.date_depot,
                 j.commentairerespon,
                 u.nom,
                 u.prénom
