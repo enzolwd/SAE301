@@ -37,13 +37,14 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
                     <th>Prénom</th>
                     <th>Groupe</th>
                     <th>Email</th>
+                    <th>rattrapage autorisé</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <?php if (empty($lesRattrapages)) : ?>
                     <tr class="empty-table-message">
-                        <td colspan="8">Aucun rattrapage n'est à venir.</td>
+                        <td colspan="9">Aucun rattrapage n'est à venir.</td>
                     </tr>
                 <?php else : ?>
                     <?php foreach ($lesRattrapages as $ratrapage) : ?>
@@ -56,6 +57,20 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
                             <td><?php echo htmlspecialchars($ratrapage['prénom']); ?></td>
                             <td><?php echo htmlspecialchars($ratrapage['groupe']); ?></td>
                             <td><?php echo htmlspecialchars($ratrapage['email']); ?></td>
+                            <?php
+                            // 1. Détermine la classe CSS et le texte
+                            if ($ratrapage['statut'] === 'accepté') {
+                                $classe_statut = 'status-oui';
+                                $texte_statut = 'OUI';
+                            } else {
+                                $classe_statut = 'status-non';
+                                $texte_statut = 'NON';
+                            }
+                            ?>
+
+                            <td class="<?php echo $classe_statut; ?>">
+                                <?php echo $texte_statut; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

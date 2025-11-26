@@ -5,9 +5,12 @@
 */
 session_start();
 
+require_once 'Gestion_Session.php';
+
 // On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Etudiant_Modele.php';
+require_once '../../Fonction_mail.php';
 
 // Fonction d'aide pour gérer l'upload d'un fichier
 function gérerUploadFichier($fileKey, $uploadDir) {
@@ -77,10 +80,16 @@ if (isset($_POST['justifier'])) {
 
     $resultat = deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heuredebut, $datefin, $heurefin, $motif, $commentaire, $cheminFichier1PourBDD, $cheminFichier2PourBDD);
 
-    $conn1 = null;
+
 
     if ($resultat === "succes") {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?succes');
+
+        $email = recupererMail($conn1, $idUtilisateurConnecte);
+        $utilisateur = recupererNom($conn1, $idUtilisateurConnecte);
+        $nomComplet = $utilisateur['prénom'] . ' ' . $utilisateur['nom'];
+
+        envoyerMail($email, $nomComplet,  1);
         exit();
     } elseif ($resultat === "inutile") {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?error=inutile');
@@ -92,5 +101,7 @@ if (isset($_POST['justifier'])) {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?error=db');
         exit();
     }
+
+    $conn1 = null;
 }
 ?>

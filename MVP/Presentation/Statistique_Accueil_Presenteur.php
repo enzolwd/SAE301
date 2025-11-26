@@ -5,6 +5,8 @@
 */
 session_start();
 
+require_once 'Gestion_Session.php';
+
 // On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
@@ -34,6 +36,26 @@ try {
 
 // 3. On ferme la connexion
 $conn1 = null;
+
+
+function getStatusClass($statut) {
+    switch (strtolower($statut)) {
+        case 'non justifie':
+            return 'status-nojustified';
+        case 'accepte':
+        case 'accepté':
+            return 'status-accepted';
+        case 'refuse':
+        case 'refusé':
+            return 'status-refused';
+        case 'demande de révision':
+            return 'status-revision';
+        default:
+            return 'status-pending';
+    }
+}
+
+
 
 // La Vue (Page_Statistique_Accueil.php) sera incluse
 ?>

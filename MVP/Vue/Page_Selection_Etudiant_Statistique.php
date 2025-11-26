@@ -18,7 +18,7 @@ require_once '../Presentation/Statistique_Selection_Presenteur.php';
 
     <div class="header-right">
         <p>ESPACE NUMÉRIQUE DE TRAVAIL</p>
-        <a href="Page_Statistique_Accueil.php" class="bouton-statistique">Liste des rattrapages</a>
+        <a href="Page_Statistique_Accueil.php" class="bouton-statistique">Liste des absences</a>
         <a href="../Presentation/Deconnexion_Presenteur.php" class="bouton-deconnexion">Déconnexion</a>
     </div>
 </div>

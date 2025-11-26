@@ -87,6 +87,7 @@ function deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heured
 
         $DejaUnJustificatif = (int)$requeteVerifierdoublons->fetchColumn();
 
+        // s'il n'y a pas déjà un justificatif, on lie toutes les absences dans l'interval du justificatif
         if ($DejaUnJustificatif === 0) {
             $requeteVerifierUtilite = $conn1->prepare("SELECT * FROM Absence WHERE idutilisateur = :idutilisateur
                                                         AND (date + heure + duree) <= TO_TIMESTAMP(:timestampfin, 'YYYY-MM-DD HH24:MI')
@@ -98,12 +99,13 @@ function deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heured
 
             $nbabsence = $requeteVerifierUtilite->rowCount();
 
+            // si le justificatif prend en compte des absences alors, on l'insère
             if ($nbabsence !== 0) {
 
                 $requete = $conn1->prepare("INSERT INTO justificatif 
-                    (datedebut, datefin, heuredebut, heurefin, commentaireeleve, commentairerespon, statut, motifeleve, motifrespon, fichier1, fichier2) 
+                    (datedebut, datefin, heuredebut, heurefin, commentaireeleve, commentairerespon, statut, motifeleve, motifrespon, fichier1, fichier2, date_depot) 
                 VALUES 
-                    ( :datedebut, :datefin, :heuredebut, :heurefin, :commentaire, null, 'en attente', :motif, null, :cheminfichier1, :cheminfichier2)");
+                    ( :datedebut, :datefin, :heuredebut, :heurefin, :commentaire, null, 'en attente', :motif, null, :cheminfichier1, :cheminfichier2, (NOW() AT TIME ZONE 'Europe/Paris'))");
 
                 $requete->bindParam(':datedebut', $datedebut);
                 $requete->bindParam(':datefin', $datefin);
@@ -202,4 +204,28 @@ function recupererMotifEtudiant($conn1, $justificatifID) {
     }
     return $motifDetails;
 }
+
+function recupererNom($conn1, $idUtilisateur)
+{
+    $sql = "SELECT nom, prénom FROM Utilisateur WHERE idutilisateur = :idutilisateur";
+    $requete = $conn1->prepare($sql);
+    $requete->bindParam(':idutilisateur', $idUtilisateur, PDO::PARAM_INT);
+    $requete->execute();
+    $nom = $requete->fetch(PDO::FETCH_ASSOC);
+
+    return $nom;
+}
+
+function recupererMail($conn1, $idUtilisateur)
+{
+    $sql = "SELECT email FROM Utilisateur WHERE idutilisateur = :idutilisateur";
+    $requete = $conn1->prepare($sql);
+    $requete->bindParam(':idutilisateur', $idUtilisateur, PDO::PARAM_INT);
+    $requete->execute();
+    $result = $requete->fetch(PDO::FETCH_ASSOC);
+
+    return $result ? $result['email'] : null;
+}
+
+
 ?>

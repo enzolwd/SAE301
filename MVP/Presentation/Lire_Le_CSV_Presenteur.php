@@ -5,6 +5,8 @@
 */
 session_start();
 
+require_once 'Gestion_Session.php';
+
 // On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Secretaire_Modele.php';

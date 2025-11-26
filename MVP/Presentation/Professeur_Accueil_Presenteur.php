@@ -5,6 +5,8 @@
 */
 session_start();
 
+require_once 'Gestion_Session.php';
+
 // On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Professeur_Modele.php';
@@ -32,5 +34,4 @@ try {
 // 3. On ferme la connexion
 $conn1 = null;
 
-// La Vue (Page_Accueil_Professeur.php) sera incluse et utilisera $lesRattrapages
 ?>

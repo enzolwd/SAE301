@@ -252,3 +252,28 @@ body {
     margin-bottom: 20px;
     box-sizing: border-box;
 }
+
+
+.status-nojustified {color : #004d9c; font-weight: bold;}
+.status-pending { color: #ffc107; font-weight: bold; }
+.status-accepted { color: #28a745; font-weight: bold; }
+.status-refused { color: #dc3545; font-weight: bold; }
+.status-revision { color: #5c00ca; font-weight: bold; }
+
+
+.tableau tbody td.status-oui {
+    background-color: inherit ; /* Laisse le fond par défaut */
+
+    color: #008000 ;             /* Texte Vert foncé */
+    font-weight: bold ;
+    text-align: center;
+}
+
+/* Rouge pour 'NON' */
+.tableau tbody td.status-non {
+    background-color: inherit ; /* Laisse le fond par défaut */
+
+    color: #CC0000 ;             /* Texte Rouge foncé */
+    font-weight: bold ;
+    text-align: center;
+}

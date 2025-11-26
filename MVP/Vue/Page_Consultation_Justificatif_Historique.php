@@ -34,6 +34,7 @@ require_once '../Presentation/Consultation_Historique_Presenteur.php';
                 <div class="details-left">
                     <p class="absence-date">Absent du : <strong><?php echo htmlspecialchars($justificatifDetailsHisto['datedebut_f'] . ' à ' . $justificatifDetailsHisto['heuredebut_f']); ?></strong></p>
                     <p class="absence-date">Au : <strong><?php echo htmlspecialchars($justificatifDetailsHisto['datefin_f'] . ' à ' . $justificatifDetailsHisto['heurefin_f']); ?></strong></p>
+                    <p class="absence-date">Justificatif déposé le : <strong><?php echo date('d/m/Y à H:i', strtotime($justificatifDetailsHisto['date_depot'])); ?></strong></p>
 
                     <p class="student-info-label">Nom : <strong><?php echo htmlspecialchars($justificatifDetailsHisto['nom']); ?></strong></p>
                     <p class="student-info-label">Prénom : <strong><?php echo htmlspecialchars($justificatifDetailsHisto['prénom']); ?></strong></p>

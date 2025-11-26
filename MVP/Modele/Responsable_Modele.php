@@ -72,6 +72,7 @@ function recupererDetailsJustificatifAttente($conn1, $justificatifID) {
                     Justificatif.commentaireeleve,
                     Justificatif.fichier1,
                     Justificatif.fichier2,
+                    Justificatif.date_depot,
                     Utilisateur.email,
                     Utilisateur.nom,
                     Utilisateur.prénom
@@ -109,6 +110,7 @@ function recupererDetailsJustificatifHistorique($conn1, $justificatifID) {
                 u.email,
                 j.statut,
                 j.motifrespon,
+                j.date_depot,
                 j.commentairerespon,
                 u.nom,
                 u.prénom
@@ -275,7 +277,7 @@ function recupererRattrapagesStats($conn1, $ressource_selectionnee) {
                            TO_CHAR(Absence.heure, 'HH24:MI') as heure,
                            TO_CHAR(Absence.duree, 'HH24:MI') as duree, 
                            Absence.matiere, Utilisateur.nom, Utilisateur.prénom,
-                           Utilisateur.groupe, Utilisateur.email
+                           Utilisateur.groupe, absence.evaluation, Absence.statut
                     FROM Absence
                     JOIN Utilisateur ON Utilisateur.idUtilisateur = Absence.idUtilisateur";
             if ($ressource_selectionnee != 'TOUT') {
@@ -476,4 +478,36 @@ function recupererStatistiquesEtudiant($conn, $idEtudiantSelectionne) {
         'totalAbsences', 'errorMessage', 'nomEtudiant', 'semestreGroup'
     );
 }
+
+
+function recupererNomEtudiant($conn1, $idJustificatif)
+{
+    $sql = "SELECT nom, prénom FROM Utilisateur JOIN Absence ON Absence.idUtilisateur = Utilisateur.idUtilisateur
+            WHERE Absence.idJustificatif = :idJustificatif
+            LIMIT 1";
+    $requete = $conn1->prepare($sql);
+    $requete->bindParam(':idJustificatif', $idJustificatif);
+    $requete->execute();
+    $nom = $requete->fetch(PDO::FETCH_ASSOC);
+
+    return $nom;
+}
+
+function recupererMailEtudiant($conn1, $idJustificatif)
+{
+    $sql = "SELECT u.email 
+            FROM Utilisateur u
+            JOIN Absence a ON a.idutilisateur = u.idutilisateur
+            WHERE a.idjustificatif = :idJustificatif
+            LIMIT 1";
+    $requete = $conn1->prepare($sql);
+    $requete->bindParam(':idJustificatif', $idJustificatif, PDO::PARAM_INT);
+    $requete->execute();
+    $result = $requete->fetch(PDO::FETCH_ASSOC);
+
+    return $result ? $result['email'] : null;
+}
+
+
+
 ?>

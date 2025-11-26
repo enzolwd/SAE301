@@ -1,0 +1,16 @@
+# Ignorer TOUS les dossiers utilisateurs Windows (la majorité des fichiers non pertinents)
+*/
+
+# Exceptions (inclure les fichiers essentiels du projet)
+!changelog.sql
+!liquibase.properties
+!migrations/
+
+# Ignorer les fichiers locaux sensibles et binaires
+liquibase_lib/
+postgresql-*.jar
+
+# Ignorer les fichiers généraux qui polluent
+*.exe
+ntuser.*
+*.log
