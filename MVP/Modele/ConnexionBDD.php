@@ -17,7 +17,6 @@ function connecterBDD() {
         return $conn;
     } catch (PDOException $e) {
         // En cas d'échec de connexion, on arrête tout
-        die("Erreur de connexion à la base de données.");
-    }
+        die("Erreur SQL : " . $e->getMessage());    }
 }
 ?>
