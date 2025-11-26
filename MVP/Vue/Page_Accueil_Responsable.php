@@ -41,17 +41,17 @@ if (!empty($notificationMessage)) {
             <section class="section-justificatifs">
                 <h2>Justificatifs en attente</h2>
                 <div class="table-container">
-                    <table class="tableau">
+                    <table class="tableau" id="tableauAttente">
                         <thead>
                         <tr>
-                            <th>Du</th>
-                            <th>À</th>
-                            <th>Au</th>
-                            <th>À</th>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Groupe</th>
-                            <th>Consulter</th>
+                            <th data-type="date">Du</th>
+                            <th data-type="heure">À</th>
+                            <th data-type="date">Au</th>
+                            <th data-type="heure">À</th>
+                            <th data-type="texte">Nom</th>
+                            <th data-type="texte">Prénom</th>
+                            <th data-type="texte">Groupe</th>
+                            <th data-type="aucun">Consulter</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -80,30 +80,23 @@ if (!empty($notificationMessage)) {
                 </div>
             </section>
 
-
-
-
-
-
-
-
             <section class="section-historique">
                 <h2>Historique</h2>
 
                 <div class="table-container">
-                    <table class="tableau historique">
+                    <table class="tableau historique" id="tableauHistorique">
                         <thead>
                         <tr>
-                            <th>Du</th>
-                            <th>À</th>
-                            <th>Au</th>
-                            <th>À</th>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Groupe</th>
-                            <th>Statut</th>
-                            <th>Consulter</th>
-                            <th>Déverrouiller</th>
+                            <th data-type="date">Du</th>
+                            <th data-type="heure">À</th>
+                            <th data-type="date">Au</th>
+                            <th data-type="heure">À</th>
+                            <th data-type="texte">Nom</th>
+                            <th data-type="texte">Prénom</th>
+                            <th data-type="texte">Groupe</th>
+                            <th data-type="texte">Statut</th>
+                            <th data-type="aucun">Consulter</th>
+                            <th data-type="aucun">Déverrouiller</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -143,27 +136,80 @@ if (!empty($notificationMessage)) {
 <footer class="main-footer"></footer>
 
 <script>
+    // gestion des notifications
     document.addEventListener('DOMContentLoaded', function() {
-        // on cherche la notification "toast"
         const toast = document.getElementById('toast');
-
         if (toast) {
-            // on attend 4 secondes
             setTimeout(function() {
-
-                // on ajoute la classe "fade-out" pour lancer l'animation de disparition
                 toast.classList.add('fade-out');
-
-                // on supprime l'élément du DOM après la fin de l'animation
                 setTimeout(function() {
                     if (toast.parentNode) {
                         toast.parentNode.removeChild(toast);
                     }
                 }, 1000);
-
             }, 4000);
         }
+
+        // initialisation du tri pour les deux tableaux
+        rendreTableauTriable('tableauAttente');
+        rendreTableauTriable('tableauHistorique');
     });
+    function rendreTableauTriable(idTableau) {
+        const tableau = document.getElementById(idTableau);
+        // Sécurité : si le tableau n'existe pas, on arrête
+        if (!tableau) return;
+
+        const lesEntetes = tableau.querySelectorAll('thead th');
+        const corpsDuTableau = tableau.querySelector('tbody');
+
+        lesEntetes.forEach((entete, indexColonne) => {
+            // On ajoute le tri seulement si ce n'est pas une colonne "aucun"
+            if (entete.getAttribute('data-type') !== 'aucun') {
+                entete.addEventListener('click', () => {
+                    trierLeTableau(tableau, lesEntetes, corpsDuTableau, indexColonne, entete);
+                });
+            }
+        });
+    }
+
+    function trierLeTableau(tableau, lesEntetes, corpsDuTableau, index, enteteClique) {
+        const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr'));
+
+        // On ignore si le tableau est vide
+        if (lesLignes.length === 1 && lesLignes[0].classList.contains('empty-table-message')) return;
+
+        // Gestion de l'ordre
+        const estActuellementCroissant = enteteClique.getAttribute('data-ordre') === 'asc';
+        const nouvelOrdre = estActuellementCroissant ? 'desc' : 'asc';
+        const multiplicateur = (nouvelOrdre === 'asc') ? 1 : -1;
+
+        // Reset des autres en-têtes
+        lesEntetes.forEach(th => th.removeAttribute('data-ordre'));
+        enteteClique.setAttribute('data-ordre', nouvelOrdre);
+
+        const typeDeDonnee = enteteClique.getAttribute('data-type');
+
+        lesLignes.sort((ligneA, ligneB) => {
+            const contenuA = ligneA.children[index].innerText.trim();
+            const contenuB = ligneB.children[index].innerText.trim();
+
+            if (typeDeDonnee === 'date') {
+                return (convertirDateFrancais(contenuA) - convertirDateFrancais(contenuB)) * multiplicateur;
+            } else if (typeDeDonnee === 'heure') {
+                return contenuA.localeCompare(contenuB) * multiplicateur;
+            } else {
+                return contenuA.localeCompare(contenuB, 'fr', { numeric: true }) * multiplicateur;
+            }
+        });
+
+        lesLignes.forEach(ligne => corpsDuTableau.appendChild(ligne));
+    }
+
+    function convertirDateFrancais(dateString) {
+        if (!dateString) return new Date(0);
+        const parties = dateString.split('/');
+        return new Date(parties[2], parties[1] - 1, parties[0]);
+    }
 </script>
 
 </body>

@@ -257,3 +257,31 @@ body {
     padding: 20px;
     background-color: #fdfdfd;
 }
+
+
+
+
+/* Rend les en-têtes cliquables visuellement */
+.absence-table thead th {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+/* Effet de survol */
+.absence-table thead th:hover {
+    background-color: #666;
+}
+
+
+/* Désactive le style cliquable pour les colonnes non triables (boutons) */
+.absence-table thead th[data-type="aucun"] {
+    cursor: default;
+}
+.absence-table thead th[data-type="aucun"]:hover {
+    background-color: inherit;
+}
+.absence-table thead th[data-type="aucun"]::after {
+    content: '';
+}

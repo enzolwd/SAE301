@@ -267,3 +267,32 @@ body {
     padding: 20px !important;
     background-color: #fdfdfd !important;
 }
+
+
+
+
+
+/* On indique que les en-têtes sont cliquables */
+.tableau thead th {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+/* Effet au survol */
+.tableau thead th:hover {
+    background-color: #666;
+}
+
+
+/* Optionnel : Désactiver le curseur sur les colonnes d'action si on ne veut pas trier */
+.tableau thead th[data-type="aucun"] {
+    cursor: default;
+}
+.tableau thead th[data-type="aucun"]:hover {
+    background-color: inherit;
+}
+.tableau thead th[data-type="aucun"]::after {
+    content: '';
+}

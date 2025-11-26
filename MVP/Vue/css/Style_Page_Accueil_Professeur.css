@@ -198,13 +198,24 @@ body {
     text-align: center;
 }
 
-/* Rouge pour 'NON' (Rattrapage non accepté/en attente/refusé) */
-/* Ce sélecteur est très spécifique et utilise !important pour écraser les styles de lignes paires */
 .tableau tbody td.status-non {
     background-color: #F44336 !important; /* Force le rouge */
     color: white !important;             /* Force le blanc */
     font-weight: bold;
     text-align: center;
 }
+
+
+
+.tableau thead th {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.tableau thead th:hover {
+    background-color: #666;
+}
+
 
 
