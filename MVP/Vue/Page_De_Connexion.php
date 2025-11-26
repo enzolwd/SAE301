@@ -6,6 +6,10 @@ if (isset($_SESSION['login_error'])) {
     unset($_SESSION['login_error']);
 }
 
+if (isset($_GET['error']) && $_GET['error'] === 'timeout') {
+    $errorMessage = "Vous avez été déconnecté suite à une inactivité de 30 minutes.";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
