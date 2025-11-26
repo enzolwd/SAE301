@@ -8,6 +8,7 @@ session_start();
 // On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
+require_once '../../Fonction_mail.php';
 
 // vérifier si l'utilisateur s'est connecté
 if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Pedagogique') {
@@ -23,12 +24,16 @@ if (isset($_POST['confirm-deverrouiller']) && isset($_POST['justificatifID'])) {
         exit();
     }
 
-    // 1. On crée la connexion
     $conn1 = connecterBDD();
 
     try {
-        // 2. On demande au Modele de déverrouiller
         $succes = deverrouillerJustificatif($conn1, $justificatifID);
+
+        $email = recupererMailEtudiant($conn1, $justificatifID);
+        $utilisateur = recupererNomEtudiant($conn1, $justificatifID);
+        $nomComplet = $utilisateur['prénom'] . ' ' . $utilisateur['nom'];
+
+        envoyerMail($email, $nomComplet,  5);
 
     } catch(Exception $e) { // Changé de PDOException
         // On redirige même si ça échoue

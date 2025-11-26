@@ -8,6 +8,7 @@ session_start();
 // On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
+require_once '../../Fonction_mail.php';
 
 // Vérifier si l'utilisateur s'est connecté
 if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Pedagogique') {
@@ -34,8 +35,14 @@ if (isset($_POST['revision']) && isset($_POST['justificatifID_form'])) {
     $conn1 = connecterBDD();
 
     try {
-        // 2. On demande au Modele de mettre en révision
         $succes = demanderRevisionJustificatif($conn1, $justificatifID, $commentaireResponsable);
+
+        $email = recupererMailEtudiant($conn1, $justificatifID);
+        $utilisateur = recupererNomEtudiant($conn1, $justificatifID);
+        $nomComplet = $utilisateur['prénom'] . ' ' . $utilisateur['nom'];
+
+        envoyerMail($email, $nomComplet,  4);
+
         header('Location: ../Vue/Page_Accueil_Responsable.php?traitement=revision');
         exit();
 
