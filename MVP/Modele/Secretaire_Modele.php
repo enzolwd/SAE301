@@ -18,7 +18,7 @@ function traiterFichierCSV($conn, $csv_data) {
         $countDejaJustifiees = 0;
         $countEtuInexistant = 0;
         $ListeEtudiantInexistant = [];
-        $countIgnorees = 0; // Ajout du compteur manquant
+        $countIgnorees = 0;
 
         foreach ($csv_data as $ligne) {
             if (!is_array($ligne) || count($ligne) < 24) {
