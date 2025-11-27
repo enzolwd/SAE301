@@ -277,3 +277,14 @@ body {
     font-weight: bold ;
     text-align: center;
 }
+
+.tableau thead th {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+/* Petit effet au survol pour montrer que c'est actif */
+.tableau thead th:hover {
+    background-color: #666;
+}

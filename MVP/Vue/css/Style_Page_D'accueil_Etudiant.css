@@ -279,9 +279,6 @@ body {
 .absence-table thead th[data-type="aucun"] {
     cursor: default;
 }
-.absence-table thead th[data-type="aucun"]:hover {
-    background-color: inherit;
-}
 .absence-table thead th[data-type="aucun"]::after {
     content: '';
 }

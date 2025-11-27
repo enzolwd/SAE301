@@ -37,7 +37,7 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
 
         <section class="tableau-wrapper">
             <div class="table-container">
-                <table class="tableau">
+                <table class="tableau" id="tableauStatistiques">
                     <thead>
                     <tr>
                         <th>Date</th>
@@ -244,6 +244,78 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
 </div>
 
 <footer class="main-footer"></footer>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // On lance le tri sur le tableau défini par son ID
+        rendreTableauTriable('tableauStatistiques');
+    });
+
+    function rendreTableauTriable(idTableau) {
+        const tableau = document.getElementById(idTableau);
+        if (!tableau) return;
+
+        const lesEntetes = tableau.querySelectorAll('thead th');
+        const corpsDuTableau = tableau.querySelector('tbody');
+
+        lesEntetes.forEach((entete, indexColonne) => {
+            // On vérifie que ce n'est pas une colonne non triable (au cas où)
+            if (entete.getAttribute('data-type') !== 'aucun') {
+                entete.addEventListener('click', () => {
+                    trierLeTableau(lesEntetes, corpsDuTableau, indexColonne, entete);
+                });
+            }
+        });
+    }
+
+    function trierLeTableau(lesEntetes, corpsDuTableau, index, enteteClique) {
+        const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr'));
+
+        // Si le tableau est vide ou ne contient que le message "vide", on arrête
+        if (lesLignes.length === 0 || (lesLignes.length === 1 && lesLignes[0].classList.contains('empty-table-message'))) return;
+
+        // Gestion de l'ordre (ascendant / descendant)
+        const estCroissant = enteteClique.getAttribute('data-ordre') === 'asc';
+        const nouvelOrdre = estCroissant ? 'desc' : 'asc';
+        const multiplicateur = (nouvelOrdre === 'asc') ? 1 : -1;
+
+        // Réinitialisation visuelle des autres colonnes
+        lesEntetes.forEach(th => th.removeAttribute('data-ordre'));
+        enteteClique.setAttribute('data-ordre', nouvelOrdre);
+
+        const typeDeDonnee = enteteClique.getAttribute('data-type');
+
+        // Algorithme de tri
+        lesLignes.sort((ligneA, ligneB) => {
+            const celluleA = ligneA.children[index].innerText.trim();
+            const celluleB = ligneB.children[index].innerText.trim();
+
+            if (typeDeDonnee === 'date') {
+                return (convertirDateFrancais(celluleA) - convertirDateFrancais(celluleB)) * multiplicateur;
+            }
+            else if (typeDeDonnee === 'heure') {
+                return celluleA.localeCompare(celluleB) * multiplicateur;
+            }
+            else {
+                // Tri alphabétique standard (gère les accents et les chiffres)
+                return celluleA.localeCompare(celluleB, 'fr', { numeric: true }) * multiplicateur;
+            }
+        });
+
+        // Réinsertion des lignes triées
+        lesLignes.forEach(ligne => corpsDuTableau.appendChild(ligne));
+    }
+
+    function convertirDateFrancais(chaineDate) {
+        if (!chaineDate) return new Date(0);
+        const parties = chaineDate.split('/');
+        // Format jj/mm/aaaa -> Date(aaaa, mm-1, jj)
+        return new Date(parties[2], parties[1] - 1, parties[0]);
+    }
+</script>
+
 
 </body>
 </html>

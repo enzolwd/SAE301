@@ -152,15 +152,18 @@ body {
     table-layout: auto;
 }
 
+.tableau thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
 .tableau thead th {
     background-color: var(--couleur-fond-entete-tableau);
     color: white;
     padding: 15px 10px;
     text-align: center;
     border-right: 1px solid white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
 }
 
 .tableau thead th:last-child {
@@ -289,9 +292,6 @@ body {
 /* Optionnel : Désactiver le curseur sur les colonnes d'action si on ne veut pas trier */
 .tableau thead th[data-type="aucun"] {
     cursor: default;
-}
-.tableau thead th[data-type="aucun"]:hover {
-    background-color: inherit;
 }
 .tableau thead th[data-type="aucun"]::after {
     content: '';
