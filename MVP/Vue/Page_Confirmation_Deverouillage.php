@@ -42,7 +42,7 @@ $justificatifID_from_url = (int)$_GET['id'];
         <div class="confirmation-contenu">
             <h3>Confirmation</h3>
             <p>Voulez-vous vraiment déverrouiller ce justificatif ?<br>
-                Son statut passera à 'Demande de révision' et l'étudiant pourra de nouveau le modifier.</p>
+                L'étudiant pourra de nouveau déposer un justificatif concernant les absences que couvrait ce justificatif.</p>
 
             <form method="POST" action="../Presentation/Confirmation_Deverouillage_Presenteur.php" class="confirmation-boutons">
 
