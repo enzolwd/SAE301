@@ -13,7 +13,7 @@ require_once '../Modele/Responsable_Modele.php';
 
 // vérifier si l'utilisateur s'est connecté
 if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Pedagogique') {
-    header('Location: ../Vue/Page_de_connexion/Page_De_Connexion.php');
+    header('Location: ../Vue/Page_De_Connexion.php');
     exit();
 }
 

@@ -13,7 +13,7 @@ require_once '../Modele/Etudiant_Modele.php';
 
 // vérifier si l'utilisateur s'est connecté
 if (!isset($_SESSION['idUtilisateur'])) {
-    header('Location: ../Vue/Page_de_connexion/Page_De_Connexion.php');
+    header('Location: ../Vue/Page_De_Connexion.php');
     exit();
 }
 
@@ -49,5 +49,4 @@ if (!$motifDetails) {
     exit();
 }
 
-// La Vue (Motif_Absence.php) sera incluse et utilisera $motifDetails
 ?>

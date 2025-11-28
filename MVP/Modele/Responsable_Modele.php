@@ -197,7 +197,7 @@ function demanderRevisionJustificatif($conn1, $justificatifID, $commentaireRespo
         $sql = "UPDATE Justificatif
                 SET statut = 'demande de révision',          
                     commentairerespon = :commentaire,
-                    motifrespon = 'Le responsable pédagogique vous demande de refaire un justificatif'
+                    motifrespon = 'Le responsable pédagogique vous demande de re-déposer un justificatif qui répond aux exigences'
                 WHERE idjustificatif = :id";
         $requete = $conn1->prepare($sql);
         $requete->bindParam(':commentaire', $commentaireResponsable, PDO::PARAM_STR);
