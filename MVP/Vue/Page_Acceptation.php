@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+// === AJOUTS POUR LA BDD ===
+require_once '../Modele/ConnexionBDD.php';
+require_once '../Modele/Responsable_Modele.php';
+$conn = connecterBDD();
+// On récupère la liste des motifs d'acceptation
+$listeMotifs = recupererMotifAcceptation($conn);
+// ==========================
+
 if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Pedagogique') {
     header('Location: Page_De_Connexion.php');
     exit();
@@ -42,27 +50,39 @@ $justificatifID_from_url = (int)$_GET['id'];
         <div class="validation-comment-content">
             <div class="validation-comment-body">
                 <p class="validation-instruction">
-                    Vous êtes sur le point de valider ce justificatif. Vous pouvez ajouter un commentaire et un motif.
+                    Vous êtes sur le point de valider ce justificatif. Sélectionnez un motif existant ou créez-en un nouveau.
                 </p>
-                <h3 class="title-validation">Commentaire :</h3>
+                <h3 class="title-validation">Validation</h3>
+
+                <form method="POST" action="../Presentation/Acceptation_Presenteur.php" class="form-ajout-motif">
+                    <label style="display:block; text-align:left; font-weight:bold; margin-bottom:5px;">Nouveau motif (Ajout BDD)</label>
+                    <div class="input-group-row">
+                        <input type="text" name="nouveauMotif" class="accepter-select" placeholder="Nouveau motif..." maxlength="65" required>
+                        <input type="hidden" name="justificatifID" value="<?php echo $justificatifID_from_url; ?>">
+                        <button type="submit" name="ajouter_motif" class="action-button bouton-ajout">Ajouter</button>
+                    </div>
+                </form>
+
+                <hr style="margin: 20px 0; border: 0; border-top: 1px dashed #ccc;">
 
                 <form method="POST" action="../Presentation/Acceptation_Presenteur.php" id="validerJustificatif">
 
+                    <label style="display:block; text-align:left; font-weight:bold; margin-bottom:5px;">Choisir un motif existant</label>
                     <select id="motifAccepter" name="motifAccepter" class="accepter-select" required>
-                        <option value="" selected>Choisir un motif...</option>
-                        <option>Maladie (certificat médical)</option>
-                        <option>Rendez-vous médical</option>
-                        <option>Raison familiale / Événement impérieux</option>
-                        <option>Convocation (administrative, juridique...)</option>
-                        <option>Examen ou concours</option>
-                        <option>Problème de transport</option>
-                        <option>Stage / Déplacement pédagogique</option>
-                        <option>Autre (préciser en commentaire)</option>
+                        <option value="" selected disabled>-- Choisir un motif --</option>
+                        <?php foreach ($listeMotifs as $m) : ?>
+                            <option value="<?php echo htmlspecialchars($m['motif']); ?>">
+                                <?php echo htmlspecialchars($m['motif']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
 
                     <input type="hidden" name="justificatifID" value="<?php echo $justificatifID_from_url; ?>">
+
+                    <label style="display:block; text-align:left; font-weight:bold; margin-bottom:5px;">Commentaire (Facultatif)</label>
                     <textarea id="commentaireValider" name="commentaireValider" class="revision-textarea"
-                              placeholder="Écrivez quelque chose... (Facultatif)"></textarea>
+                              placeholder="Écrivez quelque chose..."></textarea>
+
                     <div class="validation-buttons-wrapper">
                         <button type="submit" id="valider" class="action-button" name="valider">Valider</button>
                     </div>

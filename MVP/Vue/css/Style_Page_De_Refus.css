@@ -207,7 +207,7 @@ body {
     padding: 10px 15px; /* Pour matcher la hauteur de l'input */
     background-color: #ddd;
     color: #333;
-    border: none;
+    border: 1px solid #ccc;
 }
 .bouton-ajout:hover {
     background-color: #aaa;

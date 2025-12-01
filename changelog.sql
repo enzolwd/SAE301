@@ -165,4 +165,9 @@ CREATE TABLE motifRefus (
     motif TEXT
 );
 
+CREATE TABLE motifacceptation (
+    id SERIAL PRIMARY KEY,
+    motif TEXT NOT NULL
+);
+
 

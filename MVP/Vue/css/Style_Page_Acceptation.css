@@ -365,3 +365,32 @@ body {
     font-size: 1em;
     margin-bottom: 15px;
 }
+
+
+
+.input-group-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.input-group-row .accepter-select {
+    flex-grow: 1;
+    margin-bottom: 0; /* Important pour l'alignement */
+}
+
+.bouton-ajout {
+    padding: 10px 15px;
+    background-color: #ddd; /* Bleu UPHF */
+    color: #333;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    /* Hauteur fixe pour s'aligner avec l'input si besoin */
+    height: 40px;
+    margin-top: 0;
+
+}
+
+.bouton-ajout:hover {
+    background-color: #aaa;
+}

@@ -539,4 +539,37 @@ function ajouterNouveauMotif($conn1, $nouveauMotif) {
         }
     } catch(PDOException $e) {}
 }
+
+
+
+function recupererMotifAcceptation($conn1){
+    $lesMotifs = [];
+    try {
+        $sql = "SELECT motif FROM motifacceptation ORDER BY motif ASC";
+        $requete = $conn1->prepare($sql);
+        $requete->execute();
+        $lesMotifs = $requete->fetchAll(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        $lesMotifs = [];
+    }
+    return $lesMotifs;
+}
+
+function ajouterMotifAcceptation($conn1, $nouveauMotif) {
+    try {
+        // Vérif anti-doublon
+        $check = $conn1->prepare("SELECT COUNT(*) FROM motifacceptation WHERE LOWER(motif) = LOWER(:motif)");
+        $check->execute([':motif' => $nouveauMotif]);
+
+        if ($check->fetchColumn() == 0) {
+            $sql = "INSERT INTO motifacceptation (motif) VALUES (:motif)";
+            $requete = $conn1->prepare($sql);
+            $requete->bindParam(':motif', $nouveauMotif);
+            $requete->execute();
+        }
+    } catch(PDOException $e) {
+        die("ERREUR SQL : " . $e->getMessage());
+    }
+}
+
 ?>
