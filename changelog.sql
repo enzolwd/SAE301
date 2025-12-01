@@ -160,7 +160,7 @@ ALTER TABLE Justificatif
 
 ALTER DATABASE neondb SET timezone = 'Europe/Paris';
 
-CREATE TABLE MotifPourResponsable (
+CREATE TABLE motifRefus (
     id SERIAL PRIMARY KEY,
     motif TEXT
 );
