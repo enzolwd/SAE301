@@ -5,6 +5,7 @@
 !changelog.sql
 !liquibase.properties
 !migrations/
+!MVP/
 
 # Ignorer les fichiers locaux sensibles et binaires
 liquibase_lib/
