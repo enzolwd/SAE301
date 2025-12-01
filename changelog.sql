@@ -159,3 +159,8 @@ ALTER TABLE Justificatif
     ADD COLUMN date_depot TIMESTAMP;
 
 ALTER DATABASE neondb SET timezone = 'Europe/Paris';
+
+CREATE TABLE MotifPourResponsable (
+    id INT PRIMARY KEY,
+    motif TEXT
+);
