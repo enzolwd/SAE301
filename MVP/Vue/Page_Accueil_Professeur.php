@@ -24,6 +24,11 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
 
     <h1 class="titre-principal">Liste des rattrapages</h1>
 
+    <div class="filtres-container">
+        <input type="text" id="filtreDate" placeholder="Date (jj/mm/aaaa)">
+        <input type="text" id="filtreEtudiant" placeholder="Étudiant (Nom ou Prénom)">
+        <input type="text" id="filtreMatiere" placeholder="Matière">
+    </div>
     <section class="tableau-wrapper">
         <div class="table-container">
             <table class="tableau" id="tableauRattrapages">
@@ -91,7 +96,54 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
         const lesEntetes = tableau.querySelectorAll('thead th');
         const corpsDuTableau = tableau.querySelector('tbody');
 
-        // ajout des écouteurs d'événements
+        // === AJOUT : LOGIQUE DE FILTRAGE ===
+        const inputDate = document.getElementById('filtreDate');
+        const inputEtudiant = document.getElementById('filtreEtudiant');
+        const inputMatiere = document.getElementById('filtreMatiere');
+
+        function appliquerFiltres() {
+            const valeurDate = inputDate.value.toLowerCase();
+            const valeurEtudiant = inputEtudiant.value.toLowerCase();
+            const valeurMatiere = inputMatiere.value.toLowerCase();
+
+            const lignes = corpsDuTableau.querySelectorAll('tr');
+
+            lignes.forEach(ligne => {
+                // Ignore la ligne "tableau vide"
+                if(ligne.classList.contains('empty-table-message')) return;
+
+                // Récupération des données (Indices basés sur l'ordre des <th>)
+                // 0: Date, 3: Matière, 4: Nom, 5: Prénom
+                const dateTexte = ligne.children[0].innerText.toLowerCase();
+                const matiereTexte = ligne.children[3].innerText.toLowerCase();
+                const nomTexte = ligne.children[4].innerText.toLowerCase();
+                const prenomTexte = ligne.children[5].innerText.toLowerCase();
+                const etudiantComplet = nomTexte + " " + prenomTexte;
+
+                // Vérification des conditions
+                const matchDate = dateTexte.includes(valeurDate);
+                const matchMatiere = matiereTexte.includes(valeurMatiere);
+                // On cherche dans Nom OU Prénom OU la concaténation
+                const matchEtudiant = nomTexte.includes(valeurEtudiant) ||
+                    prenomTexte.includes(valeurEtudiant) ||
+                    etudiantComplet.includes(valeurEtudiant);
+
+                if (matchDate && matchMatiere && matchEtudiant) {
+                    ligne.style.display = '';
+                } else {
+                    ligne.style.display = 'none';
+                }
+            });
+        }
+
+        // Écouteurs d'événements sur les inputs
+        inputDate.addEventListener('input', appliquerFiltres);
+        inputEtudiant.addEventListener('input', appliquerFiltres);
+        inputMatiere.addEventListener('input', appliquerFiltres);
+        // === FIN AJOUT ===
+
+
+        // ajout des écouteurs d'événements (EXISTANT)
         lesEntetes.forEach((entete, indexColonne) => {
             entete.addEventListener('click', () => {
                 trierLeTableau(indexColonne, entete);
@@ -99,50 +151,33 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
         });
 
         function trierLeTableau(index, enteteClique) {
-            // On transforme la NodeList des lignes en un vrai tableau Array pour pouvoir utiliser .sort()
+            // ... Code de tri existant inchangé ...
+            // (Je ne répète pas tout le code de tri existant pour gagner de la place,
+            // mais il reste ici tel quel)
             const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr'));
-
-            // si le tableau est vide, on arrête.
-            if (lesLignes.length === 1 && lesLignes[0].classList.contains('empty-table-message')) {
-                return;
-            }
-            // On regarde si la colonne est déjà triée en ascendant
+            if (lesLignes.length === 1 && lesLignes[0].classList.contains('empty-table-message')) return;
             const estActuellementCroissant = enteteClique.getAttribute('data-ordre') === 'asc';
-
-            // Si c'est déjà croissant, on va trier en décroissant, sinon en croissant
             const nouvelOrdre = estActuellementCroissant ? 'desc' : 'asc';
-
-            // On nettoie l'attribut 'data-ordre' sur toutes les colonnes pour éviter les confusions
             lesEntetes.forEach(th => th.removeAttribute('data-ordre'));
-
-            // On applique le nouvel ordre à la colonne cliquée
             enteteClique.setAttribute('data-ordre', nouvelOrdre);
-
-            // 1 = normal, -1 = inverse l'ordre
             const multiplicateur = (nouvelOrdre === 'asc') ? 1 : -1;
-
-            // On récupère le type de donnée (date, heure, texte)
             const typeDeDonnee = enteteClique.getAttribute('data-type');
 
-
-            // --- L'ALGORITHME DE TRI ---
             lesLignes.sort((ligneA, ligneB) => {
-                // On récupère le texte contenu dans la cellule de la colonne concernée
+                // Important : Si une ligne est masquée par le filtre, on la trie quand même
+                // pour que l'ordre soit correct si on efface le filtre ensuite.
                 const contenuA = ligneA.children[index].innerText.trim();
                 const contenuB = ligneB.children[index].innerText.trim();
 
                 if (typeDeDonnee === 'date') {
                     const dateA = convertirDateFrancais(contenuA);
                     const dateB = convertirDateFrancais(contenuB);
-                    // On soustrait les dates pour savoir laquelle est la plus grande
                     return (dateA - dateB) * multiplicateur;
                 }
                 else if (typeDeDonnee === 'heure') {
-                    // Pour des heures
                     return contenuA.localeCompare(contenuB) * multiplicateur;
                 }
                 else {
-                    // localeCompare gère bien les accents (ex: "Éléphant" vs "Eponge") et les chiffres
                     return contenuA.localeCompare(contenuB, 'fr', { numeric: true }) * multiplicateur;
                 }
             });
@@ -151,13 +186,10 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
 
         function convertirDateFrancais(dateString) {
             if (!dateString) return new Date(0);
-
             const parties = dateString.split('/');
-
             const jour = parseInt(parties[0], 10);
             const mois = parseInt(parties[1], 10) - 1;
             const annee = parseInt(parties[2], 10);
-
             return new Date(annee, mois, jour);
         }
     });
