@@ -51,6 +51,10 @@ if (isset($_GET['error']) && $_GET['error'] === 'timeout') {
                 <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe..." required>
             </div>
 
+            <div style="text-align: right; margin-bottom: 15px;">
+                <a href="Page_Mot_De_Passe_Oublie.php" style="color: #004d66; font-size: 0.9em;">Mot de passe oublié ?</a>
+            </div>
+
             <input type="submit" class="login-button" name="identifiants" value="Se connecter">
         </form>
 

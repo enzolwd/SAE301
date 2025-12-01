@@ -171,3 +171,8 @@ CREATE TABLE motifacceptation (
 );
 
 
+ALTER TABLE Utilisateur
+    ADD COLUMN token_recuperation VARCHAR(255) DEFAULT NULL,
+    ADD COLUMN date_expiration_token TIMESTAMP DEFAULT NULL;
+
+

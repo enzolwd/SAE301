@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
-function envoyerMail($destEmail, $destName, $type) {
+function envoyerMail($destEmail, $destName, $type, $lienOptionnel = '') {
 
 
     $mails = [
@@ -70,7 +70,15 @@ function envoyerMail($destEmail, $destName, $type) {
             'message' => "<p>Bonjour $destName,
                           <p>Vous avez une ou plusieurs absences non justifiée(s).</p>
                           <p>Vous devez <strong>imprérativement</strong> déposer un justificatif.</p>"
-        ]
+        ],
+        10 => [
+        'sujet' => "Réinitialisation de votre mot de passe",
+        'message' => "<p>Bonjour $destName,</p>
+                          <p>Une demande de réinitialisation de mot de passe a été effectuée pour votre compte.</p>
+                          <p>Veuillez cliquer sur le lien ci-dessous pour créer un nouveau mot de passe (valable 1 heure) :</p>
+                          <p><a href='$lienOptionnel'>Réinitialiser mon mot de passe</a></p>
+                          <p>Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet email.</p>"
+    ]
     ];
 
     if (!isset($mails[$type])) {
