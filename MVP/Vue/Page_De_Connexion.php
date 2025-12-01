@@ -32,6 +32,7 @@ if (isset($_GET['error']) && $_GET['error'] === 'timeout') {
 <div class="login-container">
     <div class="login-box">
 
+
         <?php
         // afficher une erreur si il y en a une
         if (!empty($errorMessage)) {

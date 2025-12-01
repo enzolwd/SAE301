@@ -13,7 +13,7 @@ function verifierEmailEtRecupererInfos($conn, $email) {
 
 function stockerToken($conn, $idUtilisateur, $token) {
     try {
-        // Le token expire dans 1 heure (NOW() + interval '1 hour' pour PostgreSQL)
+        // Le token expire dans 1 heure
         $sql = "UPDATE Utilisateur 
                 SET token_recuperation = :token, 
                     date_expiration_token = NOW() + INTERVAL '1 hour' 

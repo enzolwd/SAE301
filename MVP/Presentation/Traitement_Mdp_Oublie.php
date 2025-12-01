@@ -18,10 +18,9 @@ if (isset($_POST['demande_recup']) && !empty($_POST['email'])) {
         // 3. Stocker le token en BDD
         stockerToken($conn, $infosUtilisateur['idutilisateur'], $token);
 
-        // 4. Créer le lien (Adaptez 'localhost/...' à votre VRAI chemin URL)
-        // Astuce : Utilisez $_SERVER['HTTP_HOST'] pour être dynamique
-        $dossierProjet = "/SAE301Nouvelle/MVP/Vue";
-        $lien = "http://" . $_SERVER['HTTP_HOST'] . $dossierProjet . "/Page_Reinitialisation.php?token=" . $token;
+
+        $lien = "http://localhost:63342/SAE301Nouvelle/MVP/Vue/Page_Reinitialisation.php?token=" . $token;
+
 
         // 5. Envoyer le mail (Type 10)
         $nomComplet = $infosUtilisateur['prénom'] . ' ' . $infosUtilisateur['nom'];

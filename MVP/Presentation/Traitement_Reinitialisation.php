@@ -13,15 +13,12 @@ if (isset($_POST['valider_nouveau_mdp']) && !empty($_POST['token']) && !empty($_
     $idUtilisateur = verifierToken($conn, $token);
 
     if ($idUtilisateur) {
-        // 2. Hacher le mot de passe
-        // ATTENTION : Votre système actuel utilise-t-il password_hash ou un autre hash ?
-        // Dans le fichier fourni MDP_Hash.php (brouillon), vous utilisiez password_hash.
         $mdpHash = password_hash($nouveauMdp, PASSWORD_DEFAULT);
 
-        // 3. Mettre à jour
+        // Mettre à jour
         mettreAJourMotDePasse($conn, $idUtilisateur, $mdpHash);
 
-        // 4. Redirection vers connexion avec message succès (vous pouvez ajouter un param ?success=reset)
+        // Redirection vers connexion avec message succès (vous pouvez ajouter un param ?success=reset)
         $_SESSION['login_error'] = "Mot de passe modifié avec succès. Veuillez vous connecter.";
         header('Location: ../Vue/Page_De_Connexion.php');
         exit();

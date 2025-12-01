@@ -9,6 +9,7 @@ function envoyerMail($destEmail, $destName, $type, $lienOptionnel = '') {
 
 
     $mails = [
+
         1 => [
             'sujet' => "Confirmation de soumission justificatif",
             'message' => "<p>Bonjour $destName,

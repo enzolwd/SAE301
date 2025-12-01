@@ -5,6 +5,7 @@ if (!isset($_GET['token']) || empty($_GET['token'])) {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,11 +27,11 @@ if (!isset($_GET['token']) || empty($_GET['token'])) {
         <?php endif; ?>
 
         <form method="post" action="../Presentation/Traitement_Reinitialisation.php">
-            <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token']); ?>">
+            <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token'] ?? ''); ?>">
 
             <div class="form-group">
                 <label for="new_mdp">Nouveau mot de passe</label>
-                <input type="password" id="new_mdp" name="new_mdp" required minlength="4">
+                <input type="password" id="new_mdp" name="new_mdp" required minlength="3">
             </div>
 
             <input type="submit" class="login-button" name="valider_nouveau_mdp" value="Changer le mot de passe">
