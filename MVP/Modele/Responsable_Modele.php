@@ -510,4 +510,35 @@ function recupererMailEtudiant($conn1, $idJustificatif)
 
 
 
+function recuperermotif($conn1){
+    $lesMotifs = [];
+    try {
+        $sql = "SELECT motif FROM motifpourresponsable ORDER BY motif ASC";
+        $requete = $conn1->prepare($sql);
+        $requete->execute();
+        $lesMotifs = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+    } catch(PDOException $e) {
+        $lesMotifs = [];
+    }
+    return $lesMotifs;
+}
+
+
+function ajouterNouveauMotif($conn1, $nouveauMotif) {
+    try {
+        // Vérification anti-doublon basique (insensible à la casse)
+        $check = $conn1->prepare("SELECT COUNT(*) FROM motifpourresponsable WHERE LOWER(motif) = LOWER(:motif)");
+        $check->execute([':motif' => $nouveauMotif]);
+
+        if ($check->fetchColumn() == 0) {
+            $sql = "INSERT INTO motifpourresponsable (motif) VALUES (:motif)";
+            $requete = $conn1->prepare($sql);
+            $requete->bindParam(':motif', $nouveauMotif);
+            $requete->execute();
+        }
+    } catch(PDOException $e) {
+        die("ERREUR SQL : " . $e->getMessage());
+    }
+}
 ?>

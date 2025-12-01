@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+require_once '../Modele/ConnexionBDD.php';
+require_once '../Modele/Responsable_Modele.php';
+$conn = connecterBDD();
+$listeDesMotifs = recuperermotif($conn);
+
 // Vérifier si l'utilisateur s'est connecté
 if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Pedagogique') {
     header('Location: Page_De_Connexion.php');
@@ -15,8 +20,8 @@ if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
 $justificatifID = (int)$_GET['id'];
 
 $errorMessage = '';
-if (isset($_GET['error']) && $_GET['error'] === 'xor') {
-    $errorMessage = "Erreur : Vous devez choisir un motif dans la liste ou écrire un motif personnalisé.";
+if (isset($_GET['error']) && $_GET['error'] === 'empty') {
+    $errorMessage = "Erreur : Veuillez sélectionner un motif dans la liste.";
 }
 ?>
 <!DOCTYPE html>
@@ -47,7 +52,7 @@ if (isset($_GET['error']) && $_GET['error'] === 'xor') {
 
     <div class="refusal-wrapper">
 
-        <h3 class="content-title">Motif de Refus du Justificatif</h3>
+        <h3 class="content-title">Gestion du Refus</h3>
 
         <?php
         if (!empty($errorMessage)) {
@@ -55,21 +60,29 @@ if (isset($_GET['error']) && $_GET['error'] === 'xor') {
         }
         ?>
 
+        <form method="post" action="../Presentation/Refus_Presenteur.php" class="form-ajout-motif">
+            <label class="refusal-label detail-title">Créer un nouveau motif (Ajout BDD)</label>
+            <div class="input-group-row">
+                <input type="text" name="nouveauMotif" class="refusal-select" placeholder="Nouveau motif..." maxlength="65" required>
+                <input type="hidden" name="justificatifID" value="<?php echo $justificatifID; ?>">
+                <button type="submit" name="ajouter_motif" class="action-button bouton-ajout">Ajouter</button>
+            </div>
+        </form>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px dashed #ccc;">
+
         <form method="post" action="../Presentation/Refus_Presenteur.php" id="refuserjustificatif">
             <div class="refusal-body">
 
-                <label for="motifRefus" class="refusal-label detail-title">Motif (Option 1 : Choisir)</label>
-                <select id="motifRefus" name="motifRefus" class="refusal-select">
-                    <option value="" selected>Choisir un motif de refus...</option>
-                    <option>Justificatif invalide</option>
-                    <option>Justificatif illisible</option>
-                    <option>Pièce justificative manquante</option>
-                    <option>Motif d'absence non recevable</option>
-                    <option>Dates ou heures incohérentes avec l'absence</option>
+                <label for="motifRefus" class="refusal-label detail-title">Sélectionner le motif de refus</label>
+                <select id="motifRefus" name="motifRefus" class="refusal-select" required>
+                    <option value="" selected disabled>-- Choisir dans la liste --</option>
+                    <?php foreach ($listeDesMotifs as $m) : ?>
+                        <option value="<?php echo htmlspecialchars($m['motif']); ?>">
+                            <?php echo htmlspecialchars($m['motif']); ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
-
-                <label for="motifPerso" class="refusal-label detail-title">Motif (Option 2 : Écrire)</label>
-                <input type="text" id="motifPerso" name="motifPerso" class="refusal-select" placeholder="Écrire un motif personnalisé..." maxlength="65">
 
                 <label for="commentaireRefus" class="refusal-label detail-title">Commentaire pour l'étudiant :</label>
                 <textarea id="commentaireRefus" name="commentaireRefus" class="refusal-textarea" placeholder="Expliquez la raison du refus... (facultatif)"></textarea>
@@ -77,7 +90,7 @@ if (isset($_GET['error']) && $_GET['error'] === 'xor') {
                 <input type="hidden" name="justificatifID" value="<?php echo $justificatifID; ?>">
 
                 <div class="refusal-buttons-trio">
-                    <button type="submit" id="refuser" class="action-button" name="refuser">Valider</button>
+                    <button type="submit" id="refuser" class="action-button" name="refuser">Valider le Refus</button>
                 </div>
 
             </div>
@@ -87,37 +100,6 @@ if (isset($_GET['error']) && $_GET['error'] === 'xor') {
 </div>
 
 <footer class="main-footer"></footer>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const motifSelect = document.getElementById('motifRefus');
-        const motifPerso = document.getElementById('motifPerso');
-
-        // Quand l'utilisateur choisit dans le menu déroulant
-        motifSelect.addEventListener('change', function() {
-            // S'il choisit une option, on désactive le champ texte
-            if (motifSelect.value !== '') {
-                motifPerso.disabled = true;
-                motifPerso.value = ''; // On vide le champ texte au cas où
-            } else {
-                // S'il revient sur "Choisir...", on réactive le champ texte
-                motifPerso.disabled = false;
-            }
-        });
-
-        // Quand l'utilisateur écrit dans le champ texte
-        motifPerso.addEventListener('input', function() {
-            // S'il écrit, on désactive le menu déroulant
-            if (motifPerso.value.trim() !== '') {
-                motifSelect.disabled = true;
-                motifSelect.value = ''; // On réinitialise le menu
-            } else {
-                // S'il efface tout, on réactive le menu
-                motifSelect.disabled = false;
-            }
-        });
-    });
-</script>
 
 </body>
 </html>

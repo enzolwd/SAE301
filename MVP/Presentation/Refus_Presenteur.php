@@ -1,29 +1,42 @@
 <?php
 /*
  * Fichier Presentation
- * Gère le refus d'un justificatif.
+ * Gère le refus d'un justificatif et l'ajout de motif.
 */
 session_start();
 
 require_once 'Gestion_Session.php';
-
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
 require_once '../../Fonction_mail.php';
 
-// Vérifier si l'utilisateur s'est connecté
+// Vérification connexion
 if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Pedagogique') {
     header('Location: ../Vue/Page_De_Connexion.php');
     exit();
 }
 
-// vérifier si le formulaire de refus a été soumis
+$conn1 = connecterBDD();
+
+// --- CAS 1 : AJOUT D'UN NOUVEAU MOTIF EN BDD ---
+if (isset($_POST['ajouter_motif'])) {
+    $nouveauMotif = trim($_POST['nouveauMotif']);
+    $justificatifID = filter_input(INPUT_POST, 'justificatifID', FILTER_VALIDATE_INT);
+
+    if (!empty($nouveauMotif)) {
+        ajouterNouveauMotif($conn1, $nouveauMotif);
+    }
+
+    // On retourne sur la page de refus, le nouveau motif sera chargé dans la liste
+    header('Location: ../Vue/Page_De_Refus.php?id=' . $justificatifID);
+    exit();
+}
+
+// --- CAS 2 : VALIDATION DU REFUS ---
 if (isset($_POST['refuser']) && isset($_POST['justificatifID'])) {
 
     $justificatifID = filter_input(INPUT_POST, 'justificatifID', FILTER_VALIDATE_INT);
-    $motifSelect = trim($_POST['motifRefus']);
-    $motifPerso = trim($_POST['motifPerso']);
+    $motifSelect = trim($_POST['motifRefus']); // On ne récupère que le select
     $commentaireRefus = trim($_POST['commentaireRefus']);
 
     if ($justificatifID === false || $justificatifID <= 0) {
@@ -31,19 +44,14 @@ if (isset($_POST['refuser']) && isset($_POST['justificatifID'])) {
         exit();
     }
 
-    $motifSelectRempli = !empty($motifSelect);
-    $motifPersoRempli = !empty($motifPerso);
-
-    if (($motifSelectRempli + $motifPersoRempli) !== 1) {
-        header('Location: ../Vue/Page_De_Refus.php?id=' . $justificatifID . '&error=xor');
+    // Vérification que le select n'est pas vide
+    if (empty($motifSelect)) {
+        header('Location: ../Vue/Page_De_Refus.php?id=' . $justificatifID . '&error=empty');
         exit();
     }
 
-    $motifFinal = $motifSelectRempli ? $motifSelect : $motifPerso;
+    $motifFinal = $motifSelect;
     $commentaireFinal = !empty($commentaireRefus) ? $commentaireRefus : null;
-
-    // 1. On crée la connexion
-    $conn1 = connecterBDD();
 
     try {
         $succes = refuserJustificatif($conn1, $justificatifID, $motifFinal, $commentaireFinal);
@@ -57,16 +65,15 @@ if (isset($_POST['refuser']) && isset($_POST['justificatifID'])) {
         header('Location: ../Vue/Page_Accueil_Responsable.php?traitement=refuse');
         exit();
 
-    } catch(Exception $e) { // Changé de PDOException
+    } catch(Exception $e) {
         header('Location: ../Vue/Page_Accueil_Responsable.php');
         exit();
     }
-
-    // 3. On ferme la connexion
-    $conn1 = null;
-
 } else {
+    // Si accès direct sans POST
     header('Location: ../Vue/Page_Accueil_Responsable.php');
     exit();
 }
+
+$conn1 = null;
 ?>
