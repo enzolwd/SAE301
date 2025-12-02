@@ -36,6 +36,12 @@ if (!empty($notificationMessage)) {
 
         <h1 class="titre-tableau-de-bord">Tableau De Bord</h1>
 
+        <div class="filtres-container" style="width: 95%; margin: 0 auto 20px auto;">
+            <input type="text" id="filtreDate" placeholder="Date Dépôt (jj/mm/aaaa)">
+            <input type="text" id="filtreEtudiant" placeholder="Étudiant (Nom ou Prénom)">
+            <input type="text" id="filtreGroupe" placeholder="Groupe">
+        </div>
+
         <div class="content-tables-container">
 
             <section class="section-justificatifs">
@@ -78,6 +84,9 @@ if (!empty($notificationMessage)) {
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
+                            <tr class="row-no-result" style="display: none;">
+                                <td colspan="9">Aucun justificatif ne correspond à votre recherche.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -131,6 +140,9 @@ if (!empty($notificationMessage)) {
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
+                            <tr class="row-no-result" style="display: none;">
+                                <td colspan="11">Aucun justificatif ne correspond à votre recherche.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -142,80 +154,151 @@ if (!empty($notificationMessage)) {
 <footer class="main-footer"></footer>
 
 <script>
-    // gestion des notifications
     document.addEventListener('DOMContentLoaded', function() {
+
+        // --- 1. GESTION DES NOTIFICATIONS (Toast) ---
         const toast = document.getElementById('toast');
         if (toast) {
             setTimeout(function() {
                 toast.classList.add('fade-out');
                 setTimeout(function() {
-                    if (toast.parentNode) {
-                        toast.parentNode.removeChild(toast);
-                    }
+                    if (toast.parentNode) toast.parentNode.removeChild(toast);
                 }, 1000);
             }, 4000);
         }
 
-        // initialisation du tri pour les deux tableaux
+        // --- 2. LOGIQUE DE FILTRAGE (Mise à jour pour gérer les 2 tableaux séparément) ---
+        const inputDate = document.getElementById('filtreDate');
+        const inputEtudiant = document.getElementById('filtreEtudiant');
+        const inputGroupe = document.getElementById('filtreGroupe');
+
+        // On définit les ID des deux tableaux à traiter
+        const idsTableaux = ['tableauAttente', 'tableauHistorique'];
+
+        function appliquerFiltres() {
+            const valeurDate = inputDate.value.toLowerCase();
+            const valeurEtudiant = inputEtudiant.value.toLowerCase();
+            const valeurGroupe = inputGroupe.value.toLowerCase();
+
+            // On boucle sur CHAQUE tableau indépendamment
+            idsTableaux.forEach(idTableau => {
+                const tableau = document.getElementById(idTableau);
+                if (!tableau) return;
+
+                const corpsTableau = tableau.querySelector('tbody');
+                // On récupère uniquement les lignes de données (pas les messages techniques)
+                const lignesDonnees = corpsTableau.querySelectorAll('tr:not(.empty-table-message):not(.row-no-result)');
+                const ligneAucunResultat = corpsTableau.querySelector('.row-no-result');
+
+                let compteurLignesVisibles = 0;
+
+                lignesDonnees.forEach(ligne => {
+                    // Indices des colonnes (Identiques pour les deux tableaux) :
+                    // 0: Date Dépôt | 5: Nom | 6: Prénom | 7: Groupe
+
+                    const dateDepot = ligne.children[0].innerText.toLowerCase();
+                    const nom = ligne.children[5].innerText.toLowerCase();
+                    const prenom = ligne.children[6].innerText.toLowerCase();
+                    const groupe = ligne.children[7].innerText.toLowerCase();
+                    const etudiantComplet = nom + " " + prenom;
+
+                    // Vérifications
+                    const matchDate = dateDepot.includes(valeurDate);
+                    const matchEtudiant = nom.includes(valeurEtudiant) ||
+                        prenom.includes(valeurEtudiant) ||
+                        etudiantComplet.includes(valeurEtudiant);
+                    const matchGroupe = groupe.includes(valeurGroupe);
+
+                    // Affichage de la ligne
+                    if (matchDate && matchEtudiant && matchGroupe) {
+                        ligne.style.display = '';
+                        compteurLignesVisibles++;
+                    } else {
+                        ligne.style.display = 'none';
+                    }
+                });
+
+                // --- GESTION DU MESSAGE "AUCUN RÉSULTAT" ---
+                // Si on a des données à la base mais que le filtre a tout caché
+                if (ligneAucunResultat) {
+                    if (compteurLignesVisibles === 0 && lignesDonnees.length > 0) {
+                        ligneAucunResultat.style.display = ''; // On affiche le message
+                    } else {
+                        ligneAucunResultat.style.display = 'none'; // On le cache
+                    }
+                }
+            });
+        }
+
+        // Écouteurs
+        if(inputDate) inputDate.addEventListener('input', appliquerFiltres);
+        if(inputEtudiant) inputEtudiant.addEventListener('input', appliquerFiltres);
+        if(inputGroupe) inputGroupe.addEventListener('input', appliquerFiltres);
+
+
+        // --- 3. LOGIQUE DE TRI ---
         rendreTableauTriable('tableauAttente');
         rendreTableauTriable('tableauHistorique');
+
+        function rendreTableauTriable(idTableau) {
+            const tableau = document.getElementById(idTableau);
+            if (!tableau) return;
+
+            const lesEntetes = tableau.querySelectorAll('thead th');
+            const corpsDuTableau = tableau.querySelector('tbody');
+
+            lesEntetes.forEach((entete, indexColonne) => {
+                if (entete.getAttribute('data-type') !== 'aucun') {
+                    entete.addEventListener('click', () => {
+                        trierLeTableau(lesEntetes, corpsDuTableau, indexColonne, entete);
+                    });
+                }
+            });
+        }
+
+        function trierLeTableau(lesEntetes, corpsDuTableau, index, enteteClique) {
+            // On ne trie que les vraies lignes (on ignore les messages)
+            const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr:not(.empty-table-message):not(.row-no-result)'));
+            const ligneAucunResultat = corpsDuTableau.querySelector('.row-no-result');
+
+            // Si pas de données, on ne fait rien
+            if (lesLignes.length === 0) return;
+
+            const estActuellementCroissant = enteteClique.getAttribute('data-ordre') === 'asc';
+            const nouvelOrdre = estActuellementCroissant ? 'desc' : 'asc';
+            const multiplicateur = (nouvelOrdre === 'asc') ? 1 : -1;
+
+            lesEntetes.forEach(th => th.removeAttribute('data-ordre'));
+            enteteClique.setAttribute('data-ordre', nouvelOrdre);
+
+            const typeDeDonnee = enteteClique.getAttribute('data-type');
+
+            lesLignes.sort((ligneA, ligneB) => {
+                const contenuA = ligneA.children[index].innerText.trim();
+                const contenuB = ligneB.children[index].innerText.trim();
+
+                if (typeDeDonnee === 'date') {
+                    return (convertirDateFrancais(contenuA) - convertirDateFrancais(contenuB)) * multiplicateur;
+                } else if (typeDeDonnee === 'heure') {
+                    return contenuA.localeCompare(contenuB) * multiplicateur;
+                } else {
+                    return contenuA.localeCompare(contenuB, 'fr', { numeric: true }) * multiplicateur;
+                }
+            });
+
+            // Réinsertion des lignes triées
+            lesLignes.forEach(ligne => corpsDuTableau.appendChild(ligne));
+
+            // On remet la ligne "aucun résultat" à la fin pour qu'elle ne se retrouve pas mélangée
+            if (ligneAucunResultat) corpsDuTableau.appendChild(ligneAucunResultat);
+        }
+
+        function convertirDateFrancais(dateString) {
+            if (!dateString) return new Date(0);
+            const parties = dateString.split('/');
+            return new Date(parties[2], parties[1] - 1, parties[0]);
+        }
     });
-    function rendreTableauTriable(idTableau) {
-        const tableau = document.getElementById(idTableau);
-        // Sécurité : si le tableau n'existe pas, on arrête
-        if (!tableau) return;
-
-        const lesEntetes = tableau.querySelectorAll('thead th');
-        const corpsDuTableau = tableau.querySelector('tbody');
-
-        lesEntetes.forEach((entete, indexColonne) => {
-            // On ajoute le tri seulement si ce n'est pas une colonne "aucun"
-            if (entete.getAttribute('data-type') !== 'aucun') {
-                entete.addEventListener('click', () => {
-                    trierLeTableau(tableau, lesEntetes, corpsDuTableau, indexColonne, entete);
-                });
-            }
-        });
-    }
-
-    function trierLeTableau(tableau, lesEntetes, corpsDuTableau, index, enteteClique) {
-        const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr'));
-
-        // On ignore si le tableau est vide
-        if (lesLignes.length === 1 && lesLignes[0].classList.contains('empty-table-message')) return;
-
-        // Gestion de l'ordre
-        const estActuellementCroissant = enteteClique.getAttribute('data-ordre') === 'asc';
-        const nouvelOrdre = estActuellementCroissant ? 'desc' : 'asc';
-        const multiplicateur = (nouvelOrdre === 'asc') ? 1 : -1;
-
-        // Reset des autres en-têtes
-        lesEntetes.forEach(th => th.removeAttribute('data-ordre'));
-        enteteClique.setAttribute('data-ordre', nouvelOrdre);
-
-        const typeDeDonnee = enteteClique.getAttribute('data-type');
-
-        lesLignes.sort((ligneA, ligneB) => {
-            const contenuA = ligneA.children[index].innerText.trim();
-            const contenuB = ligneB.children[index].innerText.trim();
-
-            if (typeDeDonnee === 'date') {
-                return (convertirDateFrancais(contenuA) - convertirDateFrancais(contenuB)) * multiplicateur;
-            } else if (typeDeDonnee === 'heure') {
-                return contenuA.localeCompare(contenuB) * multiplicateur;
-            } else {
-                return contenuA.localeCompare(contenuB, 'fr', { numeric: true }) * multiplicateur;
-            }
-        });
-
-        lesLignes.forEach(ligne => corpsDuTableau.appendChild(ligne));
-    }
-
-    function convertirDateFrancais(dateString) {
-        if (!dateString) return new Date(0);
-        const parties = dateString.split('/');
-        return new Date(parties[2], parties[1] - 1, parties[0]);
-    }
 </script>
 
 </body>
