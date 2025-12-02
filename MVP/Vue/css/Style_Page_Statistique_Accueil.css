@@ -288,3 +288,32 @@ body {
 .tableau thead th:hover {
     background-color: #666;
 }
+
+
+.filtres-container {
+    display: flex;
+    justify-content: flex-start; /* Aligné à gauche comme le tableau */
+    gap: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    flex-wrap: wrap;
+    background-color: #f9f9f9; /* Légère distinction visuelle */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.filtres-container input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    flex: 1; /* Les champs se partagent l'espace */
+    min-width: 140px; /* Évite qu'ils soient trop petits sur mobile */
+}
+
+.filtres-container input:focus {
+    outline: none;
+    border-color: #004d9c; /* Couleur primaire bleue définie ailleurs */
+    box-shadow: 0 0 4px rgba(0, 77, 156, 0.3);
+}

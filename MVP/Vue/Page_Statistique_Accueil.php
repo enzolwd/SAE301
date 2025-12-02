@@ -36,6 +36,14 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
     <div class="content-wrapper">
 
         <section class="tableau-wrapper">
+
+            <div class="filtres-container">
+                <input type="text" id="filtreDate" placeholder="Date (jj/mm/aaaa)">
+                <input type="text" id="filtreEtudiant" placeholder="Étudiant (Nom ou Prénom)">
+                <input type="text" id="filtreGroupe" placeholder="Groupe">
+                <input type="text" id="filtreMatiere" placeholder="Matière">
+            </div>
+
             <div class="table-container">
                 <table class="tableau" id="tableauStatistiques">
                     <thead>
@@ -249,71 +257,113 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // On lance le tri sur le tableau défini par son ID
-        rendreTableauTriable('tableauStatistiques');
-    });
 
-    function rendreTableauTriable(idTableau) {
-        const tableau = document.getElementById(idTableau);
-        if (!tableau) return;
-
-        const lesEntetes = tableau.querySelectorAll('thead th');
+        // --- VARIABLES ---
+        const tableau = document.getElementById('tableauStatistiques');
         const corpsDuTableau = tableau.querySelector('tbody');
+        const lesEntetes = tableau.querySelectorAll('thead th');
 
+        const inputDate = document.getElementById('filtreDate');
+        const inputEtudiant = document.getElementById('filtreEtudiant');
+        const inputGroupe = document.getElementById('filtreGroupe');
+        const inputMatiere = document.getElementById('filtreMatiere');
+
+        // --- FONCTION DE FILTRAGE ---
+        function appliquerFiltres() {
+            const valeurDate = inputDate.value.toLowerCase();
+            const valeurEtudiant = inputEtudiant.value.toLowerCase();
+            const valeurGroupe = inputGroupe.value.toLowerCase();
+            const valeurMatiere = inputMatiere.value.toLowerCase();
+
+            const lesLignes = corpsDuTableau.querySelectorAll('tr');
+
+            lesLignes.forEach(ligne => {
+                // On ignore la ligne "message vide"
+                if (ligne.classList.contains('empty-table-message')) return;
+
+                // Indices des colonnes (Statistiques):
+                // 0: Date, 3: Matière, 4: Nom, 5: Prénom, 6: Groupe
+                const dateTexte = ligne.children[0].innerText.toLowerCase();
+                const matiereTexte = ligne.children[3].innerText.toLowerCase();
+                const nomTexte = ligne.children[4].innerText.toLowerCase();
+                const prenomTexte = ligne.children[5].innerText.toLowerCase();
+                const groupeTexte = ligne.children[6].innerText.toLowerCase();
+
+                const etudiantComplet = nomTexte + " " + prenomTexte;
+
+                // Vérifications
+                const matchDate = dateTexte.includes(valeurDate);
+                const matchEtudiant = nomTexte.includes(valeurEtudiant) ||
+                    prenomTexte.includes(valeurEtudiant) ||
+                    etudiantComplet.includes(valeurEtudiant);
+                const matchGroupe = groupeTexte.includes(valeurGroupe);
+                const matchMatiere = matiereTexte.includes(valeurMatiere);
+
+                // Affichage
+                if (matchDate && matchEtudiant && matchGroupe && matchMatiere) {
+                    ligne.style.display = '';
+                } else {
+                    ligne.style.display = 'none';
+                }
+            });
+        }
+
+        // Écouteurs pour le filtrage
+        if(inputDate) inputDate.addEventListener('input', appliquerFiltres);
+        if(inputEtudiant) inputEtudiant.addEventListener('input', appliquerFiltres);
+        if(inputGroupe) inputGroupe.addEventListener('input', appliquerFiltres);
+        if(inputMatiere) inputMatiere.addEventListener('input', appliquerFiltres);
+
+
+        // --- LOGIQUE DE TRI ---
         lesEntetes.forEach((entete, indexColonne) => {
-            // On vérifie que ce n'est pas une colonne non triable (au cas où)
             if (entete.getAttribute('data-type') !== 'aucun') {
                 entete.addEventListener('click', () => {
-                    trierLeTableau(lesEntetes, corpsDuTableau, indexColonne, entete);
+                    trierLeTableau(indexColonne, entete);
                 });
             }
         });
-    }
 
-    function trierLeTableau(lesEntetes, corpsDuTableau, index, enteteClique) {
-        const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr'));
+        function trierLeTableau(index, enteteClique) {
+            const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr'));
 
-        // Si le tableau est vide ou ne contient que le message "vide", on arrête
-        if (lesLignes.length === 0 || (lesLignes.length === 1 && lesLignes[0].classList.contains('empty-table-message'))) return;
+            // Sécurité si tableau vide
+            if (lesLignes.length === 0 || (lesLignes.length === 1 && lesLignes[0].classList.contains('empty-table-message'))) return;
 
-        // Gestion de l'ordre (ascendant / descendant)
-        const estCroissant = enteteClique.getAttribute('data-ordre') === 'asc';
-        const nouvelOrdre = estCroissant ? 'desc' : 'asc';
-        const multiplicateur = (nouvelOrdre === 'asc') ? 1 : -1;
+            const estCroissant = enteteClique.getAttribute('data-ordre') === 'asc';
+            const nouvelOrdre = estCroissant ? 'desc' : 'asc';
+            const multiplicateur = (nouvelOrdre === 'asc') ? 1 : -1;
 
-        // Réinitialisation visuelle des autres colonnes
-        lesEntetes.forEach(th => th.removeAttribute('data-ordre'));
-        enteteClique.setAttribute('data-ordre', nouvelOrdre);
+            lesEntetes.forEach(th => th.removeAttribute('data-ordre'));
+            enteteClique.setAttribute('data-ordre', nouvelOrdre);
 
-        const typeDeDonnee = enteteClique.getAttribute('data-type');
+            const typeDeDonnee = enteteClique.getAttribute('data-type');
 
-        // Algorithme de tri
-        lesLignes.sort((ligneA, ligneB) => {
-            const celluleA = ligneA.children[index].innerText.trim();
-            const celluleB = ligneB.children[index].innerText.trim();
+            lesLignes.sort((ligneA, ligneB) => {
+                // Note : On trie sur le contenu textuel même si la ligne est masquée
+                const celluleA = ligneA.children[index].innerText.trim();
+                const celluleB = ligneB.children[index].innerText.trim();
 
-            if (typeDeDonnee === 'date') {
-                return (convertirDateFrancais(celluleA) - convertirDateFrancais(celluleB)) * multiplicateur;
-            }
-            else if (typeDeDonnee === 'heure') {
-                return celluleA.localeCompare(celluleB) * multiplicateur;
-            }
-            else {
-                // Tri alphabétique standard (gère les accents et les chiffres)
-                return celluleA.localeCompare(celluleB, 'fr', { numeric: true }) * multiplicateur;
-            }
-        });
+                if (typeDeDonnee === 'date') {
+                    return (convertirDateFrancais(celluleA) - convertirDateFrancais(celluleB)) * multiplicateur;
+                }
+                else if (typeDeDonnee === 'heure') {
+                    return celluleA.localeCompare(celluleB) * multiplicateur;
+                }
+                else {
+                    return celluleA.localeCompare(celluleB, 'fr', { numeric: true }) * multiplicateur;
+                }
+            });
 
-        // Réinsertion des lignes triées
-        lesLignes.forEach(ligne => corpsDuTableau.appendChild(ligne));
-    }
+            lesLignes.forEach(ligne => corpsDuTableau.appendChild(ligne));
+        }
 
-    function convertirDateFrancais(chaineDate) {
-        if (!chaineDate) return new Date(0);
-        const parties = chaineDate.split('/');
-        // Format jj/mm/aaaa -> Date(aaaa, mm-1, jj)
-        return new Date(parties[2], parties[1] - 1, parties[0]);
-    }
+        function convertirDateFrancais(chaineDate) {
+            if (!chaineDate) return new Date(0);
+            const parties = chaineDate.split('/');
+            return new Date(parties[2], parties[1] - 1, parties[0]);
+        }
+    });
 </script>
 
 
