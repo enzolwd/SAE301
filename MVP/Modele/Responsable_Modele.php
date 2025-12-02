@@ -9,9 +9,11 @@ function recupererTableauxResponsable($conn1) {
     $lesjustificatifsHisto = [];
 
     try {
+        // Requête pour les justificatifs EN ATTENTE
         $requeteAvoirJustificatifs = $conn1->prepare("
             SELECT
                 Justificatif.idjustificatif,
+                TO_CHAR(Justificatif.date_depot, 'DD/MM/YYYY') as datedepot,
                 TO_CHAR(Justificatif.datedebut, 'DD/MM/YYYY') as datededebut,
                 TO_CHAR(Justificatif.heuredebut, 'HH24:MI') as heuredebut,
                 TO_CHAR(Justificatif.datefin, 'DD/MM/YYYY') as datedefin,
@@ -28,9 +30,11 @@ function recupererTableauxResponsable($conn1) {
         $requeteAvoirJustificatifs->execute();
         $lesjustificatifs = $requeteAvoirJustificatifs->fetchAll(PDO::FETCH_ASSOC);
 
+        // Requête pour l'HISTORIQUE
         $requeteAvoirJustificatifsHistorique = $conn1->prepare("
             SELECT
                 Justificatif.idjustificatif,
+                TO_CHAR(Justificatif.date_depot, 'DD/MM/YYYY') as datedepot, -- AJOUT ICI
                 TO_CHAR(Justificatif.datedebut, 'DD/MM/YYYY') as datededebut,
                 TO_CHAR(Justificatif.heuredebut, 'HH24:MI') as heuredebut,
                 TO_CHAR(Justificatif.datefin, 'DD/MM/YYYY') as datedefin,

@@ -44,6 +44,7 @@ if (!empty($notificationMessage)) {
                     <table class="tableau" id="tableauAttente">
                         <thead>
                         <tr>
+                            <th data-type="date">Date Dépôt</th>
                             <th data-type="date">Du</th>
                             <th data-type="heure">À</th>
                             <th data-type="date">Au</th>
@@ -57,11 +58,13 @@ if (!empty($notificationMessage)) {
                         <tbody>
                         <?php if (empty($lesjustificatifs)) : ?>
                             <tr class="empty-table-message">
-                                <td colspan="8">Aucun justificatif en attente.</td>
+                                <td colspan="9">Aucun justificatif en attente.</td>
                             </tr>
                         <?php else : ?>
                             <?php foreach ($lesjustificatifs as $justif) : ?>
                                 <tr>
+                                    <td><?php echo htmlspecialchars($justif['datedepot'] ?? ''); ?></td>
+
                                     <td><?php echo htmlspecialchars($justif['datededebut']); ?></td>
                                     <td><?php echo htmlspecialchars($justif['heuredebut']); ?></td>
                                     <td><?php echo htmlspecialchars($justif['datedefin']); ?></td>
@@ -87,6 +90,7 @@ if (!empty($notificationMessage)) {
                     <table class="tableau historique" id="tableauHistorique">
                         <thead>
                         <tr>
+                            <th data-type="date">Date Dépôt</th>
                             <th data-type="date">Du</th>
                             <th data-type="heure">À</th>
                             <th data-type="date">Au</th>
@@ -102,11 +106,13 @@ if (!empty($notificationMessage)) {
                         <tbody>
                         <?php if (empty($lesjustificatifsHisto)) : ?>
                             <tr class="empty-table-message">
-                                <td colspan="10">Aucun justificatif dans l'historique.</td>
+                                <td colspan="11">Aucun justificatif dans l'historique.</td>
                             </tr>
                         <?php else : ?>
                             <?php foreach ($lesjustificatifsHisto as $justif) : ?>
                                 <tr>
+                                    <td><?php echo htmlspecialchars($justif['datedepot'] ?? ''); ?></td>
+
                                     <td><?php echo htmlspecialchars($justif['datededebut']); ?></td>
                                     <td><?php echo htmlspecialchars($justif['heuredebut']); ?></td>
                                     <td><?php echo htmlspecialchars($justif['datedefin']); ?></td>
