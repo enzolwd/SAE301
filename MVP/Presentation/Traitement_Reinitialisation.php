@@ -3,13 +3,22 @@ session_start();
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Recuperation_Modele.php';
 
-if (isset($_POST['valider_nouveau_mdp']) && !empty($_POST['token']) && !empty($_POST['new_mdp'])) {
+// On vérifie que le champ confirm_mdp est bien envoyé
+if (isset($_POST['valider_nouveau_mdp']) && !empty($_POST['token']) && !empty($_POST['new_mdp']) && !empty($_POST['confirm_mdp'])) {
+
     $token = $_POST['token'];
     $nouveauMdp = $_POST['new_mdp'];
+    $confirmMdp = $_POST['confirm_mdp'];
+
+    // Vérifier que les deux mots de passe correspondent
+    if ($nouveauMdp !== $confirmMdp) {
+        header('Location: ../Vue/Page_Reinitialisation.php?token=' . $token . '&error=mismatch');
+        exit();
+    }
 
     $conn = connecterBDD();
 
-    // 1. Vérifier la validité du token
+    // Vérifier la validité du token
     $idUtilisateur = verifierToken($conn, $token);
 
     if ($idUtilisateur) {
@@ -18,15 +27,21 @@ if (isset($_POST['valider_nouveau_mdp']) && !empty($_POST['token']) && !empty($_
         // Mettre à jour
         mettreAJourMotDePasse($conn, $idUtilisateur, $mdpHash);
 
-        // Redirection vers connexion avec message succès (vous pouvez ajouter un param ?success=reset)
-        $_SESSION['login_error'] = "Mot de passe modifié avec succès. Veuillez vous connecter.";
+        // --- MODIFICATION ICI ---
+        // On utilise 'login_success' au lieu de 'login_error' pour le message vert
+        $_SESSION['login_success'] = "Mot de passe modifié avec succès. Veuillez vous connecter.";
+
         header('Location: ../Vue/Page_De_Connexion.php');
         exit();
     } else {
-        // Token invalide ou expiré
         header('Location: ../Vue/Page_Reinitialisation.php?error=invalid');
         exit();
     }
 } else {
-    header('Location: ../Vue/Page_De_Connexion.php');
+    if (isset($_POST['token'])) {
+        header('Location: ../Vue/Page_Reinitialisation.php?token=' . $_POST['token'] . '&error=empty');
+    } else {
+        header('Location: ../Vue/Page_De_Connexion.php');
+    }
 }
+?>

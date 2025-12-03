@@ -23,7 +23,11 @@ if (!isset($_GET['token']) || empty($_GET['token'])) {
         <h3>Nouveau mot de passe</h3>
 
         <?php if (isset($_GET['error'])): ?>
-            <p class="error-message">Lien invalide ou expiré.</p>
+            <?php if ($_GET['error'] === 'mismatch'): ?>
+                <p class="error-message">Les mots de passe ne correspondent pas.</p>
+            <?php else: ?>
+                <p class="error-message">Lien invalide ou expiré.</p>
+            <?php endif; ?>
         <?php endif; ?>
 
         <form method="post" action="../Presentation/Traitement_Reinitialisation.php">
@@ -32,6 +36,11 @@ if (!isset($_GET['token']) || empty($_GET['token'])) {
             <div class="form-group">
                 <label for="new_mdp">Nouveau mot de passe</label>
                 <input type="password" id="new_mdp" name="new_mdp" required minlength="3">
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_mdp">Confirmer le mot de passe</label>
+                <input type="password" id="confirm_mdp" name="confirm_mdp" required minlength="3">
             </div>
 
             <input type="submit" class="login-button" name="valider_nouveau_mdp" value="Changer le mot de passe">
