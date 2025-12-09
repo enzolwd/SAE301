@@ -1,13 +1,9 @@
 <?php
-/*
- * Fichier Presentation
- * Prépare les données pour la page d'accueil du professeur.
-*/
+/* Prépare les données pour la page d'accueil du professeur */
 session_start();
 
 require_once 'Gestion_Session.php';
 
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Professeur_Modele.php';
 
@@ -29,7 +25,6 @@ try {
     exit();
 }
 
-// 3. On ferme la connexion
 $conn1 = null;
 
 ?>

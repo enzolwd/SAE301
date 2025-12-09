@@ -1,13 +1,9 @@
 <?php
-/*
- * Fichier Presentation
- * Gère l'ajout d'un utilisateur par l'ADMIN.
-*/
+/* Gère l'ajout d'un utilisateur par l'ADMIN */
 session_start();
 
 require_once 'Gestion_Session.php';
 
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Admin_Modele.php';
 
@@ -33,25 +29,21 @@ try {
 
         $hash = password_hash($mdp, PASSWORD_DEFAULT);
 
-        // 1. On crée la connexion
         $conn1 = connecterBDD();
 
-        // 2. On demande au Modele de créer l'utilisateur
         $succes = creerUtilisateur($conn1, $role, $UserName, $hash, $nom, $prenom, $idIUT, $groupe, $mail);
 
-        // 3. On ferme la connexion
         $conn1 = null;
 
         if ($succes) {
             header('Location: ../Vue/ADMIN.php?success=true');
             exit();
         } else {
-            // J'ai gardé votre erreur originale, même si elle n'est pas vérifiée
             header('Location: ../Vue/ADMIN.php?error=duplicate_idIUT');
             exit();
         }
     }
-} catch(Exception $e) { // Changé de PDOException car la connexion est gérée ailleurs
+} catch(Exception $e) {
     header('Location: ../Vue/ADMIN.php');
     exit();
 }

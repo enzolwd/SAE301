@@ -1,8 +1,5 @@
 <?php
-/*
- * Fichier Presentation
- * Gère l'acceptation d'un justificatif et l'ajout de motif.
-*/
+/* Gère l'acceptation d'un justificatif et l'ajout de motif */
 session_start();
 
 require_once 'Gestion_Session.php';
@@ -10,7 +7,7 @@ require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
 require_once '../../Fonction_mail.php';
 
-// Vérification connexion
+// vérification connexion
 if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Pedagogique') {
     header('Location: ../Vue/Page_De_Connexion.php');
     exit();
@@ -18,7 +15,7 @@ if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Peda
 
 $conn1 = connecterBDD();
 
-// --- CAS 1 : AJOUT D'UN NOUVEAU MOTIF D'ACCEPTATION ---
+// ajout d'un motif d'acceptation dans la bdd
 if (isset($_POST['ajouter_motif'])) {
     $nouveauMotif = trim($_POST['nouveauMotif']);
     $justificatifID = filter_input(INPUT_POST, 'justificatifID', FILTER_VALIDATE_INT);
@@ -32,7 +29,7 @@ if (isset($_POST['ajouter_motif'])) {
     exit();
 }
 
-// --- CAS 2 : VALIDATION DU JUSTIFICATIF ---
+// validation d'un justificatif
 if (isset($_POST['valider']) && isset($_POST['justificatifID'])) {
 
     $justificatifID = filter_input(INPUT_POST, 'justificatifID', FILTER_VALIDATE_INT);
@@ -42,8 +39,7 @@ if (isset($_POST['valider']) && isset($_POST['justificatifID'])) {
     if (empty($commentaireResponsable)) {
         $commentaireResponsable = null;
     }
-    // Si le motif est vide (ex: "-- Choisir --"), on peut bloquer ou mettre null.
-    // Ici on suppose que le champ est 'required' dans le HTML.
+
     if (empty($motifrespon)) {
         $motifrespon = null;
     }
@@ -71,9 +67,8 @@ if (isset($_POST['valider']) && isset($_POST['justificatifID'])) {
     }
 
 } else {
-    // Accès direct ou autre cas
     if(isset($_GET['id'])) {
-        // Si c'est juste un rechargement sans POST, on ne fait rien de spécial ici
+        // on ne fait rien
     } else {
         header('Location: ../Vue/Page_Accueil_Responsable.php');
         exit();

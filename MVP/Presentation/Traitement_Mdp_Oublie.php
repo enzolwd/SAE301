@@ -8,27 +8,26 @@ if (isset($_POST['demande_recup']) && !empty($_POST['email'])) {
     $email = trim($_POST['email']);
     $conn = connecterBDD();
 
-    // 1. Vérifier si l'email existe
+    // vérifier si l'email existe
     $infosUtilisateur = verifierEmailEtRecupererInfos($conn, $email);
 
     if ($infosUtilisateur) {
-        // 2. Générer un token unique cryptographique
-        $token = bin2hex(random_bytes(32)); // Génère une chaîne aléatoire de 64 caractères
+        // générer un token cryptographique
+        $token = bin2hex(random_bytes(32));
 
-        // 3. Stocker le token en BDD
+        // stocker le token dans la bdd
         stockerToken($conn, $infosUtilisateur['idutilisateur'], $token);
 
 
         $lien = "http://localhost:63342/SAE301Nouvelle/MVP/Vue/Page_Reinitialisation.php?token=" . $token;
 
 
-        // 5. Envoyer le mail (Type 10)
+        // envoyer le mail
         $nomComplet = $infosUtilisateur['prénom'] . ' ' . $infosUtilisateur['nom'];
         envoyerMail($email, $nomComplet, 10, $lien);
     }
 
-    // Dans tous les cas (même si email introuvable), on affiche le message de succès
-    // pour ne pas révéler si un email existe ou non (Sécurité).
+    // on affiche le message de succès
     header('Location: ../Vue/Page_Mot_De_Passe_Oublie.php?info=sent');
     exit();
 } else {

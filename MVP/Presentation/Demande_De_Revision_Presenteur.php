@@ -1,13 +1,9 @@
 <?php
-/*
- * Fichier Presentation
- * Gère la demande de révision d'un justificatif.
-*/
+/* Gère la demande de révision d'un justificatif */
 session_start();
 
 require_once 'Gestion_Session.php';
 
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
 require_once '../../Fonction_mail.php';
@@ -33,7 +29,6 @@ if (isset($_POST['revision']) && isset($_POST['justificatifID_form'])) {
         exit();
     }
 
-    // 1. On crée la connexion
     $conn1 = connecterBDD();
 
     try {
@@ -48,12 +43,11 @@ if (isset($_POST['revision']) && isset($_POST['justificatifID_form'])) {
         header('Location: ../Vue/Page_Accueil_Responsable.php?traitement=revision');
         exit();
 
-    } catch(Exception $e) { // Changé de PDOException
+    } catch(Exception $e) {
         header('Location: ../Vue/Page_Demande_Revision.php?id=' . $justificatifID);
         exit();
     }
 
-    // 3. On ferme la connexion
     $conn1 = null;
 
 } else {

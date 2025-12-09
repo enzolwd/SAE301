@@ -1,4 +1,5 @@
 <?php
+
 // (30 minutes * 60 secondes = 1800 secondes)
 $temps_limite = 1800;
 

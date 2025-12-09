@@ -1,8 +1,5 @@
 <?php
-/*
- * Fichier Presentation
- * Gère le refus d'un justificatif et l'ajout de motif.
-*/
+/* Gère le refus d'un justificatif et l'ajout de motif */
 session_start();
 
 require_once 'Gestion_Session.php';
@@ -18,7 +15,7 @@ if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Peda
 
 $conn1 = connecterBDD();
 
-// --- CAS 1 : AJOUT D'UN NOUVEAU MOTIF EN BDD ---
+// ajout d'un motif dans la bdd
 if (isset($_POST['ajouter_motif'])) {
     $nouveauMotif = trim($_POST['nouveauMotif']);
     $justificatifID = filter_input(INPUT_POST, 'justificatifID', FILTER_VALIDATE_INT);
@@ -27,16 +24,16 @@ if (isset($_POST['ajouter_motif'])) {
         ajouterNouveauMotif($conn1, $nouveauMotif);
     }
 
-    // On retourne sur la page de refus, le nouveau motif sera chargé dans la liste
+    // on retourne sur la page de refus
     header('Location: ../Vue/Page_De_Refus.php?id=' . $justificatifID);
     exit();
 }
 
-// --- CAS 2 : VALIDATION DU REFUS ---
+// valider le refus
 if (isset($_POST['refuser']) && isset($_POST['justificatifID'])) {
 
     $justificatifID = filter_input(INPUT_POST, 'justificatifID', FILTER_VALIDATE_INT);
-    $motifSelect = trim($_POST['motifRefus']); // On ne récupère que le select
+    $motifSelect = trim($_POST['motifRefus']);
     $commentaireRefus = trim($_POST['commentaireRefus']);
 
     if ($justificatifID === false || $justificatifID <= 0) {
@@ -70,7 +67,6 @@ if (isset($_POST['refuser']) && isset($_POST['justificatifID'])) {
         exit();
     }
 } else {
-    // Si accès direct sans POST
     header('Location: ../Vue/Page_Accueil_Responsable.php');
     exit();
 }

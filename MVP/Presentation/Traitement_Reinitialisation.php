@@ -3,14 +3,14 @@ session_start();
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Recuperation_Modele.php';
 
-// On vérifie que le champ confirm_mdp est bien envoyé
+// on vérifie que le champ confirm_mdp est bien envoyé
 if (isset($_POST['valider_nouveau_mdp']) && !empty($_POST['token']) && !empty($_POST['new_mdp']) && !empty($_POST['confirm_mdp'])) {
 
     $token = $_POST['token'];
     $nouveauMdp = $_POST['new_mdp'];
     $confirmMdp = $_POST['confirm_mdp'];
 
-    // Vérifier que les deux mots de passe correspondent
+    // vérifier que les deux mots de passe correspondent
     if ($nouveauMdp !== $confirmMdp) {
         header('Location: ../Vue/Page_Reinitialisation.php?token=' . $token . '&error=mismatch');
         exit();
@@ -24,11 +24,10 @@ if (isset($_POST['valider_nouveau_mdp']) && !empty($_POST['token']) && !empty($_
     if ($idUtilisateur) {
         $mdpHash = password_hash($nouveauMdp, PASSWORD_DEFAULT);
 
-        // Mettre à jour
+        // mettre à jour
         mettreAJourMotDePasse($conn, $idUtilisateur, $mdpHash);
 
-        // --- MODIFICATION ICI ---
-        // On utilise 'login_success' au lieu de 'login_error' pour le message vert
+        // On utilise 'login_success' pour le message vert
         $_SESSION['login_success'] = "Mot de passe modifié avec succès. Veuillez vous connecter.";
 
         header('Location: ../Vue/Page_De_Connexion.php');

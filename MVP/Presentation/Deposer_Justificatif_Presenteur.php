@@ -1,20 +1,16 @@
 <?php
-/*
- * Fichier Presentation
- * Gère le dépôt de justificatif par l'étudiant.
-*/
+/* Gère le dépôt de justificatif par l'étudiant */
 session_start();
 
 require_once 'Gestion_Session.php';
 
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Etudiant_Modele.php';
 require_once '../../Fonction_mail.php';
 
-// Fonction d'aide pour gérer l'upload d'un fichier
+// Fonction pour gérer l'upload d'un fichier
 function gérerUploadFichier($fileKey, $uploadDir) {
-    // Vérifie si le fichier existe DANS LA REQUÊTE et s'il a été uploadé sans erreur
+    // Vérifie si le fichier existe dans la requete et s'il a été uploadé
     if (isset($_FILES[$fileKey]) && $_FILES[$fileKey]['error'] === UPLOAD_ERR_OK) {
 
         $fileTmpName = $_FILES[$fileKey]['tmp_name'];
@@ -32,7 +28,6 @@ function gérerUploadFichier($fileKey, $uploadDir) {
         }
     }
     // Si le fichier n'est pas présent
-    // ou s'il y a une erreur autre
     return null;
 }
 
@@ -48,10 +43,8 @@ if (isset($_POST['justifier'])) {
 
     $uploadDir = '../Modele/uploads/';
 
-    // On appelle la fonction d'aide pour le premier fichier
     $cheminFichier1PourBDD = gérerUploadFichier('fichierjustificatif1', $uploadDir);
 
-    // On appelle la fonction d'aide pour le second fichier
     $cheminFichier2PourBDD = gérerUploadFichier('fichierjustificatif2', $uploadDir);
 
     $motif = $_POST['motif'];
@@ -60,13 +53,13 @@ if (isset($_POST['justifier'])) {
     $datefin = '';
     $heurefin = '';
 
-    // On vérifie si le mode "jour entier" a été utilisé
+    // on vérifie si le mode "jour entier" a été utilisé
     if (isset($_POST['dateJourEntier']) && !empty($_POST['dateJourEntier'])) {
         // Mode Jour Entier
         $datedebut = $_POST['dateJourEntier'];
         $datefin = $_POST['dateJourEntier'];
-        $heuredebut = '00:00'; // Début de la journée
-        $heurefin = '23:59';   // Fin de la journée
+        $heuredebut = '00:00';
+        $heurefin = '23:59';
     } else {
         // Mode Intervalle
         $datedebut = $_POST['dateDebut'];
@@ -97,7 +90,7 @@ if (isset($_POST['justifier'])) {
     } elseif ($resultat === "conflict") {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?error=conflict');
         exit();
-    } else { // "db_error"
+    } else {
         header('Location: ../Vue/Page_Deposer_Justificatif.php?error=db');
         exit();
     }

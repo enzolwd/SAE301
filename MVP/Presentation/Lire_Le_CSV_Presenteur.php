@@ -1,13 +1,9 @@
 <?php
-/*
- * Fichier Presentation
- * Gère l'upload de CSV par la secrétaire.
-*/
+/* Gère l'upload de CSV par la secrétaire */
 session_start();
 
 require_once 'Gestion_Session.php';
 
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Secretaire_Modele.php';
 
@@ -29,16 +25,13 @@ try {
             }
             fclose($f);
 
-            // 1. On crée la connexion
             $conn = connecterBDD();
 
-            // 2. On PASSE la connexion et les données au Modele
             $resultats = traiterFichierCSV($conn, $csv_data);
 
-            // 3. On ferme la connexion
             $conn = null;
 
-            // 4. On gère la réponse
+            // on gère la réponse
             if ($resultats['status'] === 'success') {
                 $_SESSION['lignesLues'] = $resultats['lignesLues'];
                 $_SESSION['countAjoutes'] = $resultats['countAjoutes'];
@@ -49,7 +42,7 @@ try {
 
                 header('Location: ../Vue/Page_Accueil_Secretaire.php?status=success');
                 exit;
-            } else { // 'error_db'
+            } else {
                 $_SESSION['import_error_public'] = "Une erreur technique est survenue. Veuillez contacter le service compétent.";
                 header('Location: ../Vue/Page_Accueil_Secretaire.php?status=error_db');
                 exit;
@@ -62,7 +55,7 @@ try {
         header('Location: ../Vue/Page_Accueil_Secretaire.php?status=error');
         exit;
     }
-} catch (Exception $e) { // Changé de PDOException
+} catch (Exception $e) {
     $_SESSION['import_error_public'] = "Une erreur technique est survenue. Veuillez contacter le service compétent.";
     header('Location: ../Vue/Page_Accueil_Secretaire.php?status=error_db');
     exit;

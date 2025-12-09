@@ -1,13 +1,9 @@
 <?php
-/*
- * Fichier Presentation
- * Prépare les données pour la page de motif d'absence.
-*/
+/* Prépare les données pour la page de motif d'absence */
 session_start();
 
 require_once 'Gestion_Session.php';
 
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Etudiant_Modele.php';
 
@@ -25,22 +21,18 @@ if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
 }
 $justificatifID = (int)$_GET['id'];
 
-// variable pour stocker les détails
 $motifDetails = null;
 
-// 1. On crée la connexion
 $conn1 = connecterBDD();
 
 try {
-    // 2. On demande les données au Modele
     $motifDetails = recupererMotifEtudiant($conn1, $justificatifID);
 
-} catch(Exception $e) { // Changé de PDOException
+} catch(Exception $e) {
     header('Location: ../Vue/Page_Accueil_Etudiant.php');
     exit();
 }
 
-// 3. On ferme la connexion
 $conn1 = null;
 
 // vérifier si le justificatif a été trouvé

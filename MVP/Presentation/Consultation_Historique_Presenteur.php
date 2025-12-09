@@ -1,13 +1,9 @@
 <?php
-/*
- * Fichier Presentation
- * Prépare les détails d'un justificatif de l'historique.
-*/
+/* Prépare les détails d'un justificatif de l'historique */
 session_start();
 
 require_once 'Gestion_Session.php';
 
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
 
@@ -24,21 +20,18 @@ if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
 }
 $justificatifID = (int)$_GET['id'];
 
-// 1. On crée la connexion
 $conn1 = connecterBDD();
 
 try {
-    // 2. On demande les données au Modele
     $justificatifDetailsHisto = recupererDetailsJustificatifHistorique($conn1, $justificatifID);
-} catch(Exception $e) { // Changé de PDOException
+} catch(Exception $e) {
     header('Location: ../Vue/Page_Accueil_Responsable.php');
     exit();
 }
 
-// 3. On ferme la connexion
 $conn1 = null;
 
-// fonction qui permet d'attribuer un css au texte (logique de Presentation)
+// fonction qui permet d'attribuer un css au texte
 function getStatusClass($statut) {
     switch (strtolower($statut)) {
         case 'non justifie':
@@ -53,5 +46,4 @@ function getStatusClass($statut) {
     }
 }
 
-// La Vue (Page_Consultation_Justificatif_Historique.php) sera incluse
 ?>

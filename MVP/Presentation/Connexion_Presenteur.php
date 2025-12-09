@@ -16,7 +16,7 @@ if (isset($_POST['identifiants'])) {
         // récupérer les infos utilisateur
         $utilisateur = trouverUtilisateurParNom($conn, $username);
 
-        // reset des tentatives si ça fait plus d'1h (ou X secondes pour test) depuis la dernière tentative et que le compte n'est pas bloqué
+        // reset des tentatives si ça fait plus d'1h depuis la dernière tentative et que le compte n'est pas bloqué
         if ($utilisateur && $utilisateur['blocage'] === null && $utilisateur['tentatives'] < 5
             && $utilisateur['derniere_tentative'] !== null
             && strtotime($utilisateur['derniere_tentative']) < time() - 3600) {
@@ -42,7 +42,7 @@ if (isset($_POST['identifiants'])) {
 
         // mot de passe correct
         if ($utilisateur && $utilisateur['hash'] && password_verify($password, $utilisateur['hash'])) {
-            // reset des tentatives et blocage + derniere_tentative
+            // reset des tentatives et blocage et derniere_tentative
             $reqReset = $conn->prepare("
                 UPDATE Utilisateur 
                 SET tentatives_echouees = 0, date_fin_blocage = NULL, derniere_tentative = NULL 
@@ -87,7 +87,7 @@ if (isset($_POST['identifiants'])) {
                     $_SESSION['login_error'] = "Trop de tentatives. Compte bloqué 15 minutes.";
 
                 } else {
-                    // incrément simple avec mise à jour de derniere_tentative
+                    // ajout de 1 sur le nombre de tentatives avec mise à jour de derniere_tentative
                     $reqUpdate = $conn->prepare("
                         UPDATE Utilisateur 
                         SET tentatives_echouees = :t, derniere_tentative = NOW() 
@@ -114,4 +114,4 @@ if (isset($_POST['identifiants'])) {
         exit();
     }
 }
-?>
+

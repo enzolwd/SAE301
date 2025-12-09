@@ -1,13 +1,9 @@
 <?php
-/*
- * Fichier Presentation
- * Prépare les données pour la page d'accueil du responsable.
-*/
+/* Prépare les données pour la page d'accueil du responsable */
 session_start();
 
 require_once 'Gestion_Session.php';
 
-// On inclut les fichiers Modele
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
 
@@ -17,7 +13,7 @@ if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Peda
     exit();
 }
 
-// Logique de Presentation (gestion des messages de notification)
+// gestion des messages de notification
 $notificationMessage = '';
 $notificationType = '';
 if (isset($_GET['traitement'])) {
@@ -37,23 +33,20 @@ if (isset($_GET['traitement'])) {
     }
 }
 
-// 1. On crée la connexion
 $conn1 = connecterBDD();
 
 try {
-    // 2. On demande les données au Modele
     list($lesjustificatifs, $lesjustificatifsHisto) = recupererTableauxResponsable($conn1);
 
-} catch(Exception $e) { // Changé de PDOException
+} catch(Exception $e) {
     header('Location: ../Vue/Page_De_Connexion.php');
     exit();
 }
 
-// 3. On ferme la connexion
 $conn1 = null;
 
 
-// fonction qui permet de convertir le statut en classe CSS (logique de Presentation)
+// fonction qui permet de convertir le statut en classe CSS
 function getStatusClass($statut) {
     switch (strtolower($statut)) {
         case 'non justifie':
@@ -71,6 +64,4 @@ function getStatusClass($statut) {
             return 'status-pending';
     }
 }
-
-// La Vue (Page_Accueil_Responsable.php) sera incluse et utilisera les variables
 ?>
