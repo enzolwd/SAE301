@@ -68,7 +68,7 @@ body {
 
 
 
-/* ----- CONTENU CENTRAL ----- */
+/* ----- contenu qui est au centre de la page ----- */
 .container {
     flex-grow: 1;
     padding: 30px;

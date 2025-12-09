@@ -53,11 +53,9 @@ body {
 .main-footer {
     height: 100px;
     background-color: #004d66;
-    margin-top: auto; /* Pousse le footer en bas */
+    margin-top: auto;
 }
 /* ----- FIN FOOTER ----- */
-
-
 
 
 
@@ -75,22 +73,12 @@ body {
     margin: 0 auto;
 }
 
-/* Bouton Retour aligné à gauche */
+/* Bouton retour aligné à gauche */
 .bouton-retour-wrapper {
     width: 100%;
     max-width: 800px;
     margin: 0 auto 20px auto;
     text-align: left;
-}
-
-/* Variables pour les couleurs */
-:root {
-    --couleur-primaire-bleu: #004d9c;
-    --couleur-secondaire-gris: #555;
-    --couleur-fond-bouton-gris: #ccc;
-    --couleur-fond-entete-tableau: #808080;
-    --couleur-texte-sombre: #333;
-    --spacing-unit: 15px;
 }
 
 /* Style général des boutons d'action */
@@ -124,7 +112,6 @@ body {
     justify-content: center;
 }
 
-
 .consultation-contenu {
     max-width: 800px;
     width: 95%;
@@ -147,48 +134,43 @@ body {
     display: flex;
     flex-direction: column;
 }
-.details-left { padding-right: calc(var(--spacing-unit) * 1.5); }
-.details-right { padding-left: calc(var(--spacing-unit) * 1.5); }
 
-.details-left > *, .details-right > * {
-    margin-top: 0;
-    margin-bottom: var(--spacing-unit);
-}
+.details-left { padding-right: 22.5px; }
+.details-right { padding-left: 22.5px; }
 
-.details-left > *:last-child, .details-right > *:last-child {
-    margin-bottom: 0;
-}
+.details-left * { margin-bottom: 15px; }
+.details-left *:last-child { margin-bottom: 0; }
 
+.details-right * { margin-bottom: 15px; }
+.details-right *:last-child { margin-bottom: 0; }
 
 .details-left p.absence-date {
-    margin-bottom: calc(var(--spacing-unit) / 3);
-    font-size: 1em;/
-}
-
-.details-left p.absence-date + p.absence-date {
-    margin-bottom: var(--spacing-unit);
-}
-
-.student-info-label {
-    margin-bottom: calc(var(--spacing-unit) / 2);
+    margin-bottom: 5px;
     font-size: 1em;
 }
 
+.details-left p.absence-date + p.absence-date {
+    margin-bottom: 15px;
+}
 
+.student-info-label {
+    margin-bottom: 7.5px;
+    font-size: 1em;
+}
 
-/* Titres H3 (Justificatif, Finalité) */
+/* Titres h3 */
 .detail-title {
     font-size: 1.1em;
     font-weight: bold;
-    margin-top: calc(var(--spacing-unit) * 0.5);
-    margin-bottom: calc(var(--spacing-unit) * 0.7);
+    margin-top: 7.5px;
+    margin-bottom: 10.5px;
     border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
 }
 
-/* Étiquettes des commentaires */
+/* étiquettes des commentaires */
 .comment-label {
-    margin-bottom: calc(var(--spacing-unit) / 3);
+    margin-bottom: 5px;
     font-weight: bold;
     font-size: 1em;
 }
@@ -200,8 +182,6 @@ body {
     font-size: 0.95em;
     line-height: 1.5;
     background-color: #f9f9f9;
-    margin-bottom: var(--spacing-unit);
-    min-height: 0;
     height: 150px;
     overflow-wrap: break-word;
     word-break: break-all;
@@ -209,11 +189,9 @@ body {
 
 .comment-box p {
     margin: 0;
-    overflow-wrap: break-word;
-    word-break: break-all;
 }
 
-/* Séparateur vertical */
+/* barre vertical */
 .separator-line {
     width: 1px;
     background-color: #ccc;
@@ -226,8 +204,9 @@ body {
     flex-direction: column;
     gap: 10px;
     margin-top: 5px;
-    margin-bottom: var(--spacing-unit);
+    margin-bottom: 15px;
 }
+
 .justificatif-buttons .action-button {
     padding: 10px 15px;
 }
@@ -244,17 +223,15 @@ body {
     text-align: center;
     margin-top: auto;
     margin-bottom: 0;
-    padding-top: var(--spacing-unit);
+    padding-top: 15px;
 }
-/* Styles pour les classes de statut */
+
+/* Styles pour les statut */
 .finalite-label .status-accepted { color: #28a745; }
 .finalite-label .status-refused { color: #dc3545; }
 .finalite-label .status-pending { color: #ffc107; }
 
-
-/* Styles pour les statuts */
-.status-nojustified {color : #004d9c; font-weight: bold;}
+.status-nojustified { color: #004d9c; font-weight: bold; }
 .status-pending { color: #ffc107; font-weight: bold; }
 .status-accepted { color: #28a745; font-weight: bold; }
 .status-refused { color: #dc3545; font-weight: bold; }
-

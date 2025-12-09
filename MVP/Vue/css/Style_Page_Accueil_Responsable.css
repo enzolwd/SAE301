@@ -86,20 +86,10 @@ body {
     margin: 0 auto;
 }
 
-/* Variables pour les couleurs */
-:root {
-    --couleur-primaire-bleu: #004d9c;
-    --couleur-secondaire-gris: #555;
-    --couleur-fond-bouton-gris: #ccc;
-    --couleur-fond-entete-tableau: #808080;
-    --couleur-bande-orange: #ff8c00;
-    --couleur-texte-sombre: #333;
-}
-
 .titre-tableau-de-bord {
     font-size: 2.5em;
     font-weight: bold;
-    color: var(--couleur-texte-sombre);
+    color: #333;
     margin: 0 0 20px 0;
     text-align: center;
     border-bottom: 3px solid #ccc;
@@ -118,7 +108,7 @@ body {
 }
 
 
-/* Sections contenant chaque tableau */
+/* bloc qui contient les tableau */
 .section-justificatifs,
 .section-historique {
     background-color: white;
@@ -132,13 +122,13 @@ body {
 .section-historique h2 {
     font-size: 1.5em;
     font-weight: normal;
-    color: var(--couleur-texte-sombre);
+    color: #333;
     margin-top: 0;
     margin-bottom: 15px;
     text-align: center;
 }
 
-/* Conteneur interne pour permettre le défilement */
+/* Conteneur pour permettre le défilement */
 .table-container {
     width: 100%;
     max-height: 400px;
@@ -159,7 +149,7 @@ body {
 }
 
 .tableau thead th {
-    background-color: var(--couleur-fond-entete-tableau);
+    background-color: #808080;
     color: white;
     padding: 15px 10px;
     text-align: center;
@@ -192,7 +182,7 @@ body {
 }
 
 
-/* Style général des boutons d'action */
+/* Style des boutons d'action */
 .action-button {
     display: inline-block;
     padding: 8px 15px;
@@ -236,7 +226,6 @@ body {
     color: #fff;
     z-index: 9999;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-
     /* Animation d'apparition */
     opacity: 0;
     transform: translateY(-30px);
@@ -273,8 +262,6 @@ body {
 
 
 
-
-
 /* On indique que les en-têtes sont cliquables */
 .tableau thead th {
     cursor: pointer;
@@ -283,13 +270,13 @@ body {
     transition: background-color 0.2s;
 }
 
-/* Effet au survol */
+/* effet quand on survol */
 .tableau thead th:hover {
     background-color: #666;
 }
 
 
-/* Optionnel : Désactiver le curseur sur les colonnes d'action si on ne veut pas trier */
+/* désactiver le curseur sur les colonnes qui contiennent les bouton pour indiquer qu'on peut pas trier par bouton parce que ça n'a pas de sens */
 .tableau thead th[data-type="aucun"] {
     cursor: default;
 }

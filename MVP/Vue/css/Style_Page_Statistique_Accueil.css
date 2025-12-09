@@ -203,7 +203,7 @@ body {
 }
 
 
-/* Boîte de statistiques */
+/* block qui contient les stats */
 .stats-box {
     background-color: #e6f0f5;
     border: 2px solid #c9d8e0;
@@ -262,18 +262,18 @@ body {
 
 
 .tableau tbody td.status-oui {
-    background-color: inherit ; /* Laisse le fond par défaut */
+    background-color: inherit ;
 
-    color: #008000 ;             /* Texte Vert foncé */
+    color: #008000 ;
     font-weight: bold ;
     text-align: center;
 }
 
-/* Rouge pour 'NON' */
+/* quand c'est non */
 .tableau tbody td.status-non {
-    background-color: inherit ; /* Laisse le fond par défaut */
+    background-color: inherit ;
 
-    color: #CC0000 ;             /* Texte Rouge foncé */
+    color: #CC0000 ;
     font-weight: bold ;
     text-align: center;
 }
@@ -284,7 +284,7 @@ body {
     transition: background-color 0.2s;
 }
 
-/* Petit effet au survol pour montrer que c'est actif */
+/* effet au survol pour montrer que c'est actif */
 .tableau thead th:hover {
     background-color: #666;
 }
@@ -292,12 +292,12 @@ body {
 
 .filtres-container {
     display: flex;
-    justify-content: flex-start; /* Aligné à gauche comme le tableau */
+    justify-content: flex-start;
     gap: 10px;
     margin-bottom: 15px;
     width: 100%;
     flex-wrap: wrap;
-    background-color: #f9f9f9; /* Légère distinction visuelle */
+    background-color: #f9f9f9;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
@@ -308,12 +308,12 @@ body {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 0.9rem;
-    flex: 1; /* Les champs se partagent l'espace */
-    min-width: 140px; /* Évite qu'ils soient trop petits sur mobile */
+    flex: 1;
+    min-width: 140px;
 }
 
 .filtres-container input:focus {
     outline: none;
-    border-color: #004d9c; /* Couleur primaire bleue définie ailleurs */
+    border-color: #004d9c;
     box-shadow: 0 0 4px rgba(0, 77, 156, 0.3);
 }

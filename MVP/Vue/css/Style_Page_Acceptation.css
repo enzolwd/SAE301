@@ -108,7 +108,7 @@ body {
     border-bottom: 3px solid #ccc;
     padding-bottom: 10px;
 }
-/* 3. Conteneur principal des deux tableaux */
+/* conteneur principal des deux tableaux */
 .content-wrapper,
 .content-tables-container {
     display: flex;
@@ -151,7 +151,7 @@ body {
 .tableau thead th:last-child {
     border-right: none;
 }
-/* Corps du tableau */
+/* corps du tableau */
 .tableau tbody td {
     border: 1px solid #ddd;
     padding: 12px 10px;
@@ -163,11 +163,11 @@ body {
 .tableau tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-/* Colonnes spécifiques au tableau Historique */
+/* colonnes spécifiques au tableau Historique */
 .tableau.historique tbody td:nth-child(3) {
     font-weight: bold;
 }
-/* Classes de statut basées sur les TR */
+/* Classes de statut basées sur les tr */
 .statut-refuse td:nth-child(3) {
     color: red;
 }
@@ -298,14 +298,13 @@ body {
     text-align: center;
 }
 
-/* style pour le H3 */
+/* style pour le h3 */
 .validation-comment-content h3 {
     margin-top: 0;
     color: #333;
 }
 
 .title-validation {
-    /* Style pour le titre 'Commentaire :' */
     font-size: 1.8em;
     font-weight: bold;
     color: var(--couleur-texte-sombre);
@@ -376,16 +375,15 @@ body {
 
 .input-group-row .accepter-select {
     flex-grow: 1;
-    margin-bottom: 0; /* Important pour l'alignement */
+    margin-bottom: 0;
 }
 
 .bouton-ajout {
     padding: 10px 15px;
-    background-color: #ddd; /* Bleu UPHF */
+    background-color: #ddd;
     color: #333;
     border: 1px solid #ccc;
     cursor: pointer;
-    /* Hauteur fixe pour s'aligner avec l'input si besoin */
     height: 40px;
     margin-top: 0;
 

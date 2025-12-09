@@ -70,7 +70,6 @@ body {
 
 
 
-/* === CONTENEUR PRINCIPAL === */
 .container {
     flex-grow: 1;
     padding: 30px;
@@ -110,7 +109,7 @@ body {
     background-color: #aaa;
 }
 
-/* Style appliqué à la balise <form> */
+/* Style pour le form */
 #deposerJustificatif {
     width: 80%;
     max-width: 900px;

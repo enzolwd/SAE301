@@ -12,16 +12,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Variables pour les couleurs */
-:root {
-    --couleur-primaire-bleu: #004d9c;
-    --couleur-secondaire-gris: #555;
-    --couleur-fond-bouton-gris: #ccc;
-    --couleur-fond-entete-tableau: #808080;
-    --couleur-bande-orange: #ff8c00;
-    --couleur-texte-sombre: #333;
-}
-
 /* === HEADER === */
 .header-main {
     display: flex;
@@ -75,7 +65,6 @@ body {
 
 
 
-/* === CONTENEUR PRINCIPAL === */
 .container {
     flex-grow: 1;
     padding: 30px;
@@ -87,7 +76,7 @@ body {
 .container h1 {
     font-size: 2.5em;
     font-weight: bold;
-    color: var(--couleur-texte-sombre);
+    color: #333;
     margin: 0 0 40px 0;
     text-align: center;
     border-bottom: 3px solid #ccc;
@@ -115,7 +104,7 @@ body {
     overflow-x: auto;
 }
 
-/* === TABLEAU DES ABSENCES === */
+/* tableau d'absence */
 .absence-table {
     width: 100%;
     border-collapse: collapse;
@@ -128,7 +117,7 @@ body {
 }
 
 .absence-table th {
-    background-color: var(--couleur-fond-entete-tableau);
+    background-color: #808080;
     color: white;
     padding: 15px 10px;
     text-align: center;
@@ -154,12 +143,11 @@ body {
     background-color: #f8f9fa;
 }
 
-.status-nojustified {color : #004d9c; font-weight: bold;}
+.status-nojustified { color: #004d9c; font-weight: bold; }
 .status-pending { color: #ffc107; font-weight: bold; }
 .status-accepted { color: #28a745; font-weight: bold; }
 .status-refused { color: #dc3545; font-weight: bold; }
 .status-revision { color: #5c00ca; font-weight: bold; }
-
 
 .action-button {
     display: inline-block;
@@ -183,39 +171,31 @@ body {
 
 .action-button:hover { background-color: #aaa; }
 
-/* Style pour le conteneur du bouton */
 .justify-button {
     text-align: right;
 }
 
-
-
-
-
-
-
-/* Espacement entre les deux boîtes blanches */
+/* Espacement entre les deux boites blanches */
 .dashboard-content.daily-view {
     margin-bottom: 30px;
 }
 
-/* On donne aussi une classe au bloc historique pour être spécifique */
 .dashboard-content.history-view h1 {
     font-size: 1.8em;
 }
 
-/* Styles pour les titres H2 des sections */
+/* Titres h2 */
 .dashboard-content h2 {
     margin-top: 0;
     margin-bottom: 20px;
-    color: var(--couleur-secondaire-gris);
+    color: #555;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
     font-size: 1.8em;
     font-weight: bold;
 }
 
-/* Formulaire de filtre par date */
+/* Formulaire filtre date */
 .date-filter-form {
     display: flex;
     flex-wrap: wrap;
@@ -230,7 +210,7 @@ body {
 
 .date-filter-form label {
     font-weight: bold;
-    color: var(--couleur-texte-sombre);
+    color: #333;
 }
 
 .date-filter-form input[type="date"] {
@@ -242,14 +222,13 @@ body {
     background-color: #fff;
 }
 
-/* On s'assure que le bouton du formulaire a la bonne taille */
 .date-filter-form .action-button {
     padding: 9px 15px;
     text-transform: none;
     font-weight: normal;
 }
 
-/* Message si un tableau est vide */
+/* message si tableau vide */
 .empty-table-message td {
     text-align: center;
     color: #777;
@@ -258,10 +237,7 @@ body {
     background-color: #fdfdfd;
 }
 
-
-
-
-/* Rend les en-têtes cliquables visuellement */
+/* headers cliquables pour trier */
 .absence-table thead th {
     cursor: pointer;
     user-select: none;
@@ -269,16 +245,15 @@ body {
     transition: background-color 0.2s;
 }
 
-/* Effet de survol */
 .absence-table thead th:hover {
     background-color: #666;
 }
 
-
-/* Désactive le style cliquable pour les colonnes non triables (boutons) */
+/* désactiver l'effet sur les colonnes qui ne peuvent pas être triées */
 .absence-table thead th[data-type="aucun"] {
     cursor: default;
 }
+
 .absence-table thead th[data-type="aucun"]::after {
     content: '';
 }

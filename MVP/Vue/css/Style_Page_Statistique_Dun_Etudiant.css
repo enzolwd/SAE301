@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0; /* Fond gris clair de votre fichier */
+    background-color: #f0f0f0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -68,6 +68,13 @@ body {
 /* ----- FIN FOOTER ----- */
 
 
+
+
+
+
+
+
+
 .container {
     flex-grow: 1;
     padding: 30px;
@@ -79,18 +86,7 @@ body {
     margin: 0 auto;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-/* Conteneur flex pour les 2 boîtes */
+/* Conteneur pour les 2 boîtes */
 .chart-container {
     display: flex;
     flex-wrap: wrap;
@@ -99,7 +95,7 @@ body {
     width: 100%;
 }
 
-/* Style de la boîte grise */
+/* Style du block grise */
 .chart-box {
     width: 48%;
     min-width: 450px;
@@ -123,7 +119,6 @@ body {
     flex-direction: column;
 }
 
-
 /* Titre à l'intérieur de la boîte */
 .chart-box h3 {
     text-align: center;
@@ -133,7 +128,7 @@ body {
     color: #333;
 }
 
-/* Conteneur pour les options radio */
+/* Conteneur pour les options */
 .chart-options {
     margin-bottom: 20px;
     padding-left: 10px;
@@ -170,11 +165,11 @@ body {
     border-radius: 50%;
 }
 
-.radio-custom:hover input ~ .radio-check {
+.radio-custom:hover input + .radio-check {
     background-color: #ccc;
 }
 
-.radio-check:after {
+.radio-check::after {
     content: "X";
     position: absolute;
     display: none;
@@ -187,7 +182,7 @@ body {
 }
 
 /* Afficher le "X" quand le bouton est coché */
-.radio-custom input:checked ~ .radio-check:after {
+.radio-custom input:checked + .radio-check::after {
     display: block;
 }
 
@@ -208,6 +203,6 @@ body {
     height: 18px;
     width: 18px;
 }
-.radio-custom.small .radio-check:after {
+.radio-custom.small .radio-check::after {
     font-size: 12px;
 }

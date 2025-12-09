@@ -69,6 +69,9 @@ body {
 
 
 
+
+
+
 /* Style pour le conteneur principal de la page */
 .container {
     flex-grow: 1;
@@ -104,14 +107,14 @@ body {
 
 
 
-/* Wrapper pour le bouton retour (pour l'aligner) */
+/* wrapper pour le bouton retour (pour l'aligner) */
 .bouton-retour-wrapper {
     max-width: 500px;
     width: 100%;
     margin: 0 auto 20px auto;
 }
 
-/* Bloc de contenu principal */
+/* bloc de contenu principal */
 .refusal-wrapper {
     max-width: 500px;
     width: 100%;
@@ -125,7 +128,6 @@ body {
     text-align: left;
 }
 
-/* S'applique aux <label> car elles ont la classe .detail-title. */
 .detail-title {
     font-size: 1.2em;
     font-weight: bold;
@@ -186,25 +188,30 @@ body {
 }
 
 .error-message-box {
-    background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
-    padding: 15px; border-radius: 5px; margin-bottom: 20px;
-    text-align: center; width: 100%;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
 }
 
 
 .input-group-row {
     display: flex;
     gap: 10px;
-    align-items: flex-start; /* Aligne le haut des inputs */
+    align-items: flex-start;
 }
 
 .input-group-row .refusal-select {
-    flex-grow: 1; /* L'input prend toute la place dispo */
-    margin-bottom: 0; /* On retire la marge car gérée par le gap */
+    flex-grow: 1;
+    margin-bottom: 0;
 }
 
 .bouton-ajout {
-    padding: 10px 15px; /* Pour matcher la hauteur de l'input */
+    padding: 10px 15px;
     background-color: #ddd;
     color: #333;
     border: 1px solid #ccc;
