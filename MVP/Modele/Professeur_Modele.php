@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Fonction qui récupère les rattrapages pour un professeur.
- * Elle REÇOIT la connexion en paramètre.
- */
 function recupererRattrapagesProf($conn1, $idProf) {
     $lesRattrapages = [];
     try {

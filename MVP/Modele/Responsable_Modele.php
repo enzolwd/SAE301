@@ -1,15 +1,11 @@
 <?php
 
-/**
- * Fonction qui récupère les justificatifs (en attente et historique).
- * Elle REÇOIT la connexion en paramètre.
- */
 function recupererTableauxResponsable($conn1) {
     $lesjustificatifs = [];
     $lesjustificatifsHisto = [];
 
     try {
-        // Requête pour les justificatifs EN ATTENTE
+        // requête pour les justificatifs en attente
         $requeteAvoirJustificatifs = $conn1->prepare("
             SELECT
                 Justificatif.idjustificatif,
@@ -30,7 +26,7 @@ function recupererTableauxResponsable($conn1) {
         $requeteAvoirJustificatifs->execute();
         $lesjustificatifs = $requeteAvoirJustificatifs->fetchAll(PDO::FETCH_ASSOC);
 
-        // Requête pour l'HISTORIQUE
+        // Requête pour l'historique
         $requeteAvoirJustificatifsHistorique = $conn1->prepare("
             SELECT
                 Justificatif.idjustificatif,
@@ -531,7 +527,7 @@ function recuperermotif($conn1){
 
 function ajouterNouveauMotif($conn1, $nouveauMotif) {
     try {
-        // Vérification anti-doublon basique (insensible à la casse)
+        // vérification des doublons
         $check = $conn1->prepare("SELECT COUNT(*) FROM motifRefus WHERE LOWER(motif) = LOWER(:motif)");
         $check->execute([':motif' => $nouveauMotif]);
 
@@ -561,7 +557,7 @@ function recupererMotifAcceptation($conn1){
 
 function ajouterMotifAcceptation($conn1, $nouveauMotif) {
     try {
-        // Vérif anti-doublon
+        // Vérification des doublons
         $check = $conn1->prepare("SELECT COUNT(*) FROM motifacceptation WHERE LOWER(motif) = LOWER(:motif)");
         $check->execute([':motif' => $nouveauMotif]);
 

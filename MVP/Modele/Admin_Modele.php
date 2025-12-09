@@ -1,13 +1,7 @@
 <?php
-/*
- * Fichier Modele
- * Contient les fonctions pour l'ADMIN.
-*/
+/* Contient les fonctions pour l'ADMIN */
 
-/**
- * Fonction pour insérer un nouvel utilisateur.
- * Elle REÇOIT la connexion en paramètre.
- */
+
 function creerUtilisateur($conn1, $role, $UserName, $hash, $nom, $prenom, $idIUT, $groupe, $mail) {
     try {
         $requete = $conn1->prepare( "INSERT INTO utilisateur (nomUtilisateur, motDePasse, nom, prénom, role, identifiantiut, groupe, email) VALUES (:UserName, :mdp, :nom, :prenom, :role, :idIUT, :groupe, :mail)");
@@ -22,10 +16,10 @@ function creerUtilisateur($conn1, $role, $UserName, $hash, $nom, $prenom, $idIUT
 
         $requete->execute();
 
-        return true; // Succès
+        return true;
 
     } catch(PDOException $e) {
-        return false; // Echec
+        return false;
     }
 }
 ?>

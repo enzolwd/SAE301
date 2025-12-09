@@ -27,13 +27,13 @@ function stockerToken($conn, $idUtilisateur, $token) {
 
 function verifierToken($conn, $token) {
     try {
-        // On cherche un user avec ce token ET dont la date d'expiration n'est pas passée
+        // On cherche un utilisateur avec ce token dont la date d'expiration n'est pas passée
         $sql = "SELECT idUtilisateur FROM Utilisateur 
                 WHERE token_recuperation = :token 
                 AND date_expiration_token > NOW()";
         $stmt = $conn->prepare($sql);
         $stmt->execute([':token' => $token]);
-        return $stmt->fetchColumn(); // Renvoie l'ID ou false
+        return $stmt->fetchColumn();
     } catch (PDOException $e) {
         return false;
     }
@@ -41,7 +41,7 @@ function verifierToken($conn, $token) {
 
 function mettreAJourMotDePasse($conn, $idUtilisateur, $nouveauMdpHash) {
     try {
-        // On change le MDP et on supprime le token pour qu'il ne soit plus réutilisable
+        // on change le mot de passe et on supprime le token
         $sql = "UPDATE Utilisateur 
                 SET motDePasse = :mdp, 
                     token_recuperation = NULL, 

@@ -1,13 +1,6 @@
 <?php
-/*
- * Fichier Modele
- * Contient les fonctions pour l'espace secrétaire.
-*/
+/* Contient les fonctions pour l'espace secrétaire */
 
-/**
- * Fonction qui traite le CSV et insère les absences dans la BDD.
- * Elle REÇOIT la connexion en paramètre.
- */
 function traiterFichierCSV($conn, $csv_data) {
     try {
         $header = array_shift($csv_data);
@@ -39,8 +32,7 @@ function traiterFichierCSV($conn, $csv_data) {
             $evaluation_str = trim($ligne[23]);
 
             $ressource = null;
-            // Expression régulière pour capturer la ressource (P, R, ou S)
-            // à l'intérieur de parenthèses : / (.* ( [PRS][1-6].*? ) ) /
+            // capturer la ressource (P, R, ou S) à l'intérieur de parenthèses : "/ (.* ( [PRS][1-6].*? ) ) /"
             $patternRessource = '/\(.*([PRS][1-6].*?)\)/';
 
             if (preg_match($patternRessource, $matiere, $text)) {

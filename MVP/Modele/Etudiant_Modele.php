@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Fonction qui récupère les absences et justificatifs d'un étudiant.
- * Elle REÇOIT la connexion en paramètre.
- */
 function recupererTableauxEtudiant($conn, $idEtudiantConnecte, $isDateView, $dateSelectionnee) {
     $resultatsdujour = [];
     $resultatsJustificatifs = [];
@@ -113,7 +109,7 @@ function deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heured
                 $requete->bindParam(':heurefin', $heurefin);
                 $requete->bindParam(':commentaire', $commentaire);
                 $requete->bindParam(':motif', $motif);
-                // Bind des deux nouveaux paramètres
+                // mettre les deux nouveaux paramètres
                 $requete->bindParam(':cheminfichier1', $cheminFichier1PourBDD);
                 $requete->bindParam(':cheminfichier2', $cheminFichier2PourBDD);
 
@@ -141,17 +137,17 @@ function deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heured
                 if (!empty($idsToDelete)) {
                     $placeholders = implode(',', array_fill(0, count($idsToDelete), '?'));
 
-                    // Récupérer les deux chemins de fichiers
+                    // récupérer les deux chemins de fichiers
                     $recupererFichier = $conn1->prepare("SELECT fichier1, fichier2 FROM Justificatif WHERE idjustificatif IN ($placeholders)");
                     $recupererFichier->execute(array_values($idsToDelete));
-                    $fichiersASupprimer = $recupererFichier->fetchAll(PDO::FETCH_ASSOC); // Récupérer en mode associatif
+                    $fichiersASupprimer = $recupererFichier->fetchAll(PDO::FETCH_ASSOC);
 
                     foreach ($fichiersASupprimer as $fichiers) {
-                        // Supprimer fichier1 s'il existe
+                        // supprimer fichier1 s'il existe
                         if (!empty($fichiers['fichier1']) && file_exists($fichiers['fichier1'])) {
                             @unlink($fichiers['fichier1']);
                         }
-                        // Supprimer fichier2 s'il existe
+                        // supprimer fichier2 s'il existe
                         if (!empty($fichiers['fichier2']) && file_exists($fichiers['fichier2'])) {
                             @unlink($fichiers['fichier2']);
                         }
@@ -170,7 +166,6 @@ function deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heured
             return "conflict";
         }
     } catch(PDOException $e) {
-        // En cas d'erreur, vous pourriez vouloir supprimer les fichiers qui viennent d'être uploadés
         if (isset($cheminFichier1PourBDD) && !empty($cheminFichier1PourBDD) && file_exists($cheminFichier1PourBDD)) {
             @unlink($cheminFichier1PourBDD);
         }
@@ -181,10 +176,6 @@ function deposerJustificatif($conn1, $idUtilisateurConnecte, $datedebut, $heured
     }
 }
 
-/**
- * Fonction qui récupère le motif d'un justificatif (côté étudiant).
- * Elle REÇOIT la connexion en paramètre.
- */
 function recupererMotifEtudiant($conn1, $justificatifID) {
     $motifDetails = null;
     try {
