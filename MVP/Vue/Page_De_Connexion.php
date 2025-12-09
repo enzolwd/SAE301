@@ -1,14 +1,14 @@
 <?php
 session_start();
 $errorMessage = "";
-$successMessage = ""; // Nouvelle variable
+$successMessage = "";
 
 if (isset($_SESSION['login_error'])) {
     $errorMessage = $_SESSION['login_error'];
     unset($_SESSION['login_error']);
 }
 
-// --- AJOUT : Récupération du message de succès ---
+// message de succès
 if (isset($_SESSION['login_success'])) {
     $successMessage = $_SESSION['login_success'];
     unset($_SESSION['login_success']);
@@ -47,7 +47,7 @@ if (isset($_GET['error']) && $_GET['error'] === 'timeout') {
         <?php endif; ?>
 
         <?php
-        // Message d'erreur (Rouge)
+        // message d'erreur
         if (!empty($errorMessage)) {
             echo '<p class="error-message">' . htmlspecialchars($errorMessage) . '</p>';
         }

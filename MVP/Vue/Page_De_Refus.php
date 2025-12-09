@@ -24,6 +24,7 @@ if (isset($_GET['error']) && $_GET['error'] === 'empty') {
     $errorMessage = "Erreur : Veuillez sélectionner un motif dans la liste.";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

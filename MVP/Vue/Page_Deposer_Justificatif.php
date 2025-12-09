@@ -7,7 +7,8 @@ if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Etudiant') {
     exit();
 }
 
-$errorMessage = ''; // Variable pour le message d'erreur
+// message d'erreur
+$errorMessage = '';
 if (isset($_GET['error'])) {
     if ($_GET['error'] === 'conflict') {
         $errorMessage = "Vous avez déjà déposé un justificatif pour une ou plusieurs absences dans cet intervalle.";
@@ -164,7 +165,7 @@ if (isset($_GET['succes'])) {
 
             if (fileInput && feedbackElement && removeButton) {
 
-                // Événement quand un fichier est choisi
+                // événement quand un fichier est choisi
                 fileInput.addEventListener('change', function() {
                     // vérifier si un fichier est sélectionné
                     if (this.files && this.files.length > 0) {
@@ -175,7 +176,7 @@ if (isset($_GET['succes'])) {
                         feedbackElement.textContent = 'Fichier importé : ' + fileName;
                         feedbackElement.style.color = '#004d66';
 
-                        // Afficher le bouton "Annuler"
+                        // afficher le bouton "Annuler"
                         removeButton.style.display = 'inline';
                     } else {
                         // vider le message si aucun fichier n'est sélectionné
@@ -185,9 +186,9 @@ if (isset($_GET['succes'])) {
                     }
                 });
 
-                // Événement quand on clique sur "Annuler"
+                // événement quand on clique sur "Annuler"
                 removeButton.addEventListener('click', function() {
-                    // Vider la valeur de l'input fichier
+                    // Vider la valeur de l'input pour fichier
                     fileInput.value = '';
 
                     // Vider le message de feedback
@@ -199,7 +200,7 @@ if (isset($_GET['succes'])) {
             }
         }
 
-        // Appliquer la fonction aux deux inputs de fichier
+        // Appliquer la fonction aux deux inputs de fichier fichier1 et fichier2
         setupFileInputFeedback('fichierjustificatif1', 'file-upload-feedback1', 'remove-file1');
         setupFileInputFeedback('fichierjustificatif2', 'file-upload-feedback2', 'remove-file2');
 
@@ -218,10 +219,10 @@ if (isset($_GET['succes'])) {
         const inputDateFin = document.getElementById('dateFin');
         const inputHeureFin = document.getElementById('heureFin');
 
-        // ajouter l'écouteur d'événement
+        // ajouter l'écouteur d'événement pour choisir le mode de justification soit un jour soit interval
         checkbox.addEventListener('change', function() {
             if (this.checked) {
-                // Mode "Jour Entier"
+                // Mode "jour entier"
                 champsJourEntier.classList.remove('hidden');
                 champsIntervalle.classList.add('hidden');
 
@@ -241,15 +242,15 @@ if (isset($_GET['succes'])) {
                 inputHeureFin.disabled = true;
 
             } else {
-                // Mode "Intervalle" (par défaut)
+                // Mode "Intervalle"
                 champsJourEntier.classList.add('hidden');
                 champsIntervalle.classList.remove('hidden');
 
-                // Rendre le champ jour entier non-obligatoire et inactif
+                // Rendre le champ jour entier non-obligatoire
                 inputDateJourEntier.required = false;
                 inputDateJourEntier.disabled = true;
 
-                // Rendre les champs intervalle obligatoires et actifs
+                // Rendre les champs intervalle obligatoires
                 inputDateDebut.required = true;
                 inputHeureDebut.required = true;
                 inputDateFin.required = true;
@@ -262,8 +263,7 @@ if (isset($_GET['succes'])) {
             }
         });
 
-        // initialiser l'état (au cas où la page est rechargée)
-        // On simule un 'change' pour mettre les champs 'disabled'/'required' dans le bon état
+        // initialiser l'état
         checkbox.checked = false;
         const event = new Event('change');
         checkbox.dispatchEvent(event);

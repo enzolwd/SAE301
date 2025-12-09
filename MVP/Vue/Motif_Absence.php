@@ -1,6 +1,7 @@
 <?php
 require_once '../Presentation/Motif_Absence_Presenteur.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

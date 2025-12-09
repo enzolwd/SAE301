@@ -5,7 +5,6 @@ if (!isset($_GET['token']) || empty($_GET['token'])) {
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>

@@ -35,7 +35,7 @@ require_once '../Presentation/Statistique_Etudiant_Presenteur.php';
 
         <script>
             Chart.register(ChartDataLabels);
-            // On définit des options pour les pourcentages
+            // on met les options pour les pourcentages
             Chart.defaults.set('plugins.datalabels', {
                 formatter: (value, ctx) => {
                     const sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
@@ -46,7 +46,7 @@ require_once '../Presentation/Statistique_Etudiant_Presenteur.php';
                 font: { weight: 'bold' }
             });
 
-            // On AFFICHE la légende en dessous du camembert
+            // On affiche la légende en dessous du camemmbert
             Chart.defaults.set('plugins.legend', {
                 display: true,
                 position: 'bottom'

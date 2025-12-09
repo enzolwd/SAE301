@@ -23,6 +23,7 @@ if (isset($_GET['error'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

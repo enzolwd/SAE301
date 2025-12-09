@@ -132,7 +132,7 @@ require_once '../Presentation/Etudiant_Accueil_Presenteur.php';
 
         function rendreTableauTriable(idTableau) {
             const tableau = document.getElementById(idTableau);
-            // Si le tableau n'existe pas, on sort
+            // Si le tableau n'existe pas, on arrete
             if (!tableau) return;
 
             const lesEntetes = tableau.querySelectorAll('thead th');
@@ -159,7 +159,7 @@ require_once '../Presentation/Etudiant_Accueil_Presenteur.php';
             const nouvelOrdre = estCroissant ? 'desc' : 'asc';
             const multiplicateur = (nouvelOrdre === 'asc') ? 1 : -1;
 
-            // Réinitialisation des attributs visuels sur les autres colonnes
+            // Réinitialisation des attributs sur les autres colonnes
             lesEntetes.forEach(th => th.removeAttribute('data-ordre'));
             enteteClique.setAttribute('data-ordre', nouvelOrdre);
 
@@ -183,14 +183,14 @@ require_once '../Presentation/Etudiant_Accueil_Presenteur.php';
                 }
             });
 
-            // réinsertion des lignes triées dans le DOM
+            // réinsertion des lignes triées
             lesLignes.forEach(ligne => corpsDuTableau.appendChild(ligne));
         }
 
         function convertirDateFrancais(chaineDate) {
             if (!chaineDate) return new Date(0);
             const parties = chaineDate.split('/');
-            // JS compte les mois de 0 à 11, donc on fait -1 sur le mois
+            // compte les mois de 0 à 11, donc on fait -1 sur le mois
             return new Date(parties[2], parties[1] - 1, parties[0]);
         }
     });

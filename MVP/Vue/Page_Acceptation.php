@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-// === AJOUTS POUR LA BDD ===
 require_once '../Modele/ConnexionBDD.php';
 require_once '../Modele/Responsable_Modele.php';
 $conn = connecterBDD();
+
 // On récupère la liste des motifs d'acceptation
 $listeMotifs = recupererMotifAcceptation($conn);
-// ==========================
 
 if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Responsable Pedagogique') {
     header('Location: Page_De_Connexion.php');

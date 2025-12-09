@@ -56,7 +56,7 @@ require_once '../Presentation/Consultation_Historique_Presenteur.php';
                     <h3 class="detail-title">Justificatif :</h3>
                     <div class="justificatif-buttons">
                         <?php
-                        // On vérifie si au moins un fichier a été fourni
+                        // on vérifie si au moins un fichier a été fourni
                         $fichier1Existe = !empty($justificatifDetailsHisto['fichier1']);
                         $fichier2Existe = !empty($justificatifDetailsHisto['fichier2']);
                         ?>

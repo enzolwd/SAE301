@@ -12,6 +12,7 @@ if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
 }
 $justificatifID_from_url = (int)$_GET['id'];
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

@@ -156,7 +156,7 @@ if (!empty($notificationMessage)) {
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-        // --- 1. GESTION DES NOTIFICATIONS (Toast) ---
+        // gestion des notifs
         const toast = document.getElementById('toast');
         if (toast) {
             setTimeout(function() {
@@ -167,12 +167,12 @@ if (!empty($notificationMessage)) {
             }, 4000);
         }
 
-        // --- 2. LOGIQUE DE FILTRAGE (Mise à jour pour gérer les 2 tableaux séparément) ---
+        // filtrage
         const inputDate = document.getElementById('filtreDate');
         const inputEtudiant = document.getElementById('filtreEtudiant');
         const inputGroupe = document.getElementById('filtreGroupe');
 
-        // On définit les ID des deux tableaux à traiter
+        // les ID des deux tableaux à traiter
         const idsTableaux = ['tableauAttente', 'tableauHistorique'];
 
         function appliquerFiltres() {
@@ -180,21 +180,19 @@ if (!empty($notificationMessage)) {
             const valeurEtudiant = inputEtudiant.value.toLowerCase();
             const valeurGroupe = inputGroupe.value.toLowerCase();
 
-            // On boucle sur CHAQUE tableau indépendamment
+            // On boucle sur tout les tableaux
             idsTableaux.forEach(idTableau => {
                 const tableau = document.getElementById(idTableau);
                 if (!tableau) return;
 
                 const corpsTableau = tableau.querySelector('tbody');
-                // On récupère uniquement les lignes de données (pas les messages techniques)
+                // On récupère les lignes de données
                 const lignesDonnees = corpsTableau.querySelectorAll('tr:not(.empty-table-message):not(.row-no-result)');
                 const ligneAucunResultat = corpsTableau.querySelector('.row-no-result');
 
                 let compteurLignesVisibles = 0;
 
                 lignesDonnees.forEach(ligne => {
-                    // Indices des colonnes (Identiques pour les deux tableaux) :
-                    // 0: Date Dépôt | 5: Nom | 6: Prénom | 7: Groupe
 
                     const dateDepot = ligne.children[0].innerText.toLowerCase();
                     const nom = ligne.children[5].innerText.toLowerCase();
@@ -218,8 +216,7 @@ if (!empty($notificationMessage)) {
                     }
                 });
 
-                // --- GESTION DU MESSAGE "AUCUN RÉSULTAT" ---
-                // Si on a des données à la base mais que le filtre a tout caché
+                // Si on a des données dans la base mais que le filtre a tout caché
                 if (ligneAucunResultat) {
                     if (compteurLignesVisibles === 0 && lignesDonnees.length > 0) {
                         ligneAucunResultat.style.display = ''; // On affiche le message
@@ -230,13 +227,13 @@ if (!empty($notificationMessage)) {
             });
         }
 
-        // Écouteurs
+        // les écouteurs
         if(inputDate) inputDate.addEventListener('input', appliquerFiltres);
         if(inputEtudiant) inputEtudiant.addEventListener('input', appliquerFiltres);
         if(inputGroupe) inputGroupe.addEventListener('input', appliquerFiltres);
 
 
-        // --- 3. LOGIQUE DE TRI ---
+        // tri
         rendreTableauTriable('tableauAttente');
         rendreTableauTriable('tableauHistorique');
 
@@ -257,7 +254,7 @@ if (!empty($notificationMessage)) {
         }
 
         function trierLeTableau(lesEntetes, corpsDuTableau, index, enteteClique) {
-            // On ne trie que les vraies lignes (on ignore les messages)
+            // On trie les lignes
             const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr:not(.empty-table-message):not(.row-no-result)'));
             const ligneAucunResultat = corpsDuTableau.querySelector('.row-no-result');
 
@@ -286,7 +283,7 @@ if (!empty($notificationMessage)) {
                 }
             });
 
-            // Réinsertion des lignes triées
+            // réinsertion des lignes triées
             lesLignes.forEach(ligne => corpsDuTableau.appendChild(ligne));
 
             // On remet la ligne "aucun résultat" à la fin pour qu'elle ne se retrouve pas mélangée

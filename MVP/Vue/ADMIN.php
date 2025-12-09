@@ -6,6 +6,7 @@ if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'ADMIN') {
     header('Location: Page_De_Connexion.php');
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

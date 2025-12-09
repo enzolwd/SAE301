@@ -258,7 +258,6 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-        // --- VARIABLES ---
         const tableau = document.getElementById('tableauStatistiques');
         const corpsDuTableau = tableau.querySelector('tbody');
         const lesEntetes = tableau.querySelectorAll('thead th');
@@ -268,7 +267,7 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
         const inputGroupe = document.getElementById('filtreGroupe');
         const inputMatiere = document.getElementById('filtreMatiere');
 
-        // --- FONCTION DE FILTRAGE ---
+        // fonction pour filtrer
         function appliquerFiltres() {
             const valeurDate = inputDate.value.toLowerCase();
             const valeurEtudiant = inputEtudiant.value.toLowerCase();
@@ -281,8 +280,6 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
                 // On ignore la ligne "message vide"
                 if (ligne.classList.contains('empty-table-message')) return;
 
-                // Indices des colonnes (Statistiques):
-                // 0: Date, 3: Matière, 4: Nom, 5: Prénom, 6: Groupe
                 const dateTexte = ligne.children[0].innerText.toLowerCase();
                 const matiereTexte = ligne.children[3].innerText.toLowerCase();
                 const nomTexte = ligne.children[4].innerText.toLowerCase();
@@ -291,7 +288,7 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
 
                 const etudiantComplet = nomTexte + " " + prenomTexte;
 
-                // Vérifications
+                // on vérification
                 const matchDate = dateTexte.includes(valeurDate);
                 const matchEtudiant = nomTexte.includes(valeurEtudiant) ||
                     prenomTexte.includes(valeurEtudiant) ||
@@ -299,7 +296,7 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
                 const matchGroupe = groupeTexte.includes(valeurGroupe);
                 const matchMatiere = matiereTexte.includes(valeurMatiere);
 
-                // Affichage
+                // affichage
                 if (matchDate && matchEtudiant && matchGroupe && matchMatiere) {
                     ligne.style.display = '';
                 } else {
@@ -308,14 +305,14 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
             });
         }
 
-        // Écouteurs pour le filtrage
+        // écouteurs pour le filtrage
         if(inputDate) inputDate.addEventListener('input', appliquerFiltres);
         if(inputEtudiant) inputEtudiant.addEventListener('input', appliquerFiltres);
         if(inputGroupe) inputGroupe.addEventListener('input', appliquerFiltres);
         if(inputMatiere) inputMatiere.addEventListener('input', appliquerFiltres);
 
 
-        // --- LOGIQUE DE TRI ---
+        // tri
         lesEntetes.forEach((entete, indexColonne) => {
             if (entete.getAttribute('data-type') !== 'aucun') {
                 entete.addEventListener('click', () => {
@@ -327,7 +324,7 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
         function trierLeTableau(index, enteteClique) {
             const lesLignes = Array.from(corpsDuTableau.querySelectorAll('tr'));
 
-            // Sécurité si tableau vide
+            // si tableau vide alors on quitte
             if (lesLignes.length === 0 || (lesLignes.length === 1 && lesLignes[0].classList.contains('empty-table-message'))) return;
 
             const estCroissant = enteteClique.getAttribute('data-ordre') === 'asc';
@@ -340,7 +337,6 @@ require_once '../Presentation/Statistique_Accueil_Presenteur.php';
             const typeDeDonnee = enteteClique.getAttribute('data-type');
 
             lesLignes.sort((ligneA, ligneB) => {
-                // Note : On trie sur le contenu textuel même si la ligne est masquée
                 const celluleA = ligneA.children[index].innerText.trim();
                 const celluleB = ligneB.children[index].innerText.trim();
 

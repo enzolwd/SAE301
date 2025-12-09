@@ -94,17 +94,16 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
         const lesEntetes = tableau.querySelectorAll('thead th');
         const corpsDuTableau = tableau.querySelector('tbody');
 
-        // === MODIFICATION JS : AJOUT LOGIQUE GROUPE ===
         const inputDate = document.getElementById('filtreDate');
         const inputEtudiant = document.getElementById('filtreEtudiant');
         const inputMatiere = document.getElementById('filtreMatiere');
-        const inputGroupe = document.getElementById('filtreGroupe'); // Nouveau sélecteur
+        const inputGroupe = document.getElementById('filtreGroupe');
 
         function appliquerFiltres() {
             const valeurDate = inputDate.value.toLowerCase();
             const valeurEtudiant = inputEtudiant.value.toLowerCase();
             const valeurMatiere = inputMatiere.value.toLowerCase();
-            const valeurGroupe = inputGroupe.value.toLowerCase(); // Nouvelle valeur
+            const valeurGroupe = inputGroupe.value.toLowerCase();
 
             const lignes = corpsDuTableau.querySelectorAll('tr');
 
@@ -116,19 +115,18 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
                 const matiereTexte = ligne.children[3].innerText.toLowerCase();
                 const nomTexte = ligne.children[4].innerText.toLowerCase();
                 const prenomTexte = ligne.children[5].innerText.toLowerCase();
-                const groupeTexte = ligne.children[6].innerText.toLowerCase(); // Nouvelle récupération
+                const groupeTexte = ligne.children[6].innerText.toLowerCase();
 
                 const etudiantComplet = nomTexte + " " + prenomTexte;
 
                 const matchDate = dateTexte.includes(valeurDate);
                 const matchMatiere = matiereTexte.includes(valeurMatiere);
-                const matchGroupe = groupeTexte.includes(valeurGroupe); // Nouvelle vérification
+                const matchGroupe = groupeTexte.includes(valeurGroupe);
 
                 const matchEtudiant = nomTexte.includes(valeurEtudiant) ||
                     prenomTexte.includes(valeurEtudiant) ||
                     etudiantComplet.includes(valeurEtudiant);
 
-                // Ajout de matchGroupe dans la condition finale
                 if (matchDate && matchMatiere && matchEtudiant && matchGroupe) {
                     ligne.style.display = '';
                 } else {
@@ -140,8 +138,7 @@ require_once '../Presentation/Professeur_Accueil_Presenteur.php';
         inputDate.addEventListener('input', appliquerFiltres);
         inputEtudiant.addEventListener('input', appliquerFiltres);
         inputMatiere.addEventListener('input', appliquerFiltres);
-        inputGroupe.addEventListener('input', appliquerFiltres); // Nouvel écouteur
-        // === FIN MODIFICATION ===
+        inputGroupe.addEventListener('input', appliquerFiltres);
 
         lesEntetes.forEach((entete, indexColonne) => {
             entete.addEventListener('click', () => {

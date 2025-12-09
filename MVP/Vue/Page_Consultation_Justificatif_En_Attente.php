@@ -1,6 +1,7 @@
 <?php
 require_once '../Presentation/Consultation_Attente_Presenteur.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

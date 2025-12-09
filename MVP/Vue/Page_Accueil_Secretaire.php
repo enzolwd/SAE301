@@ -7,6 +7,7 @@ if (!isset($_SESSION['idUtilisateur']) || $_SESSION['role'] != 'Secretaire') {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

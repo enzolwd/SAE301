@@ -76,11 +76,11 @@ require_once '../Presentation/Statistique_Selection_Presenteur.php';
         let found = false;
         let noResultOption = document.getElementById('etu-non-trouve');
 
-        // On fait une boucle sur toutes les options
+        // on fait une boucle sur toutes les options
         for (let i = 1; i < options.length; i++) {
             let option = options[i];
 
-            // On ignore l'option "aucun résultat"
+            // si c'est l'option "aucun résultat" alors on continue
             if (option.id === 'etu-non-trouve') continue;
 
             let text = option.textContent.toLowerCase();
@@ -94,7 +94,7 @@ require_once '../Presentation/Statistique_Selection_Presenteur.php';
             }
         }
 
-        // Si on n'a rien trouvé, on affiche "Aucun étudiant trouvé"
+        // si on n'a rien trouvé, on affiche "Aucun étudiant trouvé"
         noResultOption.style.display = found ? 'none' : '';
     });
 </script>
