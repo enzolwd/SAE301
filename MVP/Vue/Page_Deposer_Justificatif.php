@@ -129,7 +129,7 @@ if (isset($_GET['succes'])) {
                     <h4>Renseignements/Documents</h4>
 
                     <div class="form-group">
-                        <label for="fichierjustificatif1" class="file-label">Importer fichier 1</label>
+                        <label for="fichierjustificatif1" class="file-label">Importer fichier 1 (facultatif)</label>
                         <input type="file" id="fichierjustificatif1" name="fichierjustificatif1" class="file-input" accept=".pdf,.png,.jpg,.jpeg">
                         <small>Fichier justificatif 1 (pdf, png, jpeg, jpg)</small>
                         <span id="file-upload-feedback1"></span>
