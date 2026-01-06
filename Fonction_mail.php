@@ -5,11 +5,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
-function envoyerMail($destEmail, $destName, $type, $lienOptionnel = '') {
 
+function envoyerMail($destEmail, $destName, $type) {
 
     $mails = [
-
         1 => [
             'sujet' => "Confirmation de soumission justificatif",
             'message' => "<p>Bonjour $destName,
@@ -60,26 +59,18 @@ function envoyerMail($destEmail, $destName, $type, $lienOptionnel = '') {
                           <p>Il vous reste 48h pour rester dans les temps. Passé ce délai, le responsable pédagogique sera susceptible de refuser vos justificatifs.</p>"
         ],
         8 => [
-            'sujet' => "Alerte reste 24h pour être dans les temps ",
+            'sujet' => "Alerte reste 24h pour être dans les temps",
             'message' => "<p>Bonjour $destName,
                           <p>Vous avez une ou plusieurs absences non justifiée(s).</p>
                           <p>Vous devez déposer un justificatif.</p>
                           <p>Il vous reste 24h pour rester dans les temps. Passé ce délai, le responsable pédagogique sera susceptible de refuser vos justificatifs.</p>"
         ],
         9 => [
-            'sujet' => "Alerte vous devez impérativement justifier ",
+            'sujet' => "Alerte vous devez impérativement justifier",
             'message' => "<p>Bonjour $destName,
                           <p>Vous avez une ou plusieurs absences non justifiée(s).</p>
-                          <p>Vous devez <strong>imprérativement</strong> déposer un justificatif.</p>"
-        ],
-        10 => [
-        'sujet' => "Réinitialisation de votre mot de passe",
-        'message' => "<p>Bonjour $destName,</p>
-                          <p>Une demande de réinitialisation de mot de passe a été effectuée pour votre compte.</p>
-                          <p>Veuillez cliquer sur le lien ci-dessous pour créer un nouveau mot de passe (valable 1 heure) :</p>
-                          <p><a href='$lienOptionnel'>Réinitialiser mon mot de passe</a></p>
-                          <p>Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet email.</p>"
-    ]
+                          <p>Vous devez <strong>impérativement</strong> déposer un justificatif.</p>"
+        ]
     ];
 
     if (!isset($mails[$type])) {
@@ -89,15 +80,18 @@ function envoyerMail($destEmail, $destName, $type, $lienOptionnel = '') {
     $mail = new PHPMailer(true);
     $mail->CharSet = 'UTF-8';
     $mail->Encoding = 'base64';
-    try {
 
+    try {
         $mail->isSMTP();
         $mail->Host       = 'pro.turbo-smtp.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'baillonarthus7@gmail.com';
-        $mail->Password   = 'SAE301progsmtp';
-        $mail->Port       = 25;
-        $mail->setFrom('baillonarthus7@gmail.com', 'arthus');
+
+        $mail->Username   = '60929071f61eb85898a0';
+        $mail->Password   = 'XIHBPYxfVOzjLRJZ2c3p';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        $mail->setFrom('baillonarthus7@gmail.com', 'Arthus');
         $mail->addAddress($destEmail, $destName);
 
         $mail->isHTML(true);
