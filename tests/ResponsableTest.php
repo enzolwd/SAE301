@@ -11,8 +11,8 @@ class ResponsableTest extends TestCase {
         // mock
         $fakeDetails = [
             'idjustificatif' => 42,
-            'nom' => 'Dupont',
-            'prenom' => 'Jean',
+            'nom' => 'Baillon',
+            'prenom' => 'Arthus',
             'date_depot' => '2023-10-01',
             'motif' => 'Maladie'
         ];
@@ -29,7 +29,7 @@ class ResponsableTest extends TestCase {
         // on teste avec l'ID 42
         $resultat = recupererDetailsJustificatifAttente($pdo, 42);
 
-        $this->assertEquals('Dupont', $resultat['nom']);
+        $this->assertEquals('Baillon', $resultat['nom']);
         $this->assertEquals('Maladie', $resultat['motif']);
     }
 }

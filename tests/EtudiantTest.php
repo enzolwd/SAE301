@@ -10,22 +10,22 @@ class EtudiantTest extends TestCase {
     public function testRecupererTableauxEtudiant() {
         // préparation des fausses données
 
-        $fakeAbsences = [
-            ['matiere' => 'Maths', 'heure_formatee' => '08:00', 'statut' => 'non justifie'],
-            ['matiere' => 'Anglais', 'heure_formatee' => '10:00', 'statut' => 'non justifie']
+        $fausseAbsences = [
+            ['matiere' => 'Maths', 'heure' => '08:00', 'statut' => 'non justifie'],
+            ['matiere' => 'Anglais', 'heure' => '10:00', 'statut' => 'non justifie']
         ];
 
-        $fakeJustificatifs = [
+        $fausseJustificatifs = [
             ['idjustificatif' => 10, 'statut' => 'en attente']
         ];
 
         $stmtAbsences = $this->createMock(PDOStatement::class);
-        $stmtAbsences->method('fetchAll')->willReturn($fakeAbsences);
+        $stmtAbsences->method('fetchAll')->willReturn($fausseAbsences);
         $stmtAbsences->method('execute')->willReturn(true);
         $stmtAbsences->method('bindParam')->willReturn(true);
 
         $stmtJustifs = $this->createMock(PDOStatement::class);
-        $stmtJustifs->method('fetchAll')->willReturn($fakeJustificatifs);
+        $stmtJustifs->method('fetchAll')->willReturn($fausseJustificatifs);
         $stmtJustifs->method('execute')->willReturn(true);
         $stmtJustifs->method('bindParam')->willReturn(true);
 
